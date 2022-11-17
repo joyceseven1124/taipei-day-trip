@@ -1,7 +1,11 @@
+import conn
+import math
 from flask import *
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
+
+
 
 # Pages
 @app.route("/")
@@ -16,5 +20,28 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
+
+
+@app.route("/api/attractions",methods=["GET"])
+def search_data():
+    data_keyword = request.args.get("keyword",None)
+    data_page = request.args.get("page",0)
+    result = conn.search_keyword(data_keyword,data_page)   
+    return jsonify(result)
+    
+
+
+@app.route("/api/attraction/<attractionId>",methods=["GET"])
+def search_id(attractionId):
+    result = conn.search_id(attractionId)
+    return jsonify(result)
+
+
+@app.route("/api/categories",methods=["GET"])
+def search_categories():
+    result = conn.search_categories()
+    return jsonify(result)
+    
+
 
 app.run(port=3000)
