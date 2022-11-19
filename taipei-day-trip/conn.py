@@ -49,12 +49,13 @@ def clean_data(myresult):
     imgs = []
     alldata = []
     for i in range(len(myresult)):
-        img = myresult[i][9]
-        imgs.append(img)
+        
         if i+1<len(myresult) and myresult[i][1] == myresult[i+1][1]:
-            img = myresult[i+1][9]
+            img = myresult[i][9]
             imgs.append(img)
         else:
+            img = myresult[i][9]
+            imgs.append(img)
             data = {
                 "id" :  myresult[i][0] ,
                 "name" : myresult[i][1],
