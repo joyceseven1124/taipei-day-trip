@@ -22,7 +22,10 @@ connection_pool = pooling.MySQLConnectionPool(pool_name = "test_pool",
     **dbconfig
     )
 
+count =12
+
 def catalog_id(text):
+    int(text)
     if text == 1:
         return "親子共遊"
     elif text == 2:
@@ -42,177 +45,167 @@ def catalog_id(text):
     else:
         return "其他"
 
-def clean_data(page,total_pages,myresult):
-    try:
-        result = []
-        connection_object = connection_pool.get_connection()
-        cursor = connection_object.cursor()
-        
-        if page+1 <= total_pages:
-            next_page = page+1
+def clean_data(myresult):
+    imgs = []
+    alldata = []
+    for i in range(len(myresult)):
+        img = myresult[i][9]
+        imgs.append(img)
+        if i+1<len(myresult) and myresult[i][1] == myresult[i+1][1]:
+            img = myresult[i+1][9]
+            imgs.append(img)
         else:
-            next_page = "null"
-        
-        
-        for i in myresult:           
-            per_data = i
-            CAT = per_data[12]
-            CAT = catalog_id(CAT)
-            
-            id = per_data[0]
-            find_file= "SELECT * FROM imags where attractions_id = %s "
-            find_value = (id,)
-            cursor.execute(find_file,find_value)
-            myfile = cursor.fetchall()
-            imgs=[]
-            for f in myfile:
-                per_file = f
-                img = per_file[2]
-                imgs.append(img)
-            
             data = {
-            "id" : id ,
-            "name" : per_data[1],
-            "category" : CAT,
-            "description" : per_data[17],
-            "address": per_data[19],
-            "transport" :  per_data[3],
-            "mrt" : per_data[9],
-            "lat": per_data[16],
-            "lng" : per_data[5],
-            "images": imgs
-            }
+                "id" :  myresult[i][0] ,
+                "name" : myresult[i][1],
+                "category" : catalog_id(myresult[i][8]),
+                "description" : myresult[i][2],
+                "address": myresult[i][3],
+                "transport" :  myresult[i][4],
+                "mrt" : myresult[i][5],
+                "lat": myresult[i][6],
+                "lng" : myresult[i][7],
+                "images": imgs
+                }
+            alldata.append(data)
             
-            result.append(data)
-    except:
-        print("Unexpected Error")
-    finally:
-        cursor.close()
-        connection_object.close()        
-        data_result = {"nextPage":next_page,"data": result}
-        return data_result
+            imgs = []
+        
+    return alldata
 
+    
 def search_keyword(keyword,page):
     try:
         connection_object = connection_pool.get_connection()
         cursor = connection_object.cursor()
         keyword_catalogs = ['親子共遊','養生溫泉','宗教信仰','單車遊蹤','歷史建築','藍色公路','戶外踏青','藝文館所','其他']
         if keyword in keyword_catalogs:
-            page = int(page)    
-            catalog_count = "SELECT count( catalog.name ) FROM attractions INNER JOIN catalog ON attractions.catalog_id = catalog.id WHERE catalog.name =%s"
-            catalog_count_value = (keyword,)
-            cursor.execute(catalog_count,catalog_count_value)
-            count = cursor.fetchall()
-            total_pages = math.ceil(int(count[0][0])/12)-1
-            if page <= total_pages:
-                data_start = page*12
-                catalog_search = "SELECT * FROM attractions INNER JOIN catalog ON attractions.catalog_id = catalog.id WHERE catalog.name =%s ORDER BY attractions.id LIMIT %s,%s" 
-                catalog_value = (keyword,data_start,12)
-                cursor.execute(catalog_search,catalog_value)
-                myresult = cursor.fetchall()
-                data_result = clean_data(page,total_pages,myresult)
+            page = int(page)
+            data_start = page*12
+            
+            catalog_search = '''SELECT name,description, address,direction, MRT,latitude,longitude, 
+            imags.attractions_id,catalog_id, imags.file 
+            FROM (SELECT attractions.name,attractions.description, attractions.address, attractions.direction, 
+                  attractions.MRT,attractions.latitude,attractions.longitude, attractions.catalog_id,attractions.id FROM 
+             (attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id) where catalog.name=%s  limit %s,%s )
+            as data inner join imags on imags.attractions_id = data.id'''
+            catalog_value = (keyword,data_start,count)
+            cursor.execute(catalog_search,catalog_value)
+            myresult = cursor.fetchall()
+            
+            
+            next_page_star = (page+1)*12
+            next_page_search = '''SELECT * FROM attractions INNER JOIN catalog 
+                                    ON attractions.catalog_id = catalog.id 
+                                    WHERE catalog.name =%s  LIMIT %s,%s'''
+            next_page_value = (keyword,next_page_star,1)
+            cursor.execute(next_page_search,next_page_value)
+            next_result = cursor.fetchall()
+            if len(next_result) != 0:
+                next_page = page+1
             else:
-                data_result = {
-                    "nextPage":"null",
-                    "data": []
-                }
-           
+                next_page = None
+            result = clean_data(myresult)
             
-            
+            data_result = {
+                            "nextPage":next_page,
+                            "data": result
+                           }
+        
         elif keyword == None :
             page = int(page)    
-            cursor.execute("SELECT count( name ) FROM attractions")
-            count = cursor.fetchall()
-            total_pages = math.ceil(int(count[0][0])/12)-1
-            myresult = cursor.fetchall()
-            if page <= total_pages:
-                data_start = page*12
-                cursor.execute("SELECT * FROM attractions  ORDER BY attractions.id LIMIT %s,%s",(data_start,12))
-                myresult = cursor.fetchall()
-                data_result = clean_data(page,total_pages,myresult)
+            data_start = page*12
+            pages_search = '''SELECT imags.attractions_id, name,description, address,direction, 
+                                MRT,latitude,longitude, catalog_id,imags.file 
+                                FROM ( SELECT * FROM attractions  LIMIT %s,%s )as DATA 
+                                INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
             
-            else:
-                data_result = {
-                    "nextPage":"null",
-                    "data": []
-                } 
 
-                
-                        
-        else:
-            page = int(page)
-            cursor.execute("SELECT count( name ) FROM attractions where name lIKE %s ORDER BY id",('%'+keyword+ '%',))
-            count = cursor.fetchall()
-            total_pages = math.ceil(int(count[0][0])/12)-1
+            pages_search_value = (data_start,count)
+            cursor.execute(pages_search,pages_search_value)
             myresult = cursor.fetchall()
-            if page <= total_pages:
-                data_start = page*12
-                search_input= "SELECT * FROM attractions where name lIKE %s ORDER BY id LIMIT %s,%s"
-                search_value=('%'+keyword+ '%',data_start,12)
-                cursor.execute(search_input,search_value)
-                myresult = cursor.fetchall()
-                data_result = clean_data(page,total_pages,myresult)
+            
+            
+            next_page_star = (page+1)*12
+            next_page_search = '''SELECT * FROM attractions  LIMIT %s,%s'''
+            next_page_value = (next_page_star,1)
+            cursor.execute(next_page_search,next_page_value)
+            next_result = cursor.fetchall()
+            if len(next_result) != 0:
+                next_page = page+1
             else:
-                data_result = {
-                    "nextPage":"null",
-                    "data": []
-                }
+                next_page = None
                 
-    except:
-        data_result ={
-                "error": True,
-                "message": "Use positive integer to look up page"
-                }
+            result = clean_data(myresult)
+            
+            data_result = {
+                            "nextPage":next_page,
+                            "data": result
+                           }
+        else:
+            page = int(page)    
+            data_start = page*12
+            keyword_search = '''SELECT imags.attractions_id, name,description, address,direction, 
+                                MRT,latitude,longitude, catalog_id,imags.file 
+                                FROM ( SELECT * FROM attractions WHERE name lIKE %s   LIMIT %s,%s )as DATA 
+                                INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
+            keyword_search_value = ('%'+keyword+ '%',data_start,count)
+            cursor.execute(keyword_search,keyword_search_value)
+            myresult = cursor.fetchall()
+            
+            next_page_star = (page+1)*12
+            next_page_search = '''SELECT * FROM attractions WHERE name lIKE %s  LIMIT %s,%s'''
+            next_page_value = ('%'+keyword+ '%',next_page_star,1)
+            cursor.execute(next_page_search,next_page_value)
+            next_result = cursor.fetchall()
+            if len(next_result) != 0:
+                next_page = page+1
+            else:
+                next_page = None
+                
+            result = clean_data(myresult)
+            
+            data_result = {
+                            "nextPage":next_page,
+                            "data": result
+                           }
+            
+      
+        
+    except ValueError:
+          data_result ={
+            "error": True,
+            "message": "Please use a positive integere "
+            }
+
+        
     finally:
-        cursor.close()
-        connection_object.close()       
-        return data_result
-
-
-
-
+            cursor.close()
+            connection_object.close()
+            return data_result
+        
+           
 def search_id(id):
     try:
         connection_object = connection_pool.get_connection()
         cursor = connection_object.cursor()
-        id = int(id)
-        cursor.execute("SELECT count( id ) FROM attractions")
-        count = cursor.fetchall()
-        count = int(count[0][0])
-        if id > count:
+        id_search = '''SELECT imags.attractions_id, name,description, address,direction, 
+                            MRT,latitude,longitude, catalog_id,imags.file 
+                            FROM ( SELECT * FROM attractions WHERE id =%s )as DATA 
+                            INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
+        id_search_value = (id,)
+        cursor.execute(id_search,id_search_value)
+        myresult = cursor.fetchall()
+        result = clean_data(myresult)
+        
+        if len(myresult) != 0:
+            data_result = {"data": result}
+        
+        else:
             raise IndexError()
         
-        cursor.execute("SELECT * FROM attractions where id = %s ",(id,))
-        id_result = cursor.fetchone()
+       
         
-        
-        CAT = id_result[12]
-        CAT = catalog_id(CAT)
-
-        find_file= "SELECT * FROM imags where attractions_id = %s "
-        find_value = (id,)
-        cursor.execute(find_file,find_value)
-        myfile = cursor.fetchall()
-        imgs=[]
-        for f in myfile:
-            per_file = f
-            img = per_file[2]
-            imgs.append(img)
-        
-        data = {
-          "id" : id ,
-          "name" : id_result[1],
-          "category" : CAT,
-          "description" : id_result[17],
-          "address": id_result[19],
-          "transport" :  id_result[3],
-          "mrt" : id_result[9],
-          "lat": id_result[16],
-          "lng" : id_result[5],
-          "images": imgs
-          }
-        
-        data_result = {"data": data }
         
     except IndexError :
         data_result ={
@@ -262,5 +255,5 @@ def search_categories():
         connection_object.close()
 
         return data_result
-    
-search_id(80)
+        
+
