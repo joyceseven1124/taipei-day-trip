@@ -135,8 +135,8 @@ function clickEffect(e){
             resultInput =checkInput.test(inputPlace.value)
             if(resultInput){
                 nextPage = 0
-                Keyword = inputPlace.value
-                keywordLoad(0,Keyword)
+                keyword = inputPlace.value
+                keywordLoad(0,keyword)
             }else{
                 let hint = document.querySelector(".home_word_search_hint")
                 hint.textContent = "請輸入想查詢的地方"
@@ -147,10 +147,12 @@ function clickEffect(e){
             let menu = document.querySelector("#menu").classList.add("hide")
             let inputPlace = document.querySelector(".home_word_search_input")
             inputPlace.value =""
+            keyword = ""
+            nextPage = 0
             keywordLoad(0,"")}
     }else{
         menu.classList.add("hide")}
     }
-
+console.log(keyword,"拜託")
 const all = document.querySelector("body")
 all.addEventListener("click",clickEffect)
