@@ -84,8 +84,8 @@ def search_keyword(keyword,page):
             page = int(page)
             data_start = page*12
             
-            catalog_search = '''SELECT name,description, address,direction, MRT,latitude,longitude, 
-            imags.attractions_id,catalog_id, imags.file 
+            catalog_search = '''SELECT imags.attractions_id,name,description, address,direction, 
+            MRT,latitude,longitude, catalog_id, imags.file 
             FROM (SELECT attractions.name,attractions.description, attractions.address, attractions.direction, 
                   attractions.MRT,attractions.latitude,attractions.longitude, attractions.catalog_id,attractions.id FROM 
              (attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id) where catalog.name=%s  limit %s,%s )
