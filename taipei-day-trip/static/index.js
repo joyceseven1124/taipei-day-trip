@@ -128,6 +128,7 @@ function clickEffect(e){
         inputPlace.value = e.target.textContent
         menu.classList.add("hide")
     }else if(clickWhere === "IMG"){
+        menu.classList.add("hide")
         console.log(e.target.parentNode.nodeName)
         if(e.target.parentNode.nodeName === "BUTTON"){
             let menu = document.querySelector("#menu").classList.add("hide")
@@ -153,6 +154,5 @@ function clickEffect(e){
     }else{
         menu.classList.add("hide")}
     }
-console.log(keyword,"拜託")
 const all = document.querySelector("body")
 all.addEventListener("click",clickEffect)
