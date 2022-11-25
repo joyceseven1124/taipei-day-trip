@@ -1,24 +1,29 @@
 let nextPage= 0
 let keyword = ""
+let state = true
 const checkInput =  /^[a-zA-Z\d\u4e00-\u9fa5]{1,}$/
 
 const options = {
     root:null,
-    threshold: 1,
+    threshold: 0.1,
 }
+
 const callback = (entries,observer) => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
             nextPage = nextPage+1
             getData(nextPage,keyword)
+        }else{
+            observer.unobserve(target)
         }
     })
 }
-const observer = new IntersectionObserver(callback, options)
 
+const observer = new IntersectionObserver(callback, options)
 
 function getData(page,string){
     return new Promise(resolve => {
+        state = false
         url="/api/attractions?page="+page+"&keyword="+string
         fetch(url)
     .then(function(response){
@@ -68,11 +73,12 @@ function getData(page,string){
             let noResult = document.querySelector('.attractions_no_result')
             noResult.textContent = "查無此資料"
         }
+        state = true
         return result["nextPage"]
     })
     .then(function(nextPage){
-        if(nextPage !== null){
-            const target =document.querySelector(".attractions_container:nth-last-child(1)")
+        if(nextPage !== null && state){
+            const target  =document.querySelector(".footer")
             observer.observe(target)
         }else{
             observer.disconnect()
@@ -100,6 +106,7 @@ function categorySelect(){
 
 getData(0,"")
 categorySelect()
+
 
 
 function keywordLoad(page,string){

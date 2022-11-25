@@ -31,7 +31,6 @@ def search_data():
     return jsonify(result)
     
 
-
 @app.route("/api/attraction/<attractionId>",methods=["GET"])
 def search_id(attractionId):
     result = conn.search_id(attractionId)
