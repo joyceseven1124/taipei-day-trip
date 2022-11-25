@@ -148,6 +148,7 @@ html,body{
     color: black;
     font-size: 14px;
     font-weight: 500;
+    border-radius: 5px;
 }
 
 .home_word_search_select.hide{
@@ -293,11 +294,13 @@ html,body{
     }
 
     .navigation{
-        width: 100%;
+        width: 90%;
+        padding: 0px;
     }
 
     .navigation_name{
         margin-left:20px;
+        margin-left: 0px;
     }
 
     .navigation_button_schedule{
@@ -309,10 +312,19 @@ html,body{
     }
 
     .home_word{
-        width: 600px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding-left: 30px;
+        width: 90%;
+        margin-left: 0px;
+    }
+
+
+    .home_word_search_input{
+        width: 225px;
+    }
+
+    .home_word_search_select{
+        width: 322px;
+        margin-left: 0px;
+        grid-template-columns: 96px 96px 96px;
     }
 
     .home_word_subtitle{
@@ -327,20 +339,11 @@ html,body{
         margin-left: 0px;
     }
 
-    .home_word_search_input{
-        width: 225px;
-    }
-
-    .home_word_search_select{
-        width: 322px;
-        margin-left: 30px;
-        grid-template-columns: 96px 96px 96px;
-    }
 
     .attractions{
-        width: 100%;
+        width: 90%;
         display: grid;
-        grid-template-columns: 45% 45%;
+        grid-template-columns: 1fr 1fr;
     }
 }
 
@@ -358,11 +361,11 @@ html,body{
     }
 
     .navigation{
-        width: 100%;
+        width: 90%;
     }
 
     .navigation_name{
-        margin-left:20px;
+        margin-left:0%;
     }
 
     .navigation_button_schedule{
@@ -374,9 +377,8 @@ html,body{
     }
 
     .home_word{
-        width: 300px;
-        left: 50%;
-        transform: translateX(-132px);
+        width: 90%;
+        margin-left: 1%;
         padding-left: 0px;
     }
 
@@ -408,7 +410,7 @@ html,body{
     }
 
     .attractions{
-        width: 100%;
+        width: 90%;
         display: grid;
         grid-template-columns: 100%;
     }

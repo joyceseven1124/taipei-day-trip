@@ -3,6 +3,8 @@ let keyword = ""
 let state = true
 const checkInput =  /^[a-zA-Z\d\u4e00-\u9fa5]{1,}$/
 
+const target  =document.querySelector(".footer")
+
 const options = {
     root:null,
     threshold: 0.1,
@@ -10,11 +12,8 @@ const options = {
 
 const callback = (entries,observer) => {
     entries.forEach(entry => {
-        if(entry.isIntersecting){
-            nextPage = nextPage+1
+        if(entry.isIntersecting && nextPage !== 0){
             getData(nextPage,keyword)
-        }else{
-            observer.unobserve(target)
         }
     })
 }
@@ -69,19 +68,20 @@ function getData(page,string){
                 attractionWordPlace[(page*12)+y].appendChild(attractionMRT)
                 attractionWordPlace[(page*12)+y].appendChild(attractionCategory)
             }
+            state = true
         }else{
             let noResult = document.querySelector('.attractions_no_result')
             noResult.textContent = "查無此資料"
         }
-        state = true
         return result["nextPage"]
     })
-    .then(function(nextPage){
-        if(nextPage !== null && state){
-            const target  =document.querySelector(".footer")
+    .then(function(Page){
+        if(Page !== null && state){
+            nextPage = nextPage+1
             observer.observe(target)
         }else{
             observer.disconnect()
+            nextPage = 0
         }
     })
     .catch(function(err){console.log(err)})
