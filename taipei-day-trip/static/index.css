@@ -410,6 +410,6 @@ html,body{
     .attractions{
         width: 100%;
         display: grid;
-        grid-template-columns: 270px;
+        grid-template-columns: 100%;
     }
 }

@@ -157,7 +157,7 @@ function clickEffect(e){
             inputPlace.value =""
             keyword = ""
             nextPage = 0
-            keywordLoad(0,"")}
+            keywordLoad(nextPage,keyword)}
     }else{
         menu.classList.add("hide")}
     }
