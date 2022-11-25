@@ -21,9 +21,9 @@ const callback = (entries,observer) => {
 const observer = new IntersectionObserver(callback, options)
 
 function getData(page,string){
-    return new Promise(resolve => {
-        state = false
-        url="/api/attractions?page="+page+"&keyword="+string
+        if(state){
+            state = false
+            url="/api/attractions?page="+page+"&keyword="+string
         fetch(url)
     .then(function(response){
         return response.json();})
@@ -77,6 +77,7 @@ function getData(page,string){
     })
     .then(function(Page){
         if(Page !== null && state){
+            state = true
             nextPage = nextPage+1
             observer.observe(target)
         }else{
@@ -85,7 +86,7 @@ function getData(page,string){
         }
     })
     .catch(function(err){console.log(err)})
-    })
+    }
 }
 
 function categorySelect(){
