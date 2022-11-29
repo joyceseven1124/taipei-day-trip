@@ -91,7 +91,7 @@ for i in range(num):
     for x in file_list:
         img_id = img_id + 1
         input_img = "INSERT INTO imags(id,attractions_id,file) VALUES(%s,%s,%s)"
-        img_value = (img_id,id,"https"+x)
+        img_value = (img_id,id,"https:"+x)
         mycursor.execute(input_img,img_value)
         mydb.commit()
 

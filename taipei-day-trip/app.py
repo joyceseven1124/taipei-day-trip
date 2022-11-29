@@ -5,6 +5,7 @@ app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
+Flask(__name__,static_folder="static",static_url_path="/static")
 
 
 # Pages
@@ -29,7 +30,6 @@ def search_data():
     result = conn.search_keyword(data_keyword,data_page)   
     return jsonify(result)
     
-
 
 @app.route("/api/attraction/<attractionId>",methods=["GET"])
 def search_id(attractionId):
