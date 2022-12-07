@@ -1,0 +1,481 @@
+@import url('https://fonts.googleapis.com/css2?family\
+=Noto+Sans+TC:wght@500;700&display=swap');
+
+html,body{
+    width: 100%;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+}
+
+.nav_container{
+    width: 100%;
+    height: 54px;
+}
+
+.nav_background{
+    width: 100%;
+    height: 54px;
+    position: fixed;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+}
+
+.navigation{
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 1200px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.navigation_name{
+    font-size: 30px;
+    color: #448899;
+    line-height: 54px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    outline: none;
+    background-color: white;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.navigation_button{
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #666666;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.navigation_button_schedule{
+    background-color: white;
+    border: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Noto Sans TC';
+    color: #666666;
+    padding: 0px;
+    margin-right: 20px;
+}
+
+.navigation_button_sign{
+    background-color: white;
+    border: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Noto Sans TC';
+    color: #666666;
+    padding: 0px;
+}
+
+.attraction_content{
+    display: grid;
+    justify-content: center;
+    margin-top: 37px;
+}
+
+.attraction_information{
+    width: 1200px;
+    height: 406px;
+    display: grid;
+    grid-template-columns: 540px 600px;
+    grid-column-gap: 30px; ;
+    justify-content: center;
+}
+
+.attraction_information_images {
+    overflow:hidden;
+    width:540px;
+    height:406px;
+    position: relative;
+    border-radius: 5px;
+}
+
+@keyframes fadein {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+
+
+.image{
+    object-fit: cover;
+    width:540px;
+    height:406px;
+    border-radius: 5px;
+}
+
+.attraction_information_images_main>img:not(:first-child){
+    display:none;
+}
+
+.attraction_information_images_circle {
+    height: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 13px;
+    z-index: 3;
+    opacity: 75%;
+}
+
+.attraction_information_images_circle >span {
+    width: 12px;
+    height:12px;
+    display:inline-block;
+    background-color:white;
+    border-radius:50%;
+    margin:0px 12px;
+}
+
+.attraction_information_images_circle >span.checked {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid white;
+    background-color:black;
+}
+
+.attraction_information_images_arrow {
+    display: block;
+    opacity: 75%;
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 50%;
+    margin-top: -18px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.attraction_information_images_arrow:hover{
+    cursor: pointer;
+}
+
+.previous {
+    left: 0;
+}
+.next {
+    right: 0;
+}
+
+.attractions_introduction{
+    display: grid;
+    justify-content: center;
+    width: 1200px;
+    height: auto;
+    text-align: justify;
+    margin-top: 87px;
+    color: #666666;
+    font-weight: 700;
+    position: relative;
+}
+
+.attraction_information_booking{
+    font-weight: 700;
+    font-size: 16px;
+    font-family: 'Noto Sans TC';
+    color: #666666;
+    margin-bottom: opx;
+}
+
+.attraction_information_booking_name_title{
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.attraction_information_booking_name_category{
+    font-weight: 500;
+}
+
+.attraction_information_booking_select{
+    border-radius: 5px;
+    margin-top: 20px;
+    background-color: #e8e8e8;
+    height: 312px;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
+
+.attraction_information_booking_select > div{
+    margin-bottom: 15px;
+}
+
+
+.attraction_information_booking_select_subtitle{
+    font-weight: 500;
+}
+
+.attraction_information_booking_select_time{
+    font-weight: 500;
+}
+
+.attraction_information_booking_select_time >span{
+    font-weight: 700;
+}
+
+#price{
+    font-weight: 500;
+}
+
+.attraction_information_booking_select_button{
+    width: 154px;
+    height: 36px;
+    border-radius: 5px;
+    background-color: #448899;
+    font-size: 19px;
+    font-weight: 400;
+    color: white;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+
+input{
+    border: 0px;
+    outline: none;
+}
+
+input[type="date"]{
+    height: 35px;
+    width: 193px;
+    margin-left: 15px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+
+input[type="date"]:hover{
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    font-family: 'Noto Sans TC';
+    color: #666666;
+    position: relative;
+    border: none;
+    margin-right: 6px;
+}
+
+input[type="radio"]::before {
+    content: '';
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    color: #000;
+    border-radius: 50%;
+    position: absolute;
+    border: 0px;
+    top: -1px;
+    left: -1px;
+}
+
+input[type="radio"]:checked::after {
+    content: '';
+    background-color: #448899;
+    width: 18px;
+    height: 18px;
+    top: 1px;
+    left: 1px;
+    border-radius: 50%;
+    position: absolute;
+}
+
+
+
+.dividing_line{
+    width: 1200px;
+    height: 1px;
+    background-color: #e8e8e8;
+    position: absolute;
+    top: -50px;
+}
+
+#description{
+    font-weight: 400;
+}
+
+.attractions_introduction_address{
+    margin-top: 20px;
+}
+
+#address{
+    margin-top: 8px;
+    font-weight: 400;
+}
+
+.attractions_introduction_transport{
+    margin-top: 20px;
+}
+
+#transport{
+    margin-top: 8px;
+    font-weight: 400;
+}
+
+.footer{
+    width:100%;
+    height: 104px;
+    background-color: #757575;
+    color:white;
+    text-align: center;
+    line-height: 104px;
+    font-weight: 700;
+    margin-top: 55px;
+}
+
+
+@media(max-width:1200px){
+    .nav_container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .nav_background{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .navigation{
+        width: 90%;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .navigation_name{
+        margin-left:0%;
+    }
+
+    .navigation_button_schedule{
+        margin-left: 0%;
+    }
+
+    .navigation_button_sign{
+        margin-right: 0px;
+    }
+
+    .attraction_content{
+        width: 90%;
+        margin: 0px auto;
+    }
+
+    .attraction_information{
+        width: 100%;
+        justify-content: center;
+        grid-template-columns: 50% 50%;
+        row-gap: 30px;
+    }
+
+    .attraction_information_booking{
+        width: 100%;
+    }
+
+    .attraction_information_images{
+        width: 100%;
+    }
+
+    .attraction_information_images_circle{
+        justify-content: center;
+        width: 100%;
+    }
+
+    .attractions_introduction{
+        width: 100%;
+        margin-top: 100px;
+    }
+
+    .dividing_line{
+        width: 100%;
+    }
+}
+
+
+@media(max-width:800px){
+    .nav_container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .nav_background{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .navigation{
+        width: 90%;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .navigation_name{
+        margin-left:0%;
+    }
+
+    .navigation_button_schedule{
+        margin-left: 0%;
+    }
+
+    .navigation_button_sign{
+        margin-right: 0px;
+    }
+
+    .attraction_content{
+        width: 90%;
+        margin: 0px auto;
+    }
+
+    .attraction_information{
+        width: 100%;
+        justify-content: center;
+        grid-template-columns: 100%;
+        row-gap: 0px;
+    }
+
+    .attraction_information_booking{
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .attraction_information_images{
+        width: 100%;
+    }
+
+    .image{
+        width:100%;
+    }
+
+    .attractions_introduction{
+        width: 100%;
+        margin-top: 100px;
+    }
+
+    .dividing_line{
+        width: 100%;
+    }
+
+    .attractions_introduction{
+        margin-top: 500px;
+    }
+}
