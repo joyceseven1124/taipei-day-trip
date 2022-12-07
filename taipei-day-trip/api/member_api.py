@@ -43,7 +43,7 @@ def enter_account():
             res = make_response(jsonify(response))
             cookie_time = 7*24*60*60
             #res.set_cookie(key = token,expires=time.time()+6*60,httponly=True,secure=True)
-            res.set_cookie("token_value", token,expires=time.time()+cookie_time,secure=True)
+            res.set_cookie("token_value", token,expires=time.time()+cookie_time)
             return res,200
 
         elif result == "password error":
@@ -92,4 +92,3 @@ def stillIn_account():
             res = make_response(jsonify(response))
             res.set_cookie("token_value", value="",expires=0)
             return res,200
-#request.method == "GET":

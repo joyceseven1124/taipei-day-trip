@@ -8,12 +8,27 @@ import math
 import mysql.connector
 from mysql.connector import Error
 from mysql.connector import pooling
-import model.base_data as dbconfig
+
+import os
+from dotenv import load_dotenv
+load_dotenv()
+host = os.getenv("mysqlhost")
+port = os.getenv("mysqlport")
+database = os.getenv("mysqldatabase")
+user = os.getenv("mysqluser")
+password = os.getenv("mysqlpassword")
+
+dbconfig = {
+"host":host,
+"port":port,
+"database":database,
+"user":user,
+"password":password}
 
 connection_pool = pooling.MySQLConnectionPool(pool_name = "attraction_pool",
     pool_size = 3,
     pool_reset_session = True,
-    **dbconfig.database()
+    **dbconfig
     )
 
 count =12

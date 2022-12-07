@@ -154,10 +154,4 @@ async function signOutState(){
     window.location.reload()
 }
 
-/*function memberHave(){
-    if(memberState){
-        console.log("拉拉")
-        signIn.classList.add("hide")
-        signOut.classList.remove("hide")
-    }
-}*/
+

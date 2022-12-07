@@ -2,16 +2,31 @@ import math
 import mysql.connector
 from mysql.connector import Error
 from mysql.connector import pooling
-import model.base_data as dbconfig
 from flask_bcrypt import Bcrypt
 import jwt
 import time
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+host = os.getenv("mysqlhost")
+port = os.getenv("mysqlport")
+database = os.getenv("mysqldatabase")
+user = os.getenv("mysqluser")
+password = os.getenv("mysqlpassword")
+token_key = os.getenv("token_key")
+
+dbconfig = {
+"host":host,
+"port":port,
+"database":database,
+"user":user,
+"password":password}
 
 connection_pool = pooling.MySQLConnectionPool(pool_name = "member_pool",
     pool_size = 3,
     pool_reset_session = True,
-    **dbconfig.database()
+    **dbconfig
     )
 
 bcrypt = Bcrypt()
@@ -80,7 +95,7 @@ def enter_account(data):
 
 
 def make_token(data):
-    key = "96935DC58442A0C21C86529DA8B84251719307EABD9F8A3B3FB4B515E728BEF3"
+    key = token_key
     now = time.time()
     expiretime = 7*24*60*60
 
@@ -98,7 +113,7 @@ def check_token(token_value):
     if token == None:
         return "no token"
     try:
-        key = "96935DC58442A0C21C86529DA8B84251719307EABD9F8A3B3FB4B515E728BEF3"
+        key = token_key
         result = jwt.decode(token, key, algorithms=['HS256'])
         data = [result["id"],result["name"],result["email"]]
         return data
