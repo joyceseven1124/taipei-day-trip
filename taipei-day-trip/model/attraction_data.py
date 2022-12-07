@@ -8,18 +8,12 @@ import math
 import mysql.connector
 from mysql.connector import Error
 from mysql.connector import pooling
+import model.base_data as dbconfig
 
-dbconfig = { 
-    "host":"localhost",
-    "port":3307,
-    "database":"taipei",
-    "user":"root",
-    "password":"xu.6ru8u6"}
-
-connection_pool = pooling.MySQLConnectionPool(pool_name = "test_pool",
+connection_pool = pooling.MySQLConnectionPool(pool_name = "attraction_pool",
     pool_size = 3,
     pool_reset_session = True,
-    **dbconfig
+    **dbconfig.database()
     )
 
 count =12
@@ -84,21 +78,29 @@ def search_keyword(keyword,page):
             page = int(page)
             data_start = page*12
             
-            catalog_search = '''SELECT imags.attractions_id,name,description, address,direction, 
-            MRT,latitude,longitude, catalog_id, imags.file 
-            FROM (SELECT attractions.name,attractions.description, attractions.address, attractions.direction, 
-                  attractions.MRT,attractions.latitude,attractions.longitude, attractions.catalog_id,attractions.id FROM 
-             (attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id) where catalog.name=%s  limit %s,%s )
-            as data inner join imags on imags.attractions_id = data.id'''
+            catalog_search = '''
+            SELECT
+                imags.attractions_id,name,description, address,direction,
+                MRT,latitude,longitude, catalog_id, imags.file
+            FROM (
+                SELECT
+                    attractions.name,attractions.description, attractions.address, attractions.direction,attractions.MRT,
+                    attractions.latitude,attractions.longitude, attractions.catalog_id,attractions.id
+
+                FROM (
+                    attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id
+                )where catalog.catalog_name=%s  limit %s,%s )
+            AS data inner join imags ON imags.attractions_id = data.id'''
             catalog_value = (keyword,data_start,count)
             cursor.execute(catalog_search,catalog_value)
             myresult = cursor.fetchall()
-            
-            
+
+
             next_page_star = (page+1)*12
-            next_page_search = '''SELECT * FROM attractions INNER JOIN catalog 
-                                    ON attractions.catalog_id = catalog.id 
-                                    WHERE catalog.name =%s  LIMIT %s,%s'''
+            next_page_search = '''
+            SELECT * FROM attractions
+            INNER JOIN catalog ON attractions.catalog_id = catalog.id
+            WHERE catalog.catalog_name =%s  LIMIT %s,%s'''
             next_page_value = (keyword,next_page_star,1)
             cursor.execute(next_page_search,next_page_value)
             next_result = cursor.fetchall()
@@ -116,11 +118,14 @@ def search_keyword(keyword,page):
         elif keyword == None :
             page = int(page)    
             data_start = page*12
-            pages_search = '''SELECT imags.attractions_id, name,description, address,direction, 
-                                MRT,latitude,longitude, catalog_id,imags.file 
-                                FROM ( SELECT * FROM attractions  LIMIT %s,%s )as DATA 
-                                INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
-            
+            pages_search = '''
+            SELECT 
+                imags.attractions_id, name,description, address,
+                direction, MRT,latitude,longitude, catalog_id,imags.file 
+            FROM (
+                SELECT * FROM attractions  LIMIT %s,%s )as DATA 
+            INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
+
 
             pages_search_value = (data_start,count)
             cursor.execute(pages_search,pages_search_value)
@@ -146,10 +151,12 @@ def search_keyword(keyword,page):
         else:
             page = int(page)    
             data_start = page*12
-            keyword_search = '''SELECT imags.attractions_id, name,description, address,direction, 
-                                MRT,latitude,longitude, catalog_id,imags.file 
-                                FROM ( SELECT * FROM attractions WHERE name lIKE %s   LIMIT %s,%s )as DATA 
-                                INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
+            keyword_search = '''
+            SELECT 
+                imags.attractions_id, name,description, address,
+                direction, MRT,latitude,longitude, catalog_id,imags.file 
+            FROM ( SELECT * FROM attractions WHERE name lIKE %s   LIMIT %s,%s )as DATA 
+            INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
             keyword_search_value = ('%'+keyword+ '%',data_start,count)
             cursor.execute(keyword_search,keyword_search_value)
             myresult = cursor.fetchall()
@@ -170,9 +177,7 @@ def search_keyword(keyword,page):
                             "nextPage":next_page,
                             "data": result
                            }
-            
-      
-        
+
     except ValueError:
           data_result ={
             "error": True,
@@ -190,10 +195,12 @@ def search_id(id):
     try:
         connection_object = connection_pool.get_connection()
         cursor = connection_object.cursor()
-        id_search = '''SELECT imags.attractions_id, name,description, address,direction, 
-                            MRT,latitude,longitude, catalog_id,imags.file 
-                            FROM ( SELECT * FROM attractions WHERE id =%s )as DATA 
-                            INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
+        id_search = '''
+        SELECT 
+            imags.attractions_id, name,description, address,
+            direction, MRT,latitude,longitude, catalog_id,imags.file 
+        FROM ( SELECT * FROM attractions WHERE id =%s )as DATA 
+        INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
         id_search_value = (id,)
         cursor.execute(id_search,id_search_value)
         myresult = cursor.fetchall()
@@ -204,10 +211,7 @@ def search_id(id):
         
         else:
             raise IndexError()
-        
-       
-        
-        
+
     except IndexError :
         data_result ={
             "error": True,

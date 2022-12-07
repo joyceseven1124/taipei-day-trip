@@ -1,7 +1,7 @@
 let dataNet = window.location.href
 let dataNetArray = dataNet.split("/")
 let idNumber = parseInt(dataNetArray[4])
-let img_number = 0 
+let img_number = 0
 
 getAttraction(idNumber)
 
@@ -11,14 +11,14 @@ function getAttraction(id){
         .then(function(response){
             return response.json();})
         .then(function(data){
-            let result = data["data"][0]
-            img_number = result["images"].length
+            let result = data.data[0]
+            img_number = result.images.length
             let imgPlace = document.querySelector(".attraction_information_images_main")
             let imgCircle = document.querySelector(".attraction_information_images_circle")
-            for(let i=0; i < result["images"].length; i++){
+            for(let i=0; i < result.images.length; i++){
                 let img = document.createElement("img")
                 img.setAttribute("class","image")
-                img.src = result["images"][i]
+                img.src = result.images[i]
                 imgPlace.appendChild(img)
 
                 let circle = document.createElement("span")
@@ -29,21 +29,23 @@ function getAttraction(id){
                 }
                 imgCircle .appendChild(circle)
             }
+            let title = document.querySelector("title")
+            title.textContent = result.name
 
             let attractionName = document.querySelector(".attraction_information_booking_name_title")
-            attractionName.textContent = result["name"]
+            attractionName.textContent = result.name
 
             let attractionCategory = document.querySelector(".attraction_information_booking_name_category")
-            attractionCategory.textContent = result["category"]
-            
+            attractionCategory.textContent = result.category
+
             let attractionDescription = document.querySelector("#description")
-            attractionDescription.textContent = result["description"]
+            attractionDescription.textContent = result.description
 
             let attractionAddress = document.querySelector("#address")
-            attractionAddress.textContent = result["address"]
+            attractionAddress.textContent = result.address
 
             let attractionTransport = document.querySelector("#transport")
-            attractionTransport.textContent = result["transport"]
+            attractionTransport.textContent = result.transport
 
         })
 }

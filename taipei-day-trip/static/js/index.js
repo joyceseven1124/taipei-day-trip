@@ -29,9 +29,9 @@ function getData(page,string){
             return response.json();})
         .then(function(jsonData){
             let result =jsonData
-            if(result["data"].length !== 0){
+            if(result.data.length !== 0){
                 let attractions = document.querySelector('.attractions');
-                for(let x = 0; x < result["data"].length; x++){
+                for(let x = 0; x < result.data.length; x++){
                     let attractionCard =document.createElement("div")
                     attractionCard.setAttribute("class","attractions_container")
                     attractionCard.setAttribute("id",result["data"][x]["id"])
@@ -39,9 +39,9 @@ function getData(page,string){
                 }
 
                 let attractionCardPlace = document.querySelectorAll('.attractions_container')
-                for(let i = 0; i <result["data"].length ; i++){
-                    let picture = result["data"][i]["images"][0]
-                    let attractionName = result["data"][i]["name"]
+                for(let i = 0; i <result.data.length ; i++){
+                    let picture = result.data[i].images[0]
+                    let attractionName = result.data[i].name
 
                     let attractionImg =document.createElement("img")
                     attractionImg.setAttribute("class","attractions_container_img")
@@ -55,9 +55,9 @@ function getData(page,string){
                 }
 
                 let attractionWordPlace = document.querySelectorAll('.attractions_container_word');
-                for(let y = 0; y < result["data"].length; y++){
-                    let category = result["data"][y]["category"]
-                    let mrt = result["data"][y]["mrt"]
+                for(let y = 0; y < result.data.length; y++){
+                    let category = result.data[y].category
+                    let mrt = result.data[y].mrt
                     let attractionMRT = document.createElement("div")
                     let attractionMRTName = document.createTextNode(mrt)
                     attractionMRT.appendChild(attractionMRTName)
@@ -94,8 +94,8 @@ function categorySelect(){
         return response.json();})
     .then(function(category){
         let menuPlace = document.querySelector(".home_word_search_select.hide")
-        for(let i = 0; i < category["data"].length; i++){
-            item = category["data"][i]
+        for(let i = 0; i < category.data.length; i++){
+            item = category.data[i]
             let menuItem = document.createElement("li")
             let menuText = document.createTextNode(item)
             menuItem.appendChild(menuText)
@@ -104,8 +104,7 @@ function categorySelect(){
     }).catch(function(err){console.log(err)})
 }
 
-getData(0,"")
-categorySelect()
+
 
 
 function keywordLoad(page,string){
@@ -123,7 +122,7 @@ function keywordLoad(page,string){
 
 function clickEffect(e){
     clickWhere = e.target.nodeName
-    if(clickWhere === "INPUT"){
+    if(clickWhere === "INPUT" && e.target.classList.contains("home_word_search_input")){
         let menu = document.querySelector("#menu").classList
         if(menu.contains("hide")){
             menu.remove("hide")
@@ -134,7 +133,7 @@ function clickEffect(e){
         menu.classList.add("hide")
     }else if(clickWhere === "IMG"){
         menu.classList.add("hide")
-        if(e.target.parentNode.nodeName === "BUTTON"){
+        if(e.target.parentNode.classList.contains("home_word_search_icon")){
             let menu = document.querySelector("#menu").classList.add("hide")
             let inputPlace = document.querySelector(".home_word_search_input")
             resultInput =checkInput.test(inputPlace.value)
@@ -169,3 +168,9 @@ all.addEventListener("click",clickEffect)
 
 const attractionNet = document.querySelector(".attractions")
 attractionNet.addEventListener("click", directNewPlace)
+
+//getData(0,"")
+//categorySelect()
+
+window.addEventListener('load', getData(0,""))
+window.addEventListener('load', categorySelect())

@@ -1,38 +1,20 @@
-<!DOCTYPE html>
-    <head>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-        <meta charset="utf-8"/>
-        <title>Assignment</title>
-        <link rel="stylesheet" type="text/css" href="/static/attraction.css">
-    </head>
+{% extends "base.html" %}
+        {% block title %}Attraction{% endblock %}
+        {% block cssLink %}<link rel="stylesheet" type="text/css" href="/static/css/attraction.css">{% endblock %}
 
-    <body>
-        <nav class="nav_container">
-            <div class="nav_background">
-                <div class="navigation">
-                    <button class="navigation_name">台北一日遊</button>
-                    <div class="navigation_button">
-                        <button class="navigation_button_schedule">預定行程</button>
-                        <button class="navigation_button_sign">登入/註冊</button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
+        {% block article %}
         <article class="attraction_content">
             <div class="attraction_information">
 
                 <div class="attraction_information_images">
                     <!-- 輪播圖片 -->
-                    <div class="attraction_information_images_main">
-                    </div>
+                    <div class="attraction_information_images_main"></div>
                     <!-- 指示符 -->
-                    <div class="attraction_information_images_circle">
-                    </div>
+                    <div class="attraction_information_images_circle"></div>
 
                     <!-- 左右切換按鈕 -->
-                    <img class="attraction_information_images_arrow previous" src="/static/left_slider.png"/>
-                    <img class="attraction_information_images_arrow next" src="/static/right_slider.png"/>
+                    <img class="attraction_information_images_arrow previous" src="/static/pic/left_slider.png"/>
+                    <img class="attraction_information_images_arrow next" src="/static/pic/right_slider.png"/>
                 </div>
 
 
@@ -82,9 +64,5 @@
             </div>
 
         </article>
-
-        <footer class="footer">COPYRIGHT © 2021 台北一日遊</footer>
-
-    </body>
-    <script src="/static/attraction.js"></script>
-</html>
+        {% endblock %}
+    {% block js %}<script src="/static/js/attraction.js"></script>{% endblock %}
