@@ -162,10 +162,6 @@
 }
 
 
-input{
-    border: 0px;
-    outline: none;
-}
 
 input[type="date"]{
     height: 35px;

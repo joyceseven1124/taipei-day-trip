@@ -1,6 +1,7 @@
-let dataNet = window.location.href
-let dataNetArray = dataNet.split("/")
-let idNumber = parseInt(dataNetArray[4])
+//拿到網址上的資訊
+const dataNet = window.location.href
+const dataNetArray = dataNet.split("/")
+const idNumber = parseInt(dataNetArray[4])
 let img_number = 0
 
 getAttraction(idNumber)
@@ -11,17 +12,17 @@ function getAttraction(id){
         .then(function(response){
             return response.json();})
         .then(function(data){
-            let result = data.data[0]
+            const result = data.data[0]
             img_number = result.images.length
-            let imgPlace = document.querySelector(".attraction_information_images_main")
-            let imgCircle = document.querySelector(".attraction_information_images_circle")
+            const imgPlace = document.querySelector(".attraction_information_images_main")
+            const imgCircle = document.querySelector(".attraction_information_images_circle")
             for(let i=0; i < result.images.length; i++){
-                let img = document.createElement("img")
+                const img = document.createElement("img")
                 img.setAttribute("class","image")
                 img.src = result.images[i]
                 imgPlace.appendChild(img)
 
-                let circle = document.createElement("span")
+                const circle = document.createElement("span")
                 circle.setAttribute("class","circle")
                 circle.setAttribute("num",i)
                 if(i===0){
@@ -29,22 +30,22 @@ function getAttraction(id){
                 }
                 imgCircle .appendChild(circle)
             }
-            let title = document.querySelector("title")
+            const title = document.querySelector("title")
             title.textContent = result.name
 
-            let attractionName = document.querySelector(".attraction_information_booking_name_title")
+            const attractionName = document.querySelector(".attraction_information_booking_name_title")
             attractionName.textContent = result.name
 
-            let attractionCategory = document.querySelector(".attraction_information_booking_name_category")
+            const attractionCategory = document.querySelector(".attraction_information_booking_name_category")
             attractionCategory.textContent = result.category
 
-            let attractionDescription = document.querySelector("#description")
+            const attractionDescription = document.querySelector("#description")
             attractionDescription.textContent = result.description
 
-            let attractionAddress = document.querySelector("#address")
+            const attractionAddress = document.querySelector("#address")
             attractionAddress.textContent = result.address
 
-            let attractionTransport = document.querySelector("#transport")
+            const attractionTransport = document.querySelector("#transport")
             attractionTransport.textContent = result.transport
 
         })
@@ -54,7 +55,7 @@ function getAttraction(id){
 
 
 let circleIndex=0;
-let previous = document.getElementsByClassName("previous")
+const previous = document.getElementsByClassName("previous")
 previous[0].onclick = function () {
     circleIndex--;
     if(circleIndex == -1){
@@ -63,7 +64,7 @@ previous[0].onclick = function () {
     slideTo(circleIndex)
 }
 
-let next = document.getElementsByClassName("next");
+const next = document.getElementsByClassName("next");
 next[0].onclick = function () {
     circleIndex++;
     if(circleIndex  < img_number){
@@ -75,7 +76,7 @@ next[0].onclick = function () {
 }
 
 function slideTo(index){
-    let images = document.getElementsByClassName('image');
+    const images = document.getElementsByClassName('image');
     for(let i=0;i<images.length;i++){
         if( i == index ){
             images[i].style.display = 'inline'
@@ -98,9 +99,9 @@ function slideTo(index){
 
 
 
-let price = document.querySelector("#price")
-let morningTime = document.querySelector("#morning_time")
-let afternoonTime = document.querySelector("#afternoon_time")
+const price = document.querySelector("#price")
+const morningTime = document.querySelector("#morning_time")
+const afternoonTime = document.querySelector("#afternoon_time")
 
 morningTime.addEventListener('change',(e)=>{
     if(e.target.checked){
@@ -121,5 +122,5 @@ function goHome(){
     window.location.href = "/"
 }
 
-let home =  document.querySelector(".navigation_name")
+const home =  document.querySelector(".navigation_name")
 home.addEventListener("click",goHome)

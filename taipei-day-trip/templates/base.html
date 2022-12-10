@@ -4,7 +4,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta charset="utf-8"/>
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/reset.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/base.css"/>
+    
+    
     {% block cssLink %}{% endblock %}
   </head>
   <body>
@@ -21,17 +24,19 @@
         </div>
     </nav>
     <div class="background hide"></div>
+
     <div class="member_container">
         <div class="login hide">
             <div class="register_wrapper">
-                <div class="cancel">
-                    <button class="cancel_button">
-                        <img src="/static/pic/cancel_icon.png">
-                    </button>
-                </div>
 
-                <form class="login_form form" >
-                    <div class="form_title">登入會員帳號</div>
+                <div class="login_form form" >
+
+                    <div class="form_head">
+                        <span class="form_title">登入會員帳號</span>
+                        <button class="cancel_button">
+                            <img src="/static/pic/cancel_icon.png">
+                        </button>
+                    </div>
 
                     <div class="form_input">
                         <input id="email" type="text" name="email" placeholder="輸入電子信箱">
@@ -41,33 +46,28 @@
                         <input id="password" type="password" name="password" placeholder="輸入密碼">
                     </div>
 
-                    <div class="form_input">
-                        <input id="enter" type="button" value="登入帳戶">
+                    <button id="enter" type="button" >登入帳戶</button>
+
+                    <div class="logIn_result"></div>
+
+                    <div class="want_register">
+                        <span>還沒有帳戶？</span>
+                        <button class="register_button">點此註冊</button>
                     </div>
-                </form>
-
-                <div class="logIn_result"></div>
-
-                <div class="want_register">
-                    <span>還沒有帳戶？</span>
-                    <button class="register_button">點此註冊</button>
                 </div>
-
             </div>
         </div>
 
-
-
         <div class="register hide">
             <div class="register_wrapper">
-                <div class="cancel">
-                    <button class="cancel_button">
-                        <img src="/static/pic/cancel_icon.png">
-                    </button>
-                </div>
+                <div class="register_form form"  method="POST">
 
-                <form class="register_form form"  method="POST">
-                    <div class="form_title">註冊會員帳號</div>
+                    <div class="form_head">
+                        <span class="form_title">註冊會員帳號</span>
+                        <button class="cancel_button">
+                            <img src="/static/pic/cancel_icon.png">
+                        </button>
+                    </div>
 
                     <div class="form_input">
                         <input id="newName"
@@ -79,7 +79,7 @@
 
                     <div class="form_input">
                         <input id="newEmail"
-                            type="text"
+                            type="email"
                             name="email"
                             maxlength="30"
                             placeholder="輸入電子信箱">
@@ -93,23 +93,23 @@
                         placeholder="輸入密碼">
                     </div>
 
-                    <div class="form_input">
-                        <input id="build" type="button" value="註冊新帳戶">
+                    <button id="build" type="button" >註冊新帳戶</button>
+
+                    <div class="register_result"></div>
+
+                    <div class="want_logIn">
+                        <span>已經有帳戶了?</span>
+                        <button class="logIn_button" >點此登入</button>
                     </div>
-                </form>
-
-                <div class="register_result"></div>
-
-                <div class="want_logIn">
-                    <span>已經有帳戶了?</span>
-                    <button class="logIn_button" >點此登入</button>
                 </div>
-                
-    
             </div>
         </div>
     </div>
 
+
+    <div class="member_booking">
+
+    </div>
     {% block article %}
     {% endblock %}
 

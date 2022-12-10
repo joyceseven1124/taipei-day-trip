@@ -9,16 +9,54 @@ def search_data():
     data_keyword = request.args.get("keyword",None)
     data_page = request.args.get("page",0)
     result = attractionData.search_keyword(data_keyword,data_page)
-    return jsonify(result)
+    if type(result) == tuple:
+        data_result = {
+            "nextPage":result[0],
+            "data": result[1]
+            }
+
+        return jsonify(data_result),200
+
+    else:
+        data_result ={
+            "error": True,
+            "message": result
+            }
+        return jsonify(data_result),500
 
 
 @attraction_api_blueprint.route("/api/attraction/<attractionId>",methods=["GET"])
 def search_id(attractionId):
     result = attractionData.search_id(attractionId)
-    return jsonify(result)
+    if type(result) != str:
+        data_result = {"data": result}
+        return jsonify(data_result),200
+
+    elif result == "伺服器內部錯誤":
+        data_result ={
+            "error": True,
+            "message": result
+            }
+        return jsonify(data_result),500
+
+    else:
+        data_result ={
+            "error": True,
+            "message": result
+            }
+        return jsonify(data_result),400
 
 
 @attraction_api_blueprint.route("/api/categories",methods=["GET"])
 def search_categories():
     result = attractionData.search_categories()
-    return jsonify(result)
+    if type(result) != str:
+        data_result = {"data":result}
+        return jsonify(data_result),200
+    
+    else:
+        data_result ={
+            "error": True,
+            "message": "Please input /api/categories"
+        }
+        return jsonify(data_result),500

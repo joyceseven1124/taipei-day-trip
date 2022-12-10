@@ -31,28 +31,6 @@ connection_pool = pooling.MySQLConnectionPool(pool_name = "attraction_pool",
     **dbconfig
     )
 
-count =12
-
-def catalog_id(text):
-    int(text)
-    if text == 1:
-        return "親子共遊"
-    elif text == 2:
-        return "養生溫泉"
-    elif text == 3:
-        return "宗教信仰"
-    elif text == 4:
-        return "單車遊蹤"
-    elif text == 5:
-        return "歷史建築"
-    elif text == 6:
-        return "藍色公路"
-    elif text == 7:
-        return "戶外踏青"
-    elif text == 8:
-        return "藝文館所"
-    else:
-        return "其他"
 
 def clean_data(myresult):
     imgs = []
@@ -68,7 +46,7 @@ def clean_data(myresult):
             data = {
                 "id" :  myresult[i][0] ,
                 "name" : myresult[i][1],
-                "category" : catalog_id(myresult[i][8]),
+                "category" : myresult[i][8],
                 "description" : myresult[i][2],
                 "address": myresult[i][3],
                 "transport" :  myresult[i][4],
@@ -78,173 +56,135 @@ def clean_data(myresult):
                 "images": imgs
                 }
             alldata.append(data)
-            
             imgs = []
-        
     return alldata
 
-    
+
 def search_keyword(keyword,page):
     try:
         connection_object = connection_pool.get_connection()
         cursor = connection_object.cursor()
-        keyword_catalogs = ['親子共遊','養生溫泉','宗教信仰','單車遊蹤','歷史建築','藍色公路','戶外踏青','藝文館所','其他']
-        if keyword in keyword_catalogs:
-            page = int(page)
-            data_start = page*12
-            
-            catalog_search = '''
+
+        count =12
+        page = int(page)
+        data_start = page*count
+        next_page_star = (page+1)*count
+
+        if keyword != None and keyword != "":
+            keyword_search = '''
             SELECT
                 imags.attractions_id,name,description, address,direction,
-                MRT,latitude,longitude, catalog_id, imags.file
+                MRT,latitude,longitude, catalog_name, imags.file
+            FROM (
+                SELECT
+                    attractions.name,attractions.description, attractions.address, attractions.direction,
+                    attractions.MRT,attractions.latitude,attractions.longitude, catalog.catalog_name,attractions.id
+                FROM (
+                    attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id
+                )where
+                     (catalog.catalog_name=%s
+                     OR attractions.name LIKE %s) 
+                LIMIT %s,%s )
+            AS data INNER JOIN imags ON imags.attractions_id = data.id
+            '''
+
+            catalogs = search_categories()
+            if keyword in catalogs:
+                keyword_search_value = (keyword,'%'+keyword+ '%',data_start,count)
+            else:
+                keyword_search_value = (keyword,'%'+keyword+ '%',data_start,count)
+            cursor.execute( keyword_search,keyword_search_value)
+            myresult = cursor.fetchall()
+
+            #檢查是否有下一頁
+            next_page_value = (keyword,'%'+keyword+ '%',next_page_star,1)
+            cursor.execute(keyword_search,next_page_value)
+            next_result = cursor.fetchall()
+
+        else:
+            pages_search = '''
+            SELECT
+                imags.attractions_id,name,description, address,direction,
+                MRT,latitude,longitude, catalog_name, imags.file
             FROM (
                 SELECT
                     attractions.name,attractions.description, attractions.address, attractions.direction,attractions.MRT,
-                    attractions.latitude,attractions.longitude, attractions.catalog_id,attractions.id
-
+                    attractions.latitude,attractions.longitude, catalog.catalog_name,attractions.id
                 FROM (
                     attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id
-                )where catalog.catalog_name=%s  limit %s,%s )
-            AS data inner join imags ON imags.attractions_id = data.id'''
-            catalog_value = (keyword,data_start,count)
-            cursor.execute(catalog_search,catalog_value)
-            myresult = cursor.fetchall()
-
-
-            next_page_star = (page+1)*12
-            next_page_search = '''
-            SELECT * FROM attractions
-            INNER JOIN catalog ON attractions.catalog_id = catalog.id
-            WHERE catalog.catalog_name =%s  LIMIT %s,%s'''
-            next_page_value = (keyword,next_page_star,1)
-            cursor.execute(next_page_search,next_page_value)
-            next_result = cursor.fetchall()
-            if len(next_result) != 0:
-                next_page = page+1
-            else:
-                next_page = None
-            result = clean_data(myresult)
-            
-            data_result = {
-                            "nextPage":next_page,
-                            "data": result
-                           }
-        
-        elif keyword == None :
-            page = int(page)    
-            data_start = page*12
-            pages_search = '''
-            SELECT 
-                imags.attractions_id, name,description, address,
-                direction, MRT,latitude,longitude, catalog_id,imags.file 
-            FROM (
-                SELECT * FROM attractions  LIMIT %s,%s )as DATA 
-            INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
-
-
+                )
+                ORDER BY attractions.id
+                LIMIT %s,%s
+                )
+            AS data INNER JOIN imags ON imags.attractions_id = data.id
+            '''
             pages_search_value = (data_start,count)
             cursor.execute(pages_search,pages_search_value)
             myresult = cursor.fetchall()
-            
-            
-            next_page_star = (page+1)*12
-            next_page_search = '''SELECT * FROM attractions  LIMIT %s,%s'''
+
+            #檢查是否有下一頁
             next_page_value = (next_page_star,1)
-            cursor.execute(next_page_search,next_page_value)
+            cursor.execute(pages_search,next_page_value)
             next_result = cursor.fetchall()
-            if len(next_result) != 0:
-                next_page = page+1
-            else:
-                next_page = None
-                
-            result = clean_data(myresult)
-            
-            data_result = {
-                            "nextPage":next_page,
-                            "data": result
-                           }
+
+        #整理要回傳的資訊
+        if len(next_result) != 0:
+            next_page = page+1
         else:
-            page = int(page)    
-            data_start = page*12
-            keyword_search = '''
-            SELECT 
-                imags.attractions_id, name,description, address,
-                direction, MRT,latitude,longitude, catalog_id,imags.file 
-            FROM ( SELECT * FROM attractions WHERE name lIKE %s   LIMIT %s,%s )as DATA 
-            INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
-            keyword_search_value = ('%'+keyword+ '%',data_start,count)
-            cursor.execute(keyword_search,keyword_search_value)
-            myresult = cursor.fetchall()
-            
-            next_page_star = (page+1)*12
-            next_page_search = '''SELECT * FROM attractions WHERE name lIKE %s  LIMIT %s,%s'''
-            next_page_value = ('%'+keyword+ '%',next_page_star,1)
-            cursor.execute(next_page_search,next_page_value)
-            next_result = cursor.fetchall()
-            if len(next_result) != 0:
-                next_page = page+1
-            else:
-                next_page = None
-                
-            result = clean_data(myresult)
-            
-            data_result = {
-                            "nextPage":next_page,
-                            "data": result
-                           }
+            next_page = None
+        result = clean_data(myresult)
+        
+        data_result = (next_page,result)
+
 
     except ValueError:
-          data_result ={
-            "error": True,
-            "message": "Please use a positive integere "
-            }
+        data_result ="Please use a positive integer"
 
-        
+    except:
+        data_result ="Please try again"
+
     finally:
-            cursor.close()
-            connection_object.close()
-            return data_result
-        
-           
+        cursor.close()
+        connection_object.close()
+        return data_result
+
 def search_id(id):
     try:
         connection_object = connection_pool.get_connection()
         cursor = connection_object.cursor()
         id_search = '''
-        SELECT 
-            imags.attractions_id, name,description, address,
-            direction, MRT,latitude,longitude, catalog_id,imags.file 
-        FROM ( SELECT * FROM attractions WHERE id =%s )as DATA 
-        INNER JOIN imags ON DATA.id  = imags.attractions_id;'''
+            SELECT
+                imags.attractions_id,name,description, address,direction,
+                MRT,latitude,longitude, catalog_name, imags.file
+            FROM (
+                SELECT
+                    attractions.name,attractions.description, attractions.address, attractions.direction,attractions.MRT,
+                    attractions.latitude,attractions.longitude, catalog.catalog_name,attractions.id
+                FROM (
+                    attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id
+                )WHERE  attractions.id =  %s )
+            AS data INNER JOIN imags ON imags.attractions_id = data.id'''
         id_search_value = (id,)
         cursor.execute(id_search,id_search_value)
         myresult = cursor.fetchall()
         result = clean_data(myresult)
-        
+
         if len(myresult) != 0:
-            data_result = {"data": result}
-        
+            data_result = result
+
         else:
             raise IndexError()
 
     except IndexError :
-        data_result ={
-            "error": True,
-            "message": 'Number out of range'
-            }
-        
+        data_result ="Number out of range"
+
     except ValueError:
-          data_result ={
-            "error": True,
-            "message": "Please use a positive integere "
-            }
+        data_result ="Please use a positive integer "
+
     except:
-          data_result ={
-            "error": True,
-            "message": "Please try again"
-            }
-    
-         
+        data_result ="伺服器內部錯誤"
+
+
     finally:
         cursor.close()
         connection_object.close()
@@ -262,18 +202,14 @@ def search_categories():
         catalog_name_all = []
         for i in categories_result:
             catalog_per =  i
-            catalog_name = catalog_per[1]         
+            catalog_name = catalog_per[1]
             catalog_name_all.append(catalog_name)
-        data_result = {"data":catalog_name_all}                      
+        data_result = catalog_name_all
     except:
-        data_result ={
-            "error": True,
-            "message": "Please input /api/categories"
-        }
+        data_result ="Please input /api/categories"
     finally:
         cursor.close()
         connection_object.close()
 
         return data_result
-        
 
