@@ -56,6 +56,11 @@ button{
     }
 }
 
+input{
+    border: 0px;
+    outline: none;
+}
+
 html,body{
     @include font(16px,$font_color,700);
     @include box-size(100%,auto);
@@ -259,11 +264,11 @@ html,body{
 
 @media(max-width:560px){
     .nav_container{
-        @include center(100%,320px,flex,center)
+        @include center(100%,auto,flex,center)
     }
 
     .nav_background{
-        @include center(100%,320px,flex,center)
+        @include center(100%,auto,flex,center)
     }
 
     .navigation{

@@ -132,12 +132,17 @@
 .attractions_container{
     border: 1px solid #e8e8e8;
     border-radius: 5px 5px 5px 5px;
+    transition: .5s;
+}
+
+.attractions_container:hover{
+    cursor: pointer;
+    transform: scale(1.2);
 }
 
 .attractions_container_img{
     width: 100%;
     height: 197px;
-    background-color: blue;
     object-fit: cover;
     margin-bottom: 0px;
     border-radius: 5px 5px 0px 0px;
