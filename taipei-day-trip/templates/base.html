@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta charset="utf-8"/>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/reset.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/base.css"/>
     
     
@@ -16,7 +15,7 @@
             <div class="navigation">
                 <button class="navigation_name">台北一日遊</button>
                 <div class="navigation_button">
-                    <button class="navigation_button_schedule">預定行程</button>
+                    <button id="nav_schedule" class="navigation_button_schedule">預定行程</button>
                     <button class="navigation_button_sign">登入/註冊</button>
                     <button class="navigation_button_sign_out hide">登出系統</button>
                 </div>
@@ -27,7 +26,7 @@
 
     <div class="member_container">
         <div class="login hide">
-            <div class="register_wrapper">
+            <div class="card_pop_wrapper">
 
                 <div class="login_form form" >
 
@@ -39,16 +38,16 @@
                     </div>
 
                     <div class="form_input">
-                        <input id="email" type="text" name="email" placeholder="輸入電子信箱">
+                        <input id="email" type="text" name="email" maxlength="30" placeholder="輸入電子信箱">
                     </div>
 
                     <div class="form_input">
-                        <input id="password" type="password" name="password" placeholder="輸入密碼">
+                        <input id="password" type="password" name="password" maxlength="15" placeholder="輸入密碼">
                     </div>
 
                     <button id="enter" type="button" >登入帳戶</button>
 
-                    <div class="logIn_result"></div>
+                    <div class="logIn_result hide"></div>
 
                     <div class="want_register">
                         <span>還沒有帳戶？</span>
@@ -59,8 +58,8 @@
         </div>
 
         <div class="register hide">
-            <div class="register_wrapper">
-                <div class="register_form form"  method="POST">
+            <div class="card_pop_wrapper">
+                <div class="register_form form">
 
                     <div class="form_head">
                         <span class="form_title">註冊會員帳號</span>
@@ -95,21 +94,35 @@
 
                     <button id="build" type="button" >註冊新帳戶</button>
 
-                    <div class="register_result"></div>
+                    <div class="register_result hide"></div>
 
-                    <div class="want_logIn">
+                    <div class="want_logIn ">
                         <span>已經有帳戶了?</span>
                         <button class="logIn_button" >點此登入</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="message hide">
+            <div class="card_pop_wrapper">
+                <div class="form">
+                    <div class="form_head">
+                        <button class="cancel_button">
+                            <img src="/static/pic/cancel_icon.png">
+                        </button>
+                        <span>系統通知</span>
+                    </div>
+                    <div class="form_message_print"></div>
+                </div>
+            </div>
+        </div>
     </div>
+    
 
 
-    <div class="member_booking">
+   
 
-    </div>
     {% block article %}
     {% endblock %}
 

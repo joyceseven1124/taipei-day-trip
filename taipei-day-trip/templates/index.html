@@ -1,24 +1,24 @@
 {% extends "base.html" %}
-        {% block title %}台北一日遊{% endblock %}
-        {% block cssLink %}<link rel="stylesheet" type="text/css" href="./static/css/index.css"/>{% endblock %}
+{% block title %}台北一日遊{% endblock %}
+{% block cssLink %}<link rel="stylesheet" type="text/css" href="./static/css/index.css"/>{% endblock %}
 
-        {% block article %}
-        <header class="home">
-            <div class="home_word">
-                <div class="home_word_title">輕鬆享受台北一日悠閒</div>
-                <div class="home_word_subtitle">探索每個角落，體驗城市的深度旅遊行程</div>
-                <div class="home_word_search">
-                    <input class="home_word_search_input" type="text" placeholder="輸入景點名稱查詢">
-                    <div class="home_word_search_hint"></div>
-                    <ul id="menu" class="home_word_search_select hide" ></ul>
-                    <button class="home_word_search_icon"><img class="button_icon" src="./static/pic/search_icon.png"></button>
-                </div>
-            </div>
-            <img class="home_img"src="./static/pic/home_cover.png">
-        </header>
+{% block article %}
+<header class="home">
+    <div class="home_word">
+        <div class="home_word_title">輕鬆享受台北一日悠閒</div>
+        <div class="home_word_subtitle">探索每個角落，體驗城市的深度旅遊行程</div>
+        <div class="home_word_search">
+            <input class="home_word_search_input" type="text" placeholder="輸入景點名稱查詢">
+            <div class="home_word_search_hint"></div>
+            <ul id="menu" class="home_word_search_select hide" ></ul>
+            <button class="home_word_search_icon"><img class="button_icon" src="./static/pic/search_icon.png"></button>
+        </div>
+    </div>
+    <img class="home_img"src="./static/pic/home_cover.png">
+</header>
 
-        <article class="attractions"></article>
-        <div class="attractions_no_result"></div>
-        {% endblock %}
+<article class="attractions"></article>
+<div class="attractions_no_result"></div>
+{% endblock %}
 
-        {% block js %}<script src="./static/js/index.js"></script>{% endblock %}
+{% block js %}<script src="./static/js/index.js"></script>{% endblock %}

@@ -129,6 +129,7 @@
     box-sizing: border-box;
 }
 
+
 .attraction_information_booking_select > div{
     margin-bottom: 15px;
 }
@@ -159,11 +160,18 @@
     font-weight: 400;
     color: white;
     margin-top: 25px;
-    cursor: pointer;
     border: 0px;
 }
 
+.attraction_information_booking_select_button:hover{
+    color: white;
+    background-color: #356b78;
+}
 
+.dividing_line{
+    position: absolute;
+    top: -50px;
+}
 
 input[type="date"]{
     height: 35px;
@@ -213,14 +221,9 @@ input[type="radio"]:checked::after {
     position: absolute;
 }
 
-
-
-.dividing_line{
-    width: 1200px;
-    height: 1px;
-    background-color: #e8e8e8;
-    position: absolute;
-    top: -50px;
+input[type="radio"]:checked:focus{
+    border: 0px;
+    outline: none;
 }
 
 #description{
@@ -277,9 +280,7 @@ input[type="radio"]:checked::after {
         margin-top: 100px;
     }
 
-    .dividing_line{
-        width: 100%;
-    }
+
 }
 
 
@@ -313,11 +314,6 @@ input[type="radio"]:checked::after {
         width: 100%;
         margin-top: 100px;
     }
-
-    .dividing_line{
-        width: 100%;
-    }
-
     .attractions_introduction{
         margin-top: 500px;
     }

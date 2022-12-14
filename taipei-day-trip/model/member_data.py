@@ -5,46 +5,38 @@ from mysql.connector import pooling
 from flask_bcrypt import Bcrypt
 import jwt
 import time
+import model.base_data as base
+import re
 
-import os
-from dotenv import load_dotenv
-load_dotenv()
-host = os.getenv("mysqlhost")
-port = os.getenv("mysqlport")
-database = os.getenv("mysqldatabase")
-user = os.getenv("mysqluser")
-password = os.getenv("mysqlpassword")
-token_key = os.getenv("token_key")
-
-dbconfig = {
-"host":host,
-"port":port,
-"database":database,
-"user":user,
-"password":password}
 
 connection_pool = pooling.MySQLConnectionPool(pool_name = "member_pool",
     pool_size = 3,
     pool_reset_session = True,
-    **dbconfig
+    **base.dbconfig
     )
 
 bcrypt = Bcrypt()
 
-
 def add_member(data):
     try:
+        nameRule_result = re.match(base.nameRule, data["name"])
+        emailRule_result = re.match(base.emailRule, data["email"])
+        passwordRule_result = re.match(base.passwordRule, data["password"])
+        if nameRule_result == None or emailRule_result == None or passwordRule_result == None:
+            result = "Account or password setting error"
+            return result
+
         connection_object = connection_pool.get_connection()
         cursor = connection_object.cursor()
-
+    
         password = data["password"]
         hashed_password = bcrypt.generate_password_hash(password=password)
-
+   
         check_sql = '''SELECT email FROM member WHERE email = %s'''
         check_value = (data["email"],)
         cursor.execute(check_sql,check_value)
         check_result = cursor.fetchone()
-
+        
         if check_result == None:
             add_sql = '''
                     INSERT INTO member(username,email,password)
@@ -95,7 +87,7 @@ def enter_account(data):
 
 
 def make_token(data):
-    key = token_key
+    key = base.token_key
     now = time.time()
     expiretime = 7*24*60*60
 
@@ -113,7 +105,7 @@ def check_token(token_value):
     if token == None:
         return "no token"
     try:
-        key = token_key
+        key = base.token_key
         result = jwt.decode(token, key, algorithms=['HS256'])
         data = [result["id"],result["name"],result["email"]]
         return data
@@ -122,4 +114,28 @@ def check_token(token_value):
     except:
         return "Unexpected Error"
 
+
+def check_member(member):
+    try:
+        connection_object = connection_pool.get_connection()
+        cursor = connection_object.cursor()
+
+        check_sql = '''SELECT * FROM member WHERE email = %s'''
+        check_value = (member[2],)
+        cursor.execute(check_sql,check_value)
+        check_result = cursor.fetchone()
+
+        if check_result != None :
+            if(member[0] == check_result[0] and member[1] == check_result[1]):
+                result = "correct"
+        
+        else:
+            result = "查無會員資料"
+    except:
+        result = "伺服器內部錯誤"
+
+    finally:
+        cursor.close()
+        connection_object.close()
+        return result
 

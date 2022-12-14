@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}台北一日遊訂購處{% endblock %}
+{% block cssLink %}<link rel="stylesheet" type="text/css" href="./static/css/booking.css"/>{% endblock %}
+
+{% block article %}
+<div class="booking_title">
+    <div>您好，<span id="username"></span>，待預訂的行程如下：</div>
+</div>
+<article class="booking_content">
+    
+    <div class="booking_content_reserve"></div>
+    <section class="member_booking_wrapper hide">
+        <div class="member_booking_form">
+            <div class="dividing_line"></div>
+            <div class="member_basic_information questionnaire">
+                <div class="basic_form_title">您的聯絡資訊</div>
+                <label>聯絡姓名： 
+                    <input  class="contact_name" 
+                            maxlength="30" 
+                            type="text">
+                </label>
+
+                <label>聯絡信箱： 
+                    <input  class="contact_email" 
+                            maxlength="30" 
+                            type="email">
+                </label>
+
+                <label>手機號碼： 
+                    <input  class="contact_phone" 
+                            maxlength="10" 
+                            type="tel">
+                </label>
+
+                <div>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+            </div>
+
+            <div class="dividing_line"></div>
+
+            <div class="credit_basic_information questionnaire">
+                <div class="basic_form_title">信用卡付款資訊</div>
+                <label>卡片號碼： 
+                    <input  class="credit_number" 
+                            maxlength="16" 
+                            type="text" 
+                            placeholder="**** **** **** ****">
+                </label>
+
+                <label>過期時間： 
+                    <input class="credit_time" 
+                           type="text"
+                           maxlength="5"
+                           placeholder="MM/YY">
+                </label>
+
+                <label>驗證密碼： 
+                    <input  class="credit_password" 
+                            maxlength="3" 
+                            type="password" 
+                            placeholder="CVV">
+                </label>
+            </div>
+
+            <div class="dividing_line"></div>
+
+            <div class="deal_result">
+                <div class="confirm_deal_price">
+                    <span>總價：</span>
+                    <span class="confirm_deal_price_total"></span>
+                </div>
+                <button  class="confirm_deal_button" value="確認訂購並付款">確認訂購並付款</button>
+            </div>
+        </div>
+    </section>
+</article>
+{% endblock %}
+
+{% block js %}<script src="./static/js/booking.js"></script>{% endblock %}

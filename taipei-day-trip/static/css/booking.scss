@@ -1,0 +1,242 @@
+$main_color : #448899;
+$font_color : #666666;
+$side_color : #E8E8E8;
+
+@mixin center($width,$height,$display){
+    width: $width;
+    height: $height;
+    display: $display;
+    justify-content: center;
+}
+
+@mixin font($size,$color,$weight){
+    font-size: $size;
+    color : $color;
+    font-weight: $weight;
+    font-family: 'Noto Sans TC';
+}
+
+.booking_title{
+    @include font(16px,$font_color,700);
+    margin-top: 46px;
+    @include center(100%,27px,flex);
+    div{
+      width: 980px;
+      text-align: left;
+    }
+}
+
+.booking_information_wrapper{
+    @include center(100%,auto,flex);
+    margin-top: 35px;
+    .booking_information_article{
+        @include font(16px,$font_color,500);
+        @include center(980px,auto,grid);
+        grid-template-columns: 260px 720px;
+        .booking_information_pic{
+            width: 266px;
+            height: 200px;
+            object-fit: cover;
+        }
+        .booking_information_word{
+            position: relative;
+            padding-left: 22px;
+            .booking_information_word_title{
+                @include font(16px,$main_color,700);
+                margin-bottom: 20px;
+            }
+            .delete_icon{
+                position: absolute;
+                top:0px;
+                right:0px;
+                width: 30px;
+                height: 30px;
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+            .check_to_deal{
+                position: absolute;
+                right:30px;
+                width: 30px;
+                height: 30px;
+                margin-right: 20px;
+                border-radius: 5px;
+            }
+            div{
+                margin-bottom: 10px;
+                @include font(16px,$font_color,700);
+                .attraction_item{
+                    @include font(16px,$font_color,500);
+                }
+            }
+        }
+    }
+}
+
+
+
+input[type="checkbox"]:checked::after {
+    content: 'v';
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-size: 25px;
+    background-color: #448899;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    border: 0px;
+    border-radius: 5px;
+}
+
+input[type="checkbox"]:focus{
+    outline: none
+}
+
+input[type="checkbox"]:hover{
+    cursor: pointer;
+}
+
+input[type="checkbox"]{
+    border-radius: 5px;
+    border: 1px $side_color solid;
+}
+
+
+.member_booking_wrapper{
+    @include center(100%,auto,flex);
+    @include font(16px,$font_color,700);
+    .questionnaire{
+        @include center(100%,auto,grid);
+        .basic_form_title{
+            width: 980px;
+            @include font(16px,$font_color,700);
+            margin-bottom: 24px;
+        }
+        label{
+            display: block;
+            width: 980px;
+            margin-bottom: 15px;
+            @include font(16px,$font_color,500);
+            input{
+                width: 200px;
+                height: 38px;
+            }
+        }
+    }
+    .deal_result{
+        width: 980px;
+        text-align: right;
+        .confirm_deal_button{
+            margin-top: 25px;
+            width: 173px;
+            height: 36px;
+            background-color: $main_color;
+            opacity: 30%;
+            color: white;
+        }
+    }
+
+}
+
+.member_booking_wrapper.hide{
+    display: none;
+}
+
+.dividing_line{
+    margin: 40px auto;
+}
+
+@media(max-width:1200px){
+
+    .booking_title{
+        div{
+          width: 90%;
+        }
+    }
+    .booking_content{
+        .booking_information_article{
+            width: 90%;
+            justify-content: center;
+            grid-template-columns: 50% 50%;
+            .booking_information_pic{
+                width: 100%;
+                height: 256px;
+            }
+
+        }
+        .member_booking_form{
+            width: 90%;
+            .questionnaire{
+                display: block;
+                width: 100%;
+                .basic_form_title{
+                    width: 100%;
+                }
+                label{
+                    width: 100%;
+                } 
+            }
+            .deal_result{
+                width: 90%;
+            }
+        }
+    }
+    
+}
+
+
+@media(max-width:900px){
+
+    .booking_title{
+        div{
+          width: 90%;
+        }
+    }
+    .booking_content{
+        .booking_information_article{
+            width: 90%;
+            justify-content: center;
+            grid-template-columns: 100%;
+            row-gap: 0px;
+            .booking_information_pic{
+                width: 100%;
+                height: 256px;
+            }
+            .booking_information_word{
+                padding-top: 30px;
+                padding-left: 0px;
+                width: 100%;
+                .delete_icon{
+                    top:170px;
+                }
+                .check_to_deal{
+                    top:0px;
+                    right: 0px;
+                    margin-right: 0px;
+                    margin-top: 30px;
+                }
+            }
+
+        }
+        .member_booking_form{
+            width: 90%;
+            .questionnaire{
+                display: block;
+                width: 100%;
+                .basic_form_title{
+                    width: 100%;
+                }
+                label{
+                    width: 100%;
+                } 
+            }
+            .deal_result{
+                width: 90%;
+            }
+        }
+    }
+    
+}
+

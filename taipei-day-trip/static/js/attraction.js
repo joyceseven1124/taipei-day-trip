@@ -97,18 +97,46 @@ function slideTo(index){
     }
 }
 
-
-
+const date = document.querySelector("#date")
 const price = document.querySelector("#price")
 const morningTime = document.querySelector("#morning_time")
 const afternoonTime = document.querySelector("#afternoon_time")
+const booking_attractions = document.querySelector("#go_to_checkout_button")
+const cart_button = document.querySelector("#cart_button")
+
+async function saveBookingData(e){
+    if(date.value === ""){
+        messageCard.classList.remove("hide")
+        alertBackground.classList.remove("hide")
+        resultMessagePrint("請檢查填寫是否有遺漏","fail","messageCard")
+    }else{
+        let time = (price.textContent == "2000") ? "morning" : "afternoon"
+        const response = await fetch("/api/booking",{
+        method:"POST",
+        header:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            "attractionId": idNumber,
+            "date": date.value,
+            "time": time,
+            "price": price.textContent
+            })
+        })
+        const saveResult = await response.json()
+        if(saveResult.ok && e.target.id == "go_to_checkout_button"){
+            window.location.href = "/booking"
+        }else{
+            window.location.reload()
+        }
+    }
+
+}
+
+
 
 morningTime.addEventListener('change',(e)=>{
-    if(e.target.checked){
-        price.textContent="2000"
-    }else{
-        price.textContent="2500"
-    }
+    price.textContent = (morningTime.checked) ? "2000" : "2500"
 })
 
 afternoonTime.addEventListener("change",(e)=>{
@@ -117,10 +145,6 @@ afternoonTime.addEventListener("change",(e)=>{
     }
 })
 
+booking_attractions.addEventListener("click",loginBookingStateCheck)
 
-function goHome(){
-    window.location.href = "/"
-}
-
-const home =  document.querySelector(".navigation_name")
-home.addEventListener("click",goHome)
+cart_button.addEventListener("click",loginBookingStateCheck)
