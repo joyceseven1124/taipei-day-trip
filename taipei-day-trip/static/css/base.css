@@ -1,0 +1,288 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap");
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: white;
+  font-size: 19px;
+  color: #666666;
+  font-weight: 400;
+  font-family: "Noto Sans TC";
+}
+button:hover {
+  cursor: pointer;
+  color: #448899;
+}
+
+input {
+  border: 0px;
+  outline: none;
+}
+
+html, body {
+  font-size: 16px;
+  color: #666666;
+  font-weight: 700;
+  font-family: "Noto Sans TC";
+  width: 100%;
+  height: auto;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.nav_container {
+  width: 100%;
+  height: 54px;
+}
+.nav_container .nav_background {
+  width: 100%;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  background-color: white;
+  z-index: 20;
+}
+.nav_container .nav_background .navigation {
+  width: 1200px;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0px 15px 0px 15px;
+}
+.nav_container .nav_background .navigation .navigation_name {
+  font-size: 30px;
+  color: #448899;
+  font-weight: 700;
+  font-family: "Noto Sans TC";
+  line-height: 54px;
+  background-color: white;
+  cursor: pointer;
+}
+.nav_container .nav_background .navigation .navigation_button {
+  font-size: 16px;
+  color: #666666;
+  font-weight: 500;
+  font-family: "Noto Sans TC";
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+}
+.nav_container .nav_background .navigation .navigation_button .navigation_button_schedule {
+  margin-right: 20px;
+}
+.nav_container .nav_background .navigation .navigation_button .navigation_button_schedule:hover {
+  color: #448899;
+}
+.nav_container .nav_background .navigation .navigation_button .navigation_button_sign {
+  margin-right: 20px;
+}
+.nav_container .nav_background .navigation .navigation_button .navigation_button_sign:hover {
+  color: #448899;
+}
+.nav_container .nav_background .navigation .navigation_button .navigation_button_sign.hide {
+  display: none;
+}
+.nav_container .nav_background .navigation .navigation_button .navigation_button_sign_out {
+  margin-right: 20px;
+}
+.nav_container .nav_background .navigation .navigation_button .navigation_button_sign_out.hide {
+  display: none;
+}
+
+.member_container {
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 80px;
+  left: 0;
+}
+.member_container .login, .member_container .register {
+  width: 100%;
+  height: auto;
+  display: grid;
+  justify-content: center;
+  font-size: 16px;
+  color: #666666;
+  font-weight: 500;
+  font-family: "Noto Sans TC";
+  position: relative;
+  z-index: 35;
+}
+.member_container .login .register_wrapper, .member_container .register .register_wrapper {
+  width: 340px;
+  height: auto;
+  background-color: white;
+  border-radius: 5px;
+}
+.member_container .register.hide {
+  display: none;
+}
+.member_container .login.hide {
+  display: none;
+}
+
+.form {
+  width: 340px;
+  height: auto;
+  border-radius: 5px;
+  text-align: center;
+  background-color: white;
+  z-index: 35;
+  position: fixed;
+}
+.form::before {
+  content: "";
+  background: linear-gradient(to right, #66AABB 0%, #337788 100%);
+  width: 340px;
+  height: 10px;
+  position: absolute;
+  margin-left: -170px;
+  border-radius: 5px 5px 0px 0px;
+  z-index: 40;
+}
+.form .form_head {
+  padding-top: 25px;
+  margin-bottom: 15px;
+  height: auto;
+  font-size: 24px;
+  color: #666666;
+  font-weight: 700;
+  font-family: "Noto Sans TC";
+}
+.form .form_head .form_title {
+  text-align: center;
+}
+.form .form_head .cancel_button {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  top: 25px;
+}
+.form .form_head .cancel_button img {
+  width: 16px;
+  height: 16px;
+}
+.form .form_input input {
+  border-radius: 5px;
+  border: 1px solid #E8E8E8;
+  height: 47px;
+  width: 310px;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #666666;
+  font-weight: 500;
+  font-family: "Noto Sans TC";
+  background-color: white;
+  padding-left: 15px;
+  margin-bottom: 10px;
+}
+.form .form_input input:focus {
+  outline: 1px solid #448899;
+}
+.form #enter, .form #build {
+  width: 310px;
+  height: 47px;
+  background-color: #448899;
+  border-radius: 5px;
+  color: white;
+  margin-bottom: 15px;
+}
+.form .want_register, .form .want_logIn {
+  width: 100%;
+  text-align: center;
+  z-index: 35;
+  line-height: 16px;
+  margin-bottom: 15px;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 25%;
+  z-index: 30;
+  background-color: black;
+}
+
+.background.hide {
+  display: none;
+}
+
+.footer {
+  width: 100%;
+  height: 104px;
+  font-size: 16px;
+  color: white;
+  font-weight: 700;
+  font-family: "Noto Sans TC";
+  background-color: #757575;
+  text-align: center;
+  line-height: 104px;
+  margin-top: 55px;
+}
+
+@media (max-width: 1200px) {
+  .nav_container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+  }
+  .nav_background {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+  }
+  .navigation {
+    width: 90%;
+    padding: 0px;
+  }
+  .navigation_name {
+    margin-left: 20px;
+    margin-left: 0px;
+  }
+  .navigation_button_schedule {
+    margin-left: 0%;
+  }
+  .navigation_button_sign {
+    margin-right: 0px;
+  }
+}
+@media (max-width: 560px) {
+  .nav_container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+  }
+  .nav_background {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+  }
+  .navigation {
+    width: 90%;
+  }
+  .navigation_name {
+    margin-left: 0%;
+  }
+  .navigation_button_schedule {
+    margin-left: 0%;
+  }
+  .navigation_button_sign {
+    margin-right: 0px;
+  }
+}/*# sourceMappingURL=base.css.map */

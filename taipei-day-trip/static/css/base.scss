@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family\
+=Noto+Sans+TC:wght@500;700&display=swap');
+
+$main_color : #448899;
+$font_color : #666666;
+$font_color_light: #757575;
+$side_color : #E8E8E8;
+
+@mixin center($width,$height,$display,$way){
+    width: $width;
+    height: $height;
+    display: $display;
+    justify-content: $way;
+}
+
+@mixin font($size,$color,$weight){
+    font-size: $size;
+    color : $color;
+    font-weight: $weight;
+    font-family: 'Noto Sans TC';
+}
+
+@mixin input-style($width,$height){
+    border-radius: 5px;
+    border: 1px solid $side_color;
+    height: $height;
+    width: $width;
+    box-sizing: border-box;
+    &:focus{
+        outline:1px solid $main_color;
+    }
+}
+
+@mixin border-style($width){
+    width: $width;
+    height: 1px;
+    background-color: $side_color;
+    text-align: center
+}
+
+@mixin box-size($width,$height){
+    width: $width;
+    height: $height;
+}
+
+button{
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-color: white;
+    @include font(19px,$font_color,400);
+    &:hover{
+        cursor: pointer;
+        color: $main_color;
+    }
+}
+
+input{
+    border: 0px;
+    outline: none;
+}
+
+html,body{
+    @include font(16px,$font_color,700);
+    @include box-size(100%,auto);
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.nav_container{
+    @include box-size(100%,54px);
+    .nav_background{
+        @include center(100%,54px,flex,center);
+        position: fixed;
+        background-color: white;
+        z-index: 20;
+        .navigation{
+            @include center(1200px,auto,flex,space-between);
+            box-sizing: border-box;
+            padding:0px 15px 0px 15px;
+            .navigation_name{
+                @include font(30px,$main_color,700);
+                line-height: 54px;
+                background-color: white;
+                cursor: pointer;
+            }
+            .navigation_button{
+                @include font(16px,$font_color,500);
+                cursor: pointer;
+                align-items: center;
+                justify-content: space-between;
+                display: flex;
+                .navigation_button_schedule{
+                    margin-right: 20px;
+                    &:hover{
+                        color: $main_color;
+                    }
+                }
+                .navigation_button_sign{
+                    margin-right: 20px;
+                    &:hover{
+                        color: $main_color;
+                    }
+                }
+                .navigation_button_sign.hide{
+                    display: none;
+                }
+                .navigation_button_sign_out{
+                    margin-right: 20px;
+                }
+                .navigation_button_sign_out.hide{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.member_container{
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    top: 80px;
+    left: 0;
+    .login , .register{
+        @include center(100%,auto,grid,center);
+        @include font(16px,$font_color,500);
+        position: relative;
+        z-index: 35;
+
+        .register_wrapper{
+            @include  box-size(340px,auto);
+            background-color: white;
+            border-radius: 5px;
+        }
+    }
+    .register.hide{
+        display: none;
+    }
+    .login.hide{
+        display: none;
+    }
+}
+
+
+
+.form{
+    @include box-size(340px,auto);
+    border-radius: 5px;
+    text-align: center;
+    background-color: white;
+    z-index: 35;
+    position: fixed;
+    &::before{
+        content: "";
+        background: linear-gradient(to right, #66AABB 0%, #337788 100%);
+        @include box-size(340px,10px);
+        position: absolute;
+        margin-left: -170px;
+        border-radius: 5px 5px 0px 0px;
+        z-index: 40;
+    }
+    .form_head{
+        padding-top: 25px;
+        margin-bottom: 15px;
+        height: auto;
+        @include font(24px,$font_color , 700);
+        .form_title{
+            text-align: center;
+        }
+        .cancel_button{
+            @include center(35px,35px,flex,center);
+            align-items: center;
+            position: absolute;
+            right: 10px;
+            top:25px;
+            img{
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+    .form_input{
+        input{
+        @include input-style(310px,47px);
+        @include font(16px,$font_color,500);
+        background-color: white;
+        padding-left: 15px;
+        margin-bottom: 10px;
+        }
+    }
+
+    #enter,#build{
+        @include box-size(310px,47px);
+        background-color: #448899;
+        border-radius: 5px;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .want_register , .want_logIn{
+        width:100%;
+        text-align: center;
+        z-index: 35;
+        line-height: 16px;
+        margin-bottom: 15px;
+    }
+}
+
+.background{
+    @include box-size(100%,100% );
+    position: fixed;
+    top:0;
+    left:0;
+    opacity: 25%;
+    z-index: 30;
+    background-color: black;
+}
+
+.background.hide{
+    display: none;
+}
+
+
+
+.footer{
+    @include box-size(100%,104px);
+    @include font(16px,white,700);
+    background-color: #757575;
+    text-align: center;
+    line-height: 104px;
+    margin-top: 55px;
+}
+
+@media(max-width:1200px){
+    .nav_container{
+        @include center(100%,auto,flex,center)
+    }
+
+    .nav_background{
+        @include center(100%,auto,flex,center)
+    }
+
+    .navigation{
+        width: 90%;
+        padding: 0px;
+    }
+
+    .navigation_name{
+        margin-left:20px;
+        margin-left: 0px;
+    }
+
+    .navigation_button_schedule{
+        margin-left: 0%;
+    }
+
+    .navigation_button_sign{
+        margin-right: 0px;
+    }
+}
+
+@media(max-width:560px){
+    .nav_container{
+        @include center(100%,auto,flex,center)
+    }
+
+    .nav_background{
+        @include center(100%,auto,flex,center)
+    }
+
+    .navigation{
+        width: 90%;
+    }
+
+    .navigation_name{
+        margin-left:0%;
+    }
+
+    .navigation_button_schedule{
+        margin-left: 0%;
+    }
+
+    .navigation_button_sign{
+        margin-right: 0px;
+    }
+}

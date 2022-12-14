@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta charset="utf-8"/>
-        <title>Assignment</title>
-        <link rel="stylesheet" type="text/css" href="./static/index.css"/>
-    </head>
+{% extends "base.html" %}
+        {% block title %}台北一日遊{% endblock %}
+        {% block cssLink %}<link rel="stylesheet" type="text/css" href="./static/css/index.css"/>{% endblock %}
 
-    <body>
-    
-        <nav class="nav_container">
-            <div class="nav_background">
-                <div class="navigation">
-                    <button class="navigation_name">台北一日遊</button>
-                    <div class="navigation_button">
-                        <button class="navigation_button_schedule">預定行程</button>
-                        <button class="navigation_button_sign">登入/註冊</button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
+        {% block article %}
         <header class="home">
             <div class="home_word">
                 <div class="home_word_title">輕鬆享受台北一日悠閒</div>
@@ -28,18 +11,14 @@
                     <input class="home_word_search_input" type="text" placeholder="輸入景點名稱查詢">
                     <div class="home_word_search_hint"></div>
                     <ul id="menu" class="home_word_search_select hide" ></ul>
-                    <button class="home_word_search_icon"><img class="button_icon" src="./static/search_icon.png"></button>
+                    <button class="home_word_search_icon"><img class="button_icon" src="./static/pic/search_icon.png"></button>
                 </div>
             </div>
-            <img class="home_img"src="./static/HOME_COVER.png">
+            <img class="home_img"src="./static/pic/home_cover.png">
         </header>
 
         <article class="attractions"></article>
         <div class="attractions_no_result"></div>
+        {% endblock %}
 
-        <footer class="footer">COPYRIGHT © 2021 台北一日遊</footer>
-
-        <script src="./static/index.js"></script>
-
-    </body>
-</html>
+        {% block js %}<script src="./static/js/index.js"></script>{% endblock %}
