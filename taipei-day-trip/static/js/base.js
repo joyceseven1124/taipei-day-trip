@@ -3,7 +3,7 @@ const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-
 const passwordRule = /^[a-zA-Z\d\u4e00-\u9fa5]{3,}$/
 
 //document.addEventListener('load', checkIsState())
-document.addEventListener('DOMContentLoaded',checkIsState)
+window.addEventListener('DOMContentLoaded',checkIsState)
 
 const home =  document.querySelector(".navigation_name")
 home.addEventListener("click",goHome)
@@ -213,15 +213,18 @@ async function EnterReq(e){
 async function checkIsState(){
     const response = await fetch("/api/user/auth")
     const checkIsStateResult = await response.json()
+    whereIs = window.location.href
     if(checkIsStateResult.data !== null){
         memberState = true
         userName = checkIsStateResult.data.name
         signIn.classList.add("hide")
         signOut.classList.remove("hide")
-        const whoIs = document.querySelector("#username")
-        if(whoIs){
+        if(whereIs.includes("booking")){
+            const whoIs = document.querySelector("#username")
             whoIs.textContent = userName
         }
+    }else if(whereIs.includes("booking") && memberState !== true){
+        goHome()
     }
 }
 
@@ -234,8 +237,6 @@ function loginBookingStateCheck(e){
             return true
             //saveBookingData(e)
         }
-    }else if(whereIs.includes("booking") && memberState !== true){
-        goHome()
     }else{
         signInView()
     }

@@ -1,4 +1,4 @@
-window.addEventListener('load',loginBookingStateCheck)
+document.addEventListener('load',loginBookingStateCheck)
 window.addEventListener('load',bookingDataGet)
 
 const bookingDataPlace = document.querySelector(".booking_content_reserve")
@@ -6,8 +6,6 @@ const bookingDealPlace = document.querySelector(".member_booking_wrapper")
 const dealTotal = document.querySelector(".confirm_deal_price_total")
 
 let total = 0
-
-
 
 async function bookingDataGet(){
     const responseBooking = await fetch("/api/booking",{
