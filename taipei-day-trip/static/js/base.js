@@ -4,7 +4,6 @@ const passwordRule = /^[a-zA-Z\d\u4e00-\u9fa5]{3,}$/
 
 //document.addEventListener('load', checkIsState())
 document.addEventListener('DOMContentLoaded',checkIsState)
-//document.addEventListener('DOMContentLoaded',memberHave)
 
 const home =  document.querySelector(".navigation_name")
 home.addEventListener("click",goHome)
@@ -30,10 +29,8 @@ cancelButton.forEach(element => {
 })
 
 const buildAccount = document.querySelector("#build")
-//buildAccount.addEventListener("click",buildReq)
 
 const logInAccount = document.querySelector("#enter")
-//logInAccount.addEventListener("click",EnterReq)
 
 const alertBackground = document.querySelector(".background")
 const logIn = document.querySelector(".login")
@@ -44,15 +41,23 @@ const scroll = document.querySelector("body")
 
 const newName = document.querySelector("#newName")
 newName.addEventListener("keyup",checkRegular)
+newName.addEventListener("change",regularResultPrint)
+
 const newEmail = document.querySelector("#newEmail")
 newEmail.addEventListener("keyup",checkRegular)
+newEmail.addEventListener("change",regularResultPrint)
+
 const newPassword = document.querySelector("#newPassword")
 newPassword.addEventListener("keyup",checkRegular)
+newPassword.addEventListener("change",regularResultPrint)
 
 const email = document.querySelector("#email")
 email.addEventListener("keyup",checkRegular)
+email.addEventListener("change",regularResultPrint)
+
 const password = document.querySelector("#password")
 password.addEventListener("keyup",checkRegular)
+password.addEventListener("change",regularResultPrint)
 
 const registerResultMessage = document.querySelector(".register_result")
 const loginResultMessage = document.querySelector(".logIn_result")
@@ -77,6 +82,7 @@ function registerView(e){
 }
 
 function closeView(e){
+    cleanBuildInput()
     alertBackground.classList.add("hide")
     scroll.style.overflowY = "scroll"
     loginResultMessage.classList.add("hide")
@@ -137,58 +143,69 @@ function checkRegular(e){
     }
 }
 
-async function buildReq(e){
-    //const checkName = nameRule.test(newName.value)
-    //const checkEmail = emailRule.test(newEmail.value)
-    //const checkPassword = passwordRule.test(newPassword.value)
-    //if (checkPassword && checkName && checkEmail){
-        const response = await fetch("/api/user",{
-                method:"POST",
-                header:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    "name": newName.value,
-                    "email": newEmail.value,
-                    "password": newPassword.value
-                })
-            })
-        const buildResult = await response.json()
-        cleanBuildInput()
-        if(buildResult.error){
-            resultMessagePrint(buildResult.message,"fail",registerResultMessage)
-        }else{
-            resultMessagePrint("註冊成功","success",registerResultMessage)
+function regularResultPrint(e){
+    if(e.target.id.includes("Name")){
+        const checkName = nameRule.test(e.target.value)
+        if(!checkName && e.target.id.includes("new")){
+            resultMessagePrint("名稱不能含有特殊字元","fail",registerResultMessage)
         }
-    //}else{
-        //resultMessagePrint("請檢查資料是否有誤","fail",registerResultMessage)
-    //}
+    }else if(e.target.id.includes("mail")){
+        const checkEmail = emailRule.test(e.target.value)
+        if(!checkEmail && e.target.id.includes("new")){
+            resultMessagePrint("請檢查email格式","fail",registerResultMessage)
+        }else if(!checkEmail){
+            resultMessagePrint("請檢查email格式","fail",loginResultMessage)
+        }
+    }else{
+        const checkPassword = passwordRule.test(e.target.value)
+        if(!checkPassword && e.target.id.includes("new")){
+            resultMessagePrint("密碼不能含有特殊字元","fail",registerResultMessage)
+        }else if(!checkPassword){
+            resultMessagePrint("密碼不能含有特殊字元","fail",loginResultMessage)
+        }
+    }
+}
+
+async function buildReq(e){
+    const response = await fetch("/api/user",{
+            method:"POST",
+            header:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                "name": newName.value,
+                "email": newEmail.value,
+                "password": newPassword.value
+            })
+        })
+    const buildResult = await response.json()
+    cleanBuildInput()
+    if(buildResult.error){
+        resultMessagePrint(buildResult.message,"fail",registerResultMessage)
+    }else{
+        resultMessagePrint("註冊成功","success",registerResultMessage)
+    }
 }
 
 
 async function EnterReq(e){
-    //const checkEmail = emailRule.test(email.value)
-    //if(password !== "" && checkEmail && password){
-        const response = await fetch("/api/user/auth",{
-                method:"PUT",
-                header:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    "email": email.value,
-                    "password": password.value
-            })
+    const response = await fetch("/api/user/auth",{
+            method:"PUT",
+            header:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                "email": email.value,
+                "password": password.value
         })
+    })
 
-        const enterResult = await response.json()
-        if (enterResult.error){
-            resultMessagePrint(enterResult.message,"fail",loginResultMessage)
-        }else{
-             window.location.reload()
-        }
-    //}else{
-        //resultMessagePrint("請檢查是否正確輸入","fail",loginResultMessage)
-    //}
+    const enterResult = await response.json()
+    if (enterResult.error){
+        resultMessagePrint(enterResult.message,"fail",loginResultMessage)
+    }else{
+            window.location.reload()
+    }
 }
 
 async function checkIsState(){
@@ -206,6 +223,21 @@ async function checkIsState(){
     }
 }
 
+async function loginBookingStateCheck(e){
+    whereIs = window.location.href
+    if(memberState){
+        if(e.target.id == "nav_schedule" ){
+            window.location.href = "/booking"
+        }else{
+            saveBookingData(e)
+        }
+    }else if(whereIs.includes("booking") && memberState !== true){
+        goHome()
+    }else{
+        signInView()
+    }
+}
+
 async function signOutState(){
     const response = await fetch("/api/user/auth",{
         method:"DELETE"
@@ -220,19 +252,7 @@ async function signOutState(){
     }
 }
 
-async function loginBookingStateCheck(e){
-    const response = await fetch("/api/user/auth")
-    const checkIsStateResult = await response.json()
-    if(checkIsStateResult.data !== null){
-        if(e.target.id == "nav_schedule" ){
-            window.location.href = "/booking"
-        }else{
-            saveBookingData(e)
-        }
-    }else{
-        signInView()
-    }
-}
+
 
 
 

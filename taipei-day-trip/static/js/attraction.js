@@ -51,9 +51,6 @@ function getAttraction(id){
         })
 }
 
-
-
-
 let circleIndex=0;
 const previous = document.getElementsByClassName("previous")
 previous[0].onclick = function () {
@@ -132,8 +129,6 @@ async function saveBookingData(e){
     }
 
 }
-
-
 
 morningTime.addEventListener('change',(e)=>{
     price.textContent = (morningTime.checked) ? "2000" : "2500"

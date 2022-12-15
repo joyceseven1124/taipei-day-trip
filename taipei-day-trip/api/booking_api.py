@@ -3,7 +3,6 @@ import model.booking_data as bookingData
 import model.member_data as memberData
 import json
 
-
 booking_api_blueprint = Blueprint("booking_api_blueprint", __name__)
 
 @booking_api_blueprint.route("/api/booking",methods=["POST"])
