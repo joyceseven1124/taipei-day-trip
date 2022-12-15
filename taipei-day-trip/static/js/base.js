@@ -126,6 +126,7 @@ function checkRegular(e){
         if(checkPassword && checkName && checkEmail){
             buildAccount.addEventListener("click",buildReq)
             buildAccount.style.opacity = "100%"
+            registerResultMessage.textContent =" "
         }else{
             buildAccount.removeEventListener("click",buildReq)
             buildAccount.style.opacity = "30%"
@@ -136,6 +137,7 @@ function checkRegular(e){
         if(checkEmail && checkPassword){
             logInAccount.addEventListener("click",EnterReq)
             logInAccount.style.opacity = "100%"
+            loginResultMessage.textContent = ""
         }else{
             logInAccount.removeEventListener("click",EnterReq)
             logInAccount.style.opacity = "30%"
@@ -223,13 +225,14 @@ async function checkIsState(){
     }
 }
 
-async function loginBookingStateCheck(e){
+function loginBookingStateCheck(e){
     whereIs = window.location.href
     if(memberState){
         if(e.target.id == "nav_schedule" ){
             window.location.href = "/booking"
         }else{
-            saveBookingData(e)
+            return true
+            //saveBookingData(e)
         }
     }else if(whereIs.includes("booking") && memberState !== true){
         goHome()
@@ -237,6 +240,8 @@ async function loginBookingStateCheck(e){
         signInView()
     }
 }
+
+
 
 async function signOutState(){
     const response = await fetch("/api/user/auth",{

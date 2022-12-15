@@ -4,6 +4,8 @@ const dataNetArray = dataNet.split("/")
 const idNumber = parseInt(dataNetArray[4])
 let img_number = 0
 
+//window.addEventListener('load',loginBookingStateCheck)
+
 getAttraction(idNumber)
 
 function getAttraction(id){
@@ -101,33 +103,39 @@ const afternoonTime = document.querySelector("#afternoon_time")
 const booking_attractions = document.querySelector("#go_to_checkout_button")
 const cart_button = document.querySelector("#cart_button")
 
+
+
 async function saveBookingData(e){
-    if(date.value === ""){
-        messageCard.classList.remove("hide")
-        alertBackground.classList.remove("hide")
-        resultMessagePrint("請檢查填寫是否有遺漏","fail","messageCard")
+    let result = loginBookingStateCheck(e)
+    if(!result){
+        signInView()
     }else{
-        let time = (price.textContent == "2000") ? "morning" : "afternoon"
-        const response = await fetch("/api/booking",{
-        method:"POST",
-        header:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            "attractionId": idNumber,
-            "date": date.value,
-            "time": time,
-            "price": price.textContent
-            })
-        })
-        const saveResult = await response.json()
-        if(saveResult.ok && e.target.id == "go_to_checkout_button"){
-            window.location.href = "/booking"
+        if(date.value === ""){
+            messageCard.classList.remove("hide")
+            alertBackground.classList.remove("hide")
+            resultMessagePrint("請檢查填寫是否有遺漏","fail","messageCard")
         }else{
-            window.location.reload()
+            let time = (price.textContent == "2000") ? "morning" : "afternoon"
+            const response = await fetch("/api/booking",{
+            method:"POST",
+            header:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                "attractionId": idNumber,
+                "date": date.value,
+                "time": time,
+                "price": price.textContent
+                })
+            })
+            const saveResult = await response.json()
+            if(saveResult.ok && e.target.id == "go_to_checkout_button"){
+                window.location.href = "/booking"
+            }else{
+                window.location.reload()
+            }
         }
     }
-
 }
 
 morningTime.addEventListener('change',(e)=>{
@@ -140,6 +148,9 @@ afternoonTime.addEventListener("change",(e)=>{
     }
 })
 
-booking_attractions.addEventListener("click",loginBookingStateCheck)
 
-cart_button.addEventListener("click",loginBookingStateCheck)
+booking_attractions.addEventListener("click",saveBookingData)
+cart_button.addEventListener("click",saveBookingData)
+
+
+
