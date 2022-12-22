@@ -1,0 +1,79 @@
+.order{
+    font-size: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background-image:url( '/static/pic/thank.png' );
+    background-color: #448899;
+    background-repeat:no-repeat;
+    background-size: cover;
+    opacity: 80%;
+    .order-wrapper{
+        width: 1200px;
+        display: flex;
+        justify-content: center;
+        .order-content{
+            box-sizing: border-box;
+            width: 500px;
+            background-color: beige;
+            box-shadow: 10px 10px 10px 2px #2e2e2e;
+            margin: 50px 0px;
+            padding: 30px 20px;
+            border-radius: 20px;
+            border: 1px solid black;
+            z-index: 10;
+            .thank-title{
+                text-align: center;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #fffafa;
+            }
+            div{
+                margin-bottom: 10px;
+                #order-number,#order-status,.order-items,#order-from{
+                    font-weight: 500;
+                }
+                .order-items.next{
+                    margin-left: 90px;
+                }
+            }
+            .go-home-button{
+                margin-top: 30px;
+                text-align: center;
+                button{
+                    background-color:#448899 ;
+                    width: 100px;
+                    height: 40px;
+                    line-height: 40px;
+                    color:white;
+                }
+            }
+        }
+    }
+}
+
+.footer{
+    margin-top: 0px;
+}
+
+@media(max-width:1200px){
+    .order{
+        width: 100%;
+        .order-wrapper{
+            width: 100%;
+        }
+    }
+
+}
+
+@media(max-width:500px){
+    .order{
+        width: 100%;
+        .order-wrapper{
+            width: 100%;
+            .order-content{
+                width: 100%;
+            }
+        }
+    }
+
+}

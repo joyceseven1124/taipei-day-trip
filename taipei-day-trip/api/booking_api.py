@@ -61,7 +61,7 @@ def search_booking_data():
     member_Id = member_token_result[0]
     searchResult = bookingData.search_booking(member_Id)
 
-    if searchResult != str:
+    if type(searchResult) != str:
         response = {
             "data": searchResult
             }
@@ -69,7 +69,7 @@ def search_booking_data():
         return jsonify(response),200
     else:
         response = {
-            "error": true,
+            "error": True,
             "message": searchResult
             }
         return jsonify(response),500
@@ -78,9 +78,7 @@ def search_booking_data():
 @booking_api_blueprint.route("/api/booking",methods=["DELETE"])
 def delete_booking_data():
     member_re_value = request.cookies.get('token_value')
-    print(member_re_value)
     booking_value = json.loads(request.data)
-    print(booking_value)
     member_token_result = memberData.check_token(member_re_value)
     if type(member_token_result) != list:
         response ={

@@ -106,6 +106,7 @@ input[type=checkbox]:hover {
 input[type=checkbox] {
   border-radius: 5px;
   border: 1px #E8E8E8 solid;
+  box-shadow: 0 0 10px 1px #E8E8E8;
 }
 
 .member_booking_wrapper {
@@ -133,9 +134,10 @@ input[type=checkbox] {
   margin-bottom: 24px;
 }
 .member_booking_wrapper .questionnaire label {
-  display: block;
+  display: flex;
   width: 980px;
   margin-bottom: 15px;
+  line-height: 38px;
   font-size: 16px;
   color: #666666;
   font-weight: 500;
@@ -144,6 +146,11 @@ input[type=checkbox] {
 .member_booking_wrapper .questionnaire label input {
   width: 200px;
   height: 38px;
+  margin-right: 10px;
+}
+.member_booking_wrapper .questionnaire label span {
+  height: 38px;
+  line-height: 38px;
 }
 .member_booking_wrapper .deal_result {
   width: 980px;
@@ -164,6 +171,17 @@ input[type=checkbox] {
 
 .dividing_line {
   margin: 40px auto;
+}
+
+.tpfield {
+  display: inline-block;
+  width: 200px;
+  height: 38px;
+  margin: 5px 10px 5px 0px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #E8E8E8;
 }
 
 @media (max-width: 1200px) {

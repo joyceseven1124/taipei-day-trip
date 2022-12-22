@@ -84,6 +84,12 @@ html, body {
   justify-content: space-between;
   display: flex;
 }
+.nav_container .nav_background .navigation .navigation_button .navigation_button_record {
+  margin-right: 20px;
+}
+.nav_container .nav_background .navigation .navigation_button .navigation_button_record:hover {
+  color: #448899;
+}
 .nav_container .nav_background .navigation .navigation_button .navigation_button_schedule {
   margin-right: 20px;
 }
@@ -101,6 +107,9 @@ html, body {
 }
 .nav_container .nav_background .navigation .navigation_button .navigation_button_sign_out {
   margin-right: 20px;
+}
+.nav_container .nav_background .navigation .navigation_button .navigation_button_sign_out:hover {
+  color: #448899;
 }
 .nav_container .nav_background .navigation .navigation_button .navigation_button_sign_out.hide {
   display: none;

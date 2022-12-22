@@ -34,8 +34,7 @@ def build_account():
 def enter_account():
     member_data = json.loads(request.data)
     result = member.enter_account(member_data)
-
-    if type(result) == tuple :
+    if type(result) == dict :
         token = member.make_token(result)
         response = {"ok": True}
         res = make_response(jsonify(response))
@@ -66,8 +65,8 @@ def enter_account():
         return jsonify(response),500
 
 
-@member_api_blueprint.route("/api/user/auth",methods=["GET","DELETE"])
-def stillIn_account():
+@member_api_blueprint.route("/api/user/auth",methods=["GET"])
+def get_information_from_account():
     value = request.cookies.get('token_value')
     if request.method == "GET":
         result = member.check_token(value)
@@ -90,3 +89,12 @@ def stillIn_account():
             res = make_response(jsonify(response))
             res.set_cookie("token_value", value="",expires=0)
             return res,200
+
+
+@member_api_blueprint.route("/api/user/auth",methods=["DELETE"])
+def delete_account():
+    value = request.cookies.get('token_value')
+    response = {"ok": True}
+    res = make_response(jsonify(response))
+    res.set_cookie("token_value", value="",expires=0)
+    return res,200

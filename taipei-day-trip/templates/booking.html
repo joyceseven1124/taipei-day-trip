@@ -14,22 +14,25 @@
             <div class="dividing_line"></div>
             <div class="member_basic_information questionnaire">
                 <div class="basic_form_title">您的聯絡資訊</div>
-                <label>聯絡姓名： 
-                    <input  class="contact_name" 
-                            maxlength="30" 
+                <label>聯絡姓名：
+                    <input  class="contact_name"
+                            maxlength="30"
                             type="text">
+                    <div class="card_name_result"></div>
                 </label>
 
-                <label>聯絡信箱： 
+                <label>聯絡信箱：
                     <input  class="contact_email" 
                             maxlength="30" 
                             type="email">
+                    <div class="card_email_result"></div>
                 </label>
 
                 <label>手機號碼： 
                     <input  class="contact_phone" 
                             maxlength="10" 
                             type="tel">
+                    <div class="card_phone_result"></div>
                 </label>
 
                 <div>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
@@ -39,25 +42,22 @@
 
             <div class="credit_basic_information questionnaire">
                 <div class="basic_form_title">信用卡付款資訊</div>
-                <label>卡片號碼： 
-                    <input  class="credit_number" 
-                            maxlength="16" 
-                            type="text" 
-                            placeholder="**** **** **** ****">
+                <label>
+                    <span>卡片號碼： </span>
+                    <div class="tpfield" id="card-number"></div>
+                    <div class="card_number_result"></div>
                 </label>
 
-                <label>過期時間： 
-                    <input class="credit_time" 
-                           type="text"
-                           maxlength="5"
-                           placeholder="MM/YY">
+                <label>
+                    <span>過期時間：</span> 
+                    <div class="tpfield" id="card-expiration-date"></div>
+                    <div class="card_expiration_date_result"></div>
                 </label>
 
-                <label>驗證密碼： 
-                    <input  class="credit_password" 
-                            maxlength="3" 
-                            type="password" 
-                            placeholder="CVV">
+                <label>
+                    <span>驗證密碼：</span> 
+                    <div class="tpfield" id="card-ccv"></div>
+                    <div class="card_ccv_result"></div>
                 </label>
             </div>
 
@@ -75,4 +75,8 @@
 </article>
 {% endblock %}
 
-{% block js %}<script src="./static/js/booking.js"></script>{% endblock %}
+{% block js %}
+<script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+<script src="./static/js/booking.js"></script>
+
+{% endblock %}
