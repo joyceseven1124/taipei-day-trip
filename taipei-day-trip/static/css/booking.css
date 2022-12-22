@@ -1,0 +1,243 @@
+.booking_title {
+  font-size: 16px;
+  color: #666666;
+  font-weight: 700;
+  font-family: "Noto Sans TC";
+  margin-top: 46px;
+  width: 100%;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+}
+.booking_title div {
+  width: 980px;
+  text-align: left;
+}
+
+.booking_information_wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+}
+.booking_information_wrapper .booking_information_article {
+  font-size: 16px;
+  color: #666666;
+  font-weight: 500;
+  font-family: "Noto Sans TC";
+  width: 980px;
+  height: auto;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 260px 720px;
+}
+.booking_information_wrapper .booking_information_article .booking_information_pic {
+  width: 266px;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.booking_information_wrapper .booking_information_article .booking_information_word {
+  position: relative;
+  padding-left: 22px;
+}
+.booking_information_wrapper .booking_information_article .booking_information_word .booking_information_word_title {
+  font-size: 16px;
+  color: #448899;
+  font-weight: 700;
+  font-family: "Noto Sans TC";
+  margin-bottom: 20px;
+}
+.booking_information_wrapper .booking_information_article .booking_information_word .delete_icon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 30px;
+  height: 30px;
+}
+.booking_information_wrapper .booking_information_article .booking_information_word .delete_icon:hover {
+  cursor: pointer;
+}
+.booking_information_wrapper .booking_information_article .booking_information_word .check_to_deal {
+  position: absolute;
+  right: 30px;
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+.booking_information_wrapper .booking_information_article .booking_information_word div {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #666666;
+  font-weight: 700;
+  font-family: "Noto Sans TC";
+}
+.booking_information_wrapper .booking_information_article .booking_information_word div .attraction_item {
+  font-size: 16px;
+  color: #666666;
+  font-weight: 500;
+  font-family: "Noto Sans TC";
+}
+
+input[type=checkbox]:checked::after {
+  content: "v";
+  text-align: center;
+  line-height: 30px;
+  color: white;
+  font-size: 25px;
+  background-color: #448899;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  border: 0px;
+  border-radius: 5px;
+}
+
+input[type=checkbox]:focus {
+  outline: none;
+}
+
+input[type=checkbox]:hover {
+  cursor: pointer;
+}
+
+input[type=checkbox] {
+  border-radius: 5px;
+  border: 1px #E8E8E8 solid;
+}
+
+.member_booking_wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
+  color: #666666;
+  font-weight: 700;
+  font-family: "Noto Sans TC";
+}
+.member_booking_wrapper .questionnaire {
+  width: 100%;
+  height: auto;
+  display: grid;
+  justify-content: center;
+}
+.member_booking_wrapper .questionnaire .basic_form_title {
+  width: 980px;
+  font-size: 16px;
+  color: #666666;
+  font-weight: 700;
+  font-family: "Noto Sans TC";
+  margin-bottom: 24px;
+}
+.member_booking_wrapper .questionnaire label {
+  display: block;
+  width: 980px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #666666;
+  font-weight: 500;
+  font-family: "Noto Sans TC";
+}
+.member_booking_wrapper .questionnaire label input {
+  width: 200px;
+  height: 38px;
+}
+.member_booking_wrapper .deal_result {
+  width: 980px;
+  text-align: right;
+}
+.member_booking_wrapper .deal_result .confirm_deal_button {
+  margin-top: 25px;
+  width: 173px;
+  height: 36px;
+  background-color: #448899;
+  opacity: 30%;
+  color: white;
+}
+
+.member_booking_wrapper.hide {
+  display: none;
+}
+
+.dividing_line {
+  margin: 40px auto;
+}
+
+@media (max-width: 1200px) {
+  .booking_title div {
+    width: 90%;
+  }
+  .booking_content .booking_information_article {
+    width: 90%;
+    justify-content: center;
+    grid-template-columns: 50% 50%;
+  }
+  .booking_content .booking_information_article .booking_information_pic {
+    width: 100%;
+    height: 256px;
+  }
+  .booking_content .member_booking_form {
+    width: 90%;
+  }
+  .booking_content .member_booking_form .questionnaire {
+    display: block;
+    width: 100%;
+  }
+  .booking_content .member_booking_form .questionnaire .basic_form_title {
+    width: 100%;
+  }
+  .booking_content .member_booking_form .questionnaire label {
+    width: 100%;
+  }
+  .booking_content .member_booking_form .deal_result {
+    width: 90%;
+  }
+}
+@media (max-width: 900px) {
+  .booking_title div {
+    width: 90%;
+  }
+  .booking_content .booking_information_article {
+    width: 90%;
+    justify-content: center;
+    grid-template-columns: 100%;
+    row-gap: 0px;
+  }
+  .booking_content .booking_information_article .booking_information_pic {
+    width: 100%;
+    height: 256px;
+  }
+  .booking_content .booking_information_article .booking_information_word {
+    padding-top: 30px;
+    padding-left: 0px;
+    width: 100%;
+  }
+  .booking_content .booking_information_article .booking_information_word .delete_icon {
+    top: 170px;
+  }
+  .booking_content .booking_information_article .booking_information_word .check_to_deal {
+    top: 0px;
+    right: 0px;
+    margin-right: 0px;
+    margin-top: 30px;
+  }
+  .booking_content .member_booking_form {
+    width: 90%;
+  }
+  .booking_content .member_booking_form .questionnaire {
+    display: block;
+    width: 100%;
+  }
+  .booking_content .member_booking_form .questionnaire .basic_form_title {
+    width: 100%;
+  }
+  .booking_content .member_booking_form .questionnaire label {
+    width: 100%;
+  }
+  .booking_content .member_booking_form .deal_result {
+    width: 90%;
+  }
+}/*# sourceMappingURL=booking.css.map */

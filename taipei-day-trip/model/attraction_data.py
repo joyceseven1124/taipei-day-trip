@@ -8,27 +8,12 @@ import math
 import mysql.connector
 from mysql.connector import Error
 from mysql.connector import pooling
-
-import os
-from dotenv import load_dotenv
-load_dotenv()
-host = os.getenv("mysqlhost")
-port = os.getenv("mysqlport")
-database = os.getenv("mysqldatabase")
-user = os.getenv("mysqluser")
-password = os.getenv("mysqlpassword")
-
-dbconfig = {
-"host":host,
-"port":port,
-"database":database,
-"user":user,
-"password":password}
+import model.base_data as base
 
 connection_pool = pooling.MySQLConnectionPool(pool_name = "attraction_pool",
     pool_size = 3,
     pool_reset_session = True,
-    **dbconfig
+    **base.dbconfig
     )
 
 
@@ -36,7 +21,7 @@ def clean_data(myresult):
     imgs = []
     alldata = []
     for i in range(len(myresult)):
-        
+
         if i+1<len(myresult) and myresult[i][1] == myresult[i+1][1]:
             img = myresult[i][9]
             imgs.append(img)
@@ -73,19 +58,36 @@ def search_keyword(keyword,page):
         if keyword != None and keyword != "":
             keyword_search = '''
             SELECT
-                imags.attractions_id,name,description, address,direction,
-                MRT,latitude,longitude, catalog_name, imags.file
+                imags.attractions_id,
+                name,
+                description, 
+                address,
+                direction,
+                MRT,
+                latitude,
+                longitude, 
+                catalog_name, 
+                imags.file
             FROM (
                 SELECT
-                    attractions.name,attractions.description, attractions.address, attractions.direction,
-                    attractions.MRT,attractions.latitude,attractions.longitude, catalog.catalog_name,attractions.id
+                    attractions.name,
+                    attractions.description, 
+                    attractions.address, 
+                    attractions.direction,
+                    attractions.MRT,
+                    attractions.latitude,
+                    attractions.longitude, 
+                    catalog.catalog_name,
+                    attractions.id
                 FROM (
-                    attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id
+                    attractions INNER JOIN catalog  
+                    ON attractions.catalog_id = catalog.id
                 )where
                      (catalog.catalog_name=%s
                      OR attractions.name LIKE %s) 
                 LIMIT %s,%s )
-            AS data INNER JOIN imags ON imags.attractions_id = data.id
+            AS data INNER JOIN imags 
+            ON imags.attractions_id = data.id
             '''
 
             catalogs = search_categories()
@@ -104,12 +106,27 @@ def search_keyword(keyword,page):
         else:
             pages_search = '''
             SELECT
-                imags.attractions_id,name,description, address,direction,
-                MRT,latitude,longitude, catalog_name, imags.file
+                imags.attractions_id,
+                name,
+                description, 
+                address,
+                direction,
+                MRT,
+                latitude,
+                longitude, 
+                catalog_name, 
+                imags.file
             FROM (
                 SELECT
-                    attractions.name,attractions.description, attractions.address, attractions.direction,attractions.MRT,
-                    attractions.latitude,attractions.longitude, catalog.catalog_name,attractions.id
+                    attractions.name,
+                    attractions.description, 
+                    attractions.address, 
+                    attractions.direction,
+                    attractions.MRT,
+                    attractions.latitude,
+                    attractions.longitude, 
+                    catalog.catalog_name,
+                    attractions.id
                 FROM (
                     attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id
                 )
@@ -154,12 +171,27 @@ def search_id(id):
         cursor = connection_object.cursor()
         id_search = '''
             SELECT
-                imags.attractions_id,name,description, address,direction,
-                MRT,latitude,longitude, catalog_name, imags.file
+                imags.attractions_id,
+                name,
+                description, 
+                address,
+                direction,
+                MRT,
+                latitude,
+                longitude, 
+                catalog_name, 
+                imags.file
             FROM (
                 SELECT
-                    attractions.name,attractions.description, attractions.address, attractions.direction,attractions.MRT,
-                    attractions.latitude,attractions.longitude, catalog.catalog_name,attractions.id
+                    attractions.name,
+                    attractions.description, 
+                    attractions.address, 
+                    attractions.direction,
+                    attractions.MRT,
+                    attractions.latitude,
+                    attractions.longitude, 
+                    catalog.catalog_name,
+                    attractions.id
                 FROM (
                     attractions INNER JOIN catalog  ON attractions.catalog_id = catalog.id
                 )WHERE  attractions.id =  %s )

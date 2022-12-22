@@ -122,12 +122,6 @@ function clickEffect(e){
         }else{
             hint.textContent = "請輸入想查詢的地方"
         }
-    }else if(clickWhere === "BUTTON" && e.target.classList.contains("navigation_name")){
-        menu.add("hide")
-        inputPlace.value =""
-        keyword = ""
-        nextPage = 0
-        keywordLoad(0,keyword)
     }else{
         menu.add("hide")}
     }

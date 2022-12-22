@@ -5,6 +5,7 @@ button {
   border: none;
   outline: none;
   background-color: white;
+  border-radius: 5px;
   font-size: 19px;
   color: #666666;
   font-weight: 400;
@@ -12,12 +13,24 @@ button {
 }
 button:hover {
   cursor: pointer;
-  color: #448899;
 }
 
 input {
   border: 0px;
   outline: none;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #E8E8E8;
+}
+input:focus {
+  outline: 1px solid #448899;
+}
+
+.dividing_line {
+  width: 1200px;
+  height: 1px;
+  background-color: #e8e8e8;
+  text-align: center;
 }
 
 html, body {
@@ -67,7 +80,6 @@ html, body {
   color: #666666;
   font-weight: 500;
   font-family: "Noto Sans TC";
-  cursor: pointer;
   align-items: center;
   justify-content: space-between;
   display: flex;
@@ -101,7 +113,7 @@ html, body {
   top: 80px;
   left: 0;
 }
-.member_container .login, .member_container .register {
+.member_container .login, .member_container .register, .member_container .message {
   width: 100%;
   height: auto;
   display: grid;
@@ -113,20 +125,13 @@ html, body {
   position: relative;
   z-index: 35;
 }
-.member_container .login .register_wrapper, .member_container .register .register_wrapper {
+.member_container .login .card_pop_wrapper, .member_container .register .card_pop_wrapper, .member_container .message .card_pop_wrapper {
   width: 340px;
   height: auto;
   background-color: white;
   border-radius: 5px;
 }
-.member_container .register.hide {
-  display: none;
-}
-.member_container .login.hide {
-  display: none;
-}
-
-.form {
+.member_container .login .card_pop_wrapper .form, .member_container .register .card_pop_wrapper .form, .member_container .message .card_pop_wrapper .form {
   width: 340px;
   height: auto;
   border-radius: 5px;
@@ -135,7 +140,7 @@ html, body {
   z-index: 35;
   position: fixed;
 }
-.form::before {
+.member_container .login .card_pop_wrapper .form::before, .member_container .register .card_pop_wrapper .form::before, .member_container .message .card_pop_wrapper .form::before {
   content: "";
   background: linear-gradient(to right, #66AABB 0%, #337788 100%);
   width: 340px;
@@ -145,7 +150,7 @@ html, body {
   border-radius: 5px 5px 0px 0px;
   z-index: 40;
 }
-.form .form_head {
+.member_container .login .card_pop_wrapper .form .form_head, .member_container .register .card_pop_wrapper .form .form_head, .member_container .message .card_pop_wrapper .form .form_head {
   padding-top: 25px;
   margin-bottom: 15px;
   height: auto;
@@ -154,10 +159,10 @@ html, body {
   font-weight: 700;
   font-family: "Noto Sans TC";
 }
-.form .form_head .form_title {
+.member_container .login .card_pop_wrapper .form .form_head .form_title, .member_container .register .card_pop_wrapper .form .form_head .form_title, .member_container .message .card_pop_wrapper .form .form_head .form_title {
   text-align: center;
 }
-.form .form_head .cancel_button {
+.member_container .login .card_pop_wrapper .form .form_head .cancel_button, .member_container .register .card_pop_wrapper .form .form_head .cancel_button, .member_container .message .card_pop_wrapper .form .form_head .cancel_button {
   width: 35px;
   height: 35px;
   display: flex;
@@ -167,16 +172,13 @@ html, body {
   right: 10px;
   top: 25px;
 }
-.form .form_head .cancel_button img {
+.member_container .login .card_pop_wrapper .form .form_head .cancel_button img, .member_container .register .card_pop_wrapper .form .form_head .cancel_button img, .member_container .message .card_pop_wrapper .form .form_head .cancel_button img {
   width: 16px;
   height: 16px;
 }
-.form .form_input input {
-  border-radius: 5px;
-  border: 1px solid #E8E8E8;
-  height: 47px;
+.member_container .login .card_pop_wrapper .form .form_input input, .member_container .register .card_pop_wrapper .form .form_input input, .member_container .message .card_pop_wrapper .form .form_input input {
   width: 310px;
-  box-sizing: border-box;
+  height: 47px;
   font-size: 16px;
   color: #666666;
   font-weight: 500;
@@ -185,23 +187,37 @@ html, body {
   padding-left: 15px;
   margin-bottom: 10px;
 }
-.form .form_input input:focus {
-  outline: 1px solid #448899;
-}
-.form #enter, .form #build {
+.member_container .login .card_pop_wrapper .form #enter, .member_container .login .card_pop_wrapper .form #build, .member_container .register .card_pop_wrapper .form #enter, .member_container .register .card_pop_wrapper .form #build, .member_container .message .card_pop_wrapper .form #enter, .member_container .message .card_pop_wrapper .form #build {
   width: 310px;
   height: 47px;
   background-color: #448899;
+  opacity: 30%;
   border-radius: 5px;
   color: white;
   margin-bottom: 15px;
 }
-.form .want_register, .form .want_logIn {
+.member_container .login .card_pop_wrapper .form .register_result, .member_container .login .card_pop_wrapper .form .logIn_result, .member_container .register .card_pop_wrapper .form .register_result, .member_container .register .card_pop_wrapper .form .logIn_result, .member_container .message .card_pop_wrapper .form .register_result, .member_container .message .card_pop_wrapper .form .logIn_result {
+  margin-bottom: 15px;
+}
+.member_container .login .card_pop_wrapper .form .logIn_result.hide, .member_container .login .card_pop_wrapper .form .register_result.hide, .member_container .register .card_pop_wrapper .form .logIn_result.hide, .member_container .register .card_pop_wrapper .form .register_result.hide, .member_container .message .card_pop_wrapper .form .logIn_result.hide, .member_container .message .card_pop_wrapper .form .register_result.hide {
+  display: none;
+}
+.member_container .login .card_pop_wrapper .form .want_register, .member_container .login .card_pop_wrapper .form .want_logIn, .member_container .register .card_pop_wrapper .form .want_register, .member_container .register .card_pop_wrapper .form .want_logIn, .member_container .message .card_pop_wrapper .form .want_register, .member_container .message .card_pop_wrapper .form .want_logIn {
   width: 100%;
   text-align: center;
   z-index: 35;
   line-height: 16px;
   margin-bottom: 15px;
+}
+.member_container .register.hide, .member_container .login.hide, .member_container .message.hide {
+  display: none;
+}
+.member_container .message {
+  margin-top: 20%;
+}
+.member_container .message .form_message_print {
+  font-size: 20px;
+  margin-bottom: 20px;
 }
 
 .background {
@@ -235,13 +251,13 @@ html, body {
 @media (max-width: 1200px) {
   .nav_container {
     width: 100%;
-    height: auto;
+    height: 54px;
     display: flex;
     justify-content: center;
   }
   .nav_background {
     width: 100%;
-    height: auto;
+    height: 54px;
     display: flex;
     justify-content: center;
   }
@@ -259,17 +275,20 @@ html, body {
   .navigation_button_sign {
     margin-right: 0px;
   }
+  .dividing_line {
+    width: 100%;
+  }
 }
 @media (max-width: 560px) {
   .nav_container {
     width: 100%;
-    height: auto;
+    height: 54px;
     display: flex;
     justify-content: center;
   }
   .nav_background {
     width: 100%;
-    height: auto;
+    height: 54px;
     display: flex;
     justify-content: center;
   }
@@ -284,5 +303,8 @@ html, body {
   }
   .navigation_button_sign {
     margin-right: 0px;
+  }
+  .dividing_line {
+    width: 100%;
   }
 }/*# sourceMappingURL=base.css.map */
