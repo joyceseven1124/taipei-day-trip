@@ -60,17 +60,16 @@ def add_member(data):
 def enter_account(data):
     try:
         connection_object = connection_pool.get_connection()
-        cursor = connection_object.cursor()
+        cursor = connection_object.cursor(buffered=True, dictionary=True)
 
         check_sql = '''SELECT * FROM member WHERE email = %s'''
         check_value = (data["email"],)
         cursor.execute(check_sql,check_value)
         check_result = cursor.fetchone()
-
         if check_result != None :
-            password = check_result[3]
+            search_password = check_result["password"]
             input_password = data["password"]
-            check_password = bcrypt.check_password_hash(password,input_password)
+            check_password = bcrypt.check_password_hash(search_password,input_password)
             if check_password :
                 result = check_result
             else:
@@ -92,9 +91,9 @@ def make_token(data):
     expiretime = 7*24*60*60
 
     payload = {
-        "id": data[0],
-        "name": data[1],
-        "email": data[2],
+        "id": data["id"],
+        "name": data["username"],
+        "email": data["email"],
         "expire": now + expiretime
     }
 
@@ -118,15 +117,14 @@ def check_token(token_value):
 def check_member(member):
     try:
         connection_object = connection_pool.get_connection()
-        cursor = connection_object.cursor()
+        cursor = connection_object.cursor(buffered=True, dictionary=True)
 
         check_sql = '''SELECT * FROM member WHERE email = %s'''
         check_value = (member[2],)
         cursor.execute(check_sql,check_value)
         check_result = cursor.fetchone()
-
         if check_result != None :
-            if(member[0] == check_result[0] and member[1] == check_result[1]):
+            if(member[0] == check_result["id"] and member[1] == check_result["username"]):
                 result = "correct"
         
         else:

@@ -1,6 +1,7 @@
 const nameRule =  /^[a-zA-Z\d\u4e00-\u9fa5]{1,}$/
 const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/
 const passwordRule = /^[a-zA-Z\d\u4e00-\u9fa5]{3,}$/
+const phoneNumberRule = /^09\d{8}$/
 
 //document.addEventListener('load', checkIsState())
 window.addEventListener('DOMContentLoaded',checkIsState)
@@ -13,6 +14,9 @@ signIn.addEventListener("click",signInView)
 
 const bookingIn = document.querySelector(".navigation_button_schedule")
 bookingIn.addEventListener("click",loginBookingStateCheck)
+
+const recordButton = document.querySelector(".navigation_button_record")
+recordButton.addEventListener("click",orderRecordStateCheck)
 
 const signOut = document.querySelector(".navigation_button_sign_out")
 signOut.addEventListener("click",signOutState)
@@ -225,11 +229,15 @@ async function checkIsState(){
         }
     }else if(whereIs.includes("booking") && memberState !== true){
         goHome()
+    }else if(whereIs.includes("thankyou") && memberState !== true){
+        goHome()
+    }else if(whereIs.includes("record") && memberState !== true){
+        goHome()
     }
 }
 
 function loginBookingStateCheck(e){
-    whereIs = window.location.href
+    //whereIs = window.location.href
     if(memberState){
         if(e.target.id == "nav_schedule" ){
             window.location.href = "/booking"
@@ -237,6 +245,14 @@ function loginBookingStateCheck(e){
             return true
             //saveBookingData(e)
         }
+    }else{
+        signInView()
+    }
+}
+
+function orderRecordStateCheck(){
+    if(memberState){
+        window.location.href = "/recording"
     }else{
         signInView()
     }

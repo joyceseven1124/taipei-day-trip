@@ -49,7 +49,12 @@
 
 .home_word_search_input:focus{
     outline: none;
-
+    border:1px #448899 solid;
+    box-sizing: border-box;
+    box-shadow: 0 0 15px #448899; 
+    color: #448899;
+    text-shadow: 0px 0px 0px #000;
+    -webkit-text-fill-color: transparent;
 }
 
 .home_word_search_select{
@@ -137,13 +142,15 @@
 .attractions_container{
     border: 1px solid #e8e8e8;
     border-radius: 5px 5px 5px 5px;
-    transition: .5s;
+    overflow: hidden;
+    box-shadow: 1px 1px 20px 2px rgba(0,0,0,10%);
 }
 
 .attractions_container:hover{
     cursor: pointer;
-    transform: scale(1.2);
+    overflow: hidden;
 }
+
 
 .attractions_container_img{
     width: 100%;
@@ -151,6 +158,14 @@
     object-fit: cover;
     margin-bottom: 0px;
     border-radius: 5px 5px 0px 0px;
+    transform: scale(1,1);
+    opacity: 90%;
+    transition: all 1s ease-out;
+}
+
+.attractions_container_img:hover{
+    transform: scale(1.2,1.2);
+    opacity: 100%;
 }
 
 

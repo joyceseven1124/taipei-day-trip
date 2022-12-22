@@ -8,6 +8,20 @@
 
                 <div class="attraction_information_images">
                     <!-- 輪播圖片 -->
+                   
+                    <div id="load-wrapper">
+                        <div class="loader">
+                            <span class="ringFour"></span>
+                            <span class="ringThree"></span>
+                            <span class="colorRing"></span>
+                            <span class="ringTwo"></span>
+                            <span class="ball"></span>
+                        </div>
+                        <div class="label">
+                            <h2 class="loading_word">載入中...0%</h2>
+                        </div>
+                    </div>
+                    
                     <div class="attraction_information_images_main"></div>
                     <!-- 指示符 -->
                     <div class="attraction_information_images_circle"></div>
@@ -73,4 +87,4 @@
 
         </article>
         {% endblock %}
-    {% block js %}<script src="/static/js/attraction.js"></script>{% endblock %}
+    {% block js %}<script  src="/static/js/attraction.js"></script>{% endblock %}

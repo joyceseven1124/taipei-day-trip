@@ -82,7 +82,7 @@ input[type="checkbox"]:checked::after {
     line-height: 30px;
     color: white;
     font-size: 25px;
-    background-color: #448899;
+    background-color: $main_color;
     width: 30px;
     height: 30px;
     position: absolute;
@@ -101,6 +101,7 @@ input[type="checkbox"]:hover{
 input[type="checkbox"]{
     border-radius: 5px;
     border: 1px $side_color solid;
+    box-shadow:0 0 10px 1px $side_color;
 }
 
 
@@ -115,13 +116,19 @@ input[type="checkbox"]{
             margin-bottom: 24px;
         }
         label{
-            display: block;
+            display: flex;
             width: 980px;
             margin-bottom: 15px;
+            line-height: 38px;
             @include font(16px,$font_color,500);
             input{
                 width: 200px;
                 height: 38px;
+                margin-right: 10px;
+            }
+            span{
+                height: 38px;
+                line-height: 38px;
             }
         }
     }
@@ -147,6 +154,19 @@ input[type="checkbox"]{
 .dividing_line{
     margin: 40px auto;
 }
+
+.tpfield {
+    display: inline-block;
+    width: 200px;
+    height: 38px;
+    margin: 5px 10px 5px 0px;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #E8E8E8;
+}
+
+
 
 @media(max-width:1200px){
 
@@ -176,7 +196,7 @@ input[type="checkbox"]{
                 }
                 label{
                     width: 100%;
-                } 
+                }
             }
             .deal_result{
                 width: 90%;

@@ -17,6 +17,7 @@ connection_pool = pooling.MySQLConnectionPool(pool_name = "booking_pool",
 
 def save_booking(member,booking_data):
     try:
+        
         connection_object = connection_pool.get_connection()
         cursor = connection_object.cursor()
         add_sql = '''
@@ -28,11 +29,11 @@ def save_booking(member,booking_data):
                         member_id)
                     VALUE(%s,%s,%s,%s,%s)'''
 
-        add_value = (int(booking_data['attractionId']),
+        add_value = (booking_data['attractionId'],
                     booking_data['date'],
                     booking_data['time'],
                     booking_data['price'],
-                    int(member)
+                    member
                     )
 
         cursor.execute(add_sql,add_value)
@@ -41,6 +42,9 @@ def save_booking(member,booking_data):
 
     except TypeError:
         result = "建立失敗，輸入不正確或其他原因"
+
+    except mysql.connector.Error as err:
+        result = err
 
     except:
         result = "伺服器內部錯誤"
@@ -56,7 +60,7 @@ def save_booking(member,booking_data):
 def search_booking(member_id):
     try:
         connection_object = connection_pool.get_connection()
-        cursor = connection_object.cursor()
+        cursor = connection_object.cursor(buffered=True, dictionary=True)
 
         search_booking_sql = '''
         SELECT
@@ -92,14 +96,14 @@ def search_booking(member_id):
             for i in search_booking_result:
                 data = {
                     "attraction": {
-                    "id": i[0],
-                    "name": i[1],
-                    "address": i[2],
-                    "image": i[3]
+                    "id": i["attractions_id"],
+                    "name": i["name"],
+                    "address": i["address"],
+                    "image": i["file"]
                     },
-                    "date": i[4],
-                    "time": i[5],
-                    "price": i[6]
+                    "date": i["booking_date"],
+                    "time": i["booking_time"],
+                    "price": i["booking_price"]
                     }
                 result.append(data)
         else:

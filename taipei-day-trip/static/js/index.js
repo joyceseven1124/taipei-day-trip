@@ -24,7 +24,7 @@ const observer = new IntersectionObserver(callback, options)
 function getData(page,string){
     if(state){
         state = false
-        url="/api/attractions?page="+page+"&keyword="+string
+        let url="/api/attractions?page="+page+"&keyword="+string
         fetch(url)
         .then(function(response){
             return response.json();})
@@ -139,3 +139,5 @@ attractionNet.addEventListener("click", directNewPlace)
 
 window.addEventListener('load', getData(0,""))
 window.addEventListener('load', categorySelect())
+//document.addEventListener('load', getData(0,""))
+//document.addEventListener('load', categorySelect())
