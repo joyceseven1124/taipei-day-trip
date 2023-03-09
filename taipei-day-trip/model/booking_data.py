@@ -17,7 +17,6 @@ connection_pool = pooling.MySQLConnectionPool(pool_name = "booking_pool",
 
 def save_booking(member,booking_data):
     try:
-        
         connection_object = connection_pool.get_connection()
         cursor = connection_object.cursor()
         add_sql = '''
@@ -117,6 +116,71 @@ def search_booking(member_id):
         return result
 
 
+
+def count_booking_number(member_id):
+    try:
+        connection_object = connection_pool.get_connection()
+        cursor = connection_object.cursor()
+
+        search_booking_sql = '''
+        SELECT COUNT(*) FROM booking where member_id=%s'''
+        search_booking_value = (member_id,)
+        cursor.execute(search_booking_sql,search_booking_value)
+        search_booking_result = cursor.fetchone()
+        result = search_booking_result
+    except:
+        result = "伺服器內部錯誤"
+
+    finally:
+        cursor.close()
+        connection_object.close()
+        return result
+
+
+def clean_cart(member,booking_data):
+    try:
+        connection_object = connection_pool.get_connection()
+        cursor = connection_object.cursor()
+        all_data = []
+        for i in booking_data:
+            print(i)
+            all_data.append(i['attractionId'])
+            all_data.append(i['date'])
+            all_data.append(i['time'])
+            all_data.append(i['price'])
+            all_data.append(member)
+        print(all_data)
+        delete_number_str = ", ".join(['(%s,%s,%s,%s,%s)']*len(booking_data))
+        delete_sql = '''
+                DELETE
+                FROM booking
+                WHERE(attractions_id,booking_date,booking_time,booking_price,member_id)
+                IN ({})'''.format(delete_number_str)
+        delete_value = all_data
+        cursor.execute(delete_sql,delete_value)
+        connection_object.commit()
+        result = "ok"
+
+
+    except TypeError:
+        result = "建立失敗，輸入不正確或其他原因"
+
+    except mysql.connector.Error as err:
+        result = err
+
+    except Exception as e:
+        result = e
+
+    except:
+        result = "伺服器內部錯誤"
+
+
+    finally:
+        cursor.close()
+        connection_object.close()
+        return result
+
+
 def delete_booking(member,booking_data):
     try:
         connection_object = connection_pool.get_connection()
@@ -156,3 +220,4 @@ def delete_booking(member,booking_data):
         cursor.close()
         connection_object.close()
         return result
+

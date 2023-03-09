@@ -120,6 +120,13 @@ const afternoonTime = document.querySelector("#afternoon_time")
 const booking_attractions = document.querySelector("#go_to_checkout_button")
 const cart_button = document.querySelector("#cart_button")
 
+const dateNow = new Date();
+const year = dateNow.getFullYear();
+const month = ('0'+ (dateNow.getMonth() + 1)).slice(-2);
+const day = ('0' + dateNow.getDate()).slice(-2);
+// var day = date.getDay();
+const dateTimeNow = year +'-'+ month +'-'+ day;
+date.setAttribute('min', dateTimeNow);
 
 
 async function saveBookingData(e){

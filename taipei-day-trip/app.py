@@ -27,6 +27,9 @@ def thankyou():
 @app.route("/recording")
 def recording():
 	return render_template("recording.html")
+@app.route("/member")
+def see_member_information():
+	return render_template("member.html")
 
 app.register_blueprint(attraction_api_blueprint)
 app.register_blueprint(member_api_blueprint)
@@ -34,4 +37,4 @@ app.register_blueprint(booking_api_blueprint)
 app.register_blueprint(orders_api_blueprint)
 
 if __name__ == "__main__" :
-    app.run(port=3000)
+    app.run(debug=True ,host="0.0.0.0",port=3000)

@@ -201,7 +201,7 @@ contactEmail.addEventListener("change",checkContactEmailRegular)
 function checkContactPhoneRegular(e){
     const contactPhoneResult = phoneNumberRule.test(contactPhone.value)
     if(!contactPhoneResult){
-        inputCheckResult("錯誤","fail",".card_phone_result")
+        inputCheckResult("❌","fail",".card_phone_result")
     }else{
         inputCheckResult("✔","success",".card_phone_result")
     }
@@ -210,7 +210,7 @@ function checkContactPhoneRegular(e){
 function checkContactEmailRegular(e){
     const contactEmailResult = emailRule.test(contactEmail.value)
     if(!contactEmailResult){
-        inputCheckResult("錯誤","fail",".card_email_result")
+        inputCheckResult("❌","fail",".card_email_result")
     }else{
         inputCheckResult("✔","success",".card_email_result")
     }
@@ -247,7 +247,7 @@ TPDirect.card.onUpdate(function (update) {
     }
     // number 欄位是錯誤的
     if (update.status.number === 2) {
-        inputCheckResult("錯誤","fail",".card_number_result")
+        inputCheckResult("❌","fail",".card_number_result")
     } else if (update.status.number === 0) {
         inputCheckResult("✔","success",".card_number_result")
 
@@ -257,7 +257,7 @@ TPDirect.card.onUpdate(function (update) {
 
     if (update.status.expiry === 2) {
         //setNumberFormGroupToError(".card_expiration_date_result")
-        inputCheckResult("錯誤","fail",".card_expiration_date_result")
+        inputCheckResult("❌","fail",".card_expiration_date_result")
     } else if (update.status.expiry === 0) {
         // setNumberFormGroupToSuccess()
         inputCheckResult("✔","success",".card_expiration_date_result")
@@ -267,7 +267,7 @@ TPDirect.card.onUpdate(function (update) {
 
     if (update.status.ccv === 2) {
         // setNumberFormGroupToError()
-        inputCheckResult("錯誤","fail",".card_ccv_result")
+        inputCheckResult("❌","fail",".card_ccv_result")
     } else if (update.status.ccv === 0) {
         // setNumberFormGroupToSuccess()
         inputCheckResult("✔","success",".card_ccv_result")
@@ -353,6 +353,16 @@ function onSubmit(event) {
 async function orderReq(orderItemsData){
     payButton.removeEventListener("click",onSubmit)
     payButton.style.backgroundColor = "#356b78"
+    alertBackground.classList.remove("hide")
+
+    const preloadCardPlace = document.createElement("div")
+    preloadCardPlace.setAttribute("class","preloadImg-wrapper")
+    alertBackground.appendChild(preloadCardPlace)
+
+    const preloadCard = document.createElement("img")
+    preloadCard.src = "./static/pic/preload.gif!qt324new_nowater"
+    preloadCardPlace.appendChild(preloadCard)
+
     const response = await fetch("/api/orders",{
             method:"POST",
             header:{
@@ -361,6 +371,19 @@ async function orderReq(orderItemsData){
             body:JSON.stringify(orderItemsData)
         })
     const orderResult = await response.json()
-    let number =  orderResult.data.number
-    window.location.href = "/thankyou?number="+number
+    alertBackground.classList.add("hide")
+    if(!orderResult.error){
+        let number =  orderResult.data.number
+        window.location.href = "/thankyou?number="+number
+
+    }else{
+        alertBackground.removeChild(preloadCardPlace)
+        let message = orderResult.message
+        alertBackground.classList.remove("hide")
+        scroll.style.overflowY = "hidden"
+        payButton.style.backgroundColor = "#448899"
+        //payButton.style.opacity = "30%"
+        //payButton.removeEventListener("click",onSubmit)
+        resultMessagePrint(message,"fail","messageCard")
+    }
 }

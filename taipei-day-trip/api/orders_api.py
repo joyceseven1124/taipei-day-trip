@@ -36,9 +36,13 @@ def add_order():
                 url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
                 headers = {'content-type': 'application/json', "x-api-key": partner_key}
                 tappay_result = requests.post(url, headers=headers, json=result).json()
+                print(tappay_result)
                 #更改訂單中的付款狀態
                 amend_result = orderData.amend_order_state(order_number,tappay_result)
+                print("修正")
+                print(amend_result)
                 if tappay_result["status"] == 0:
+                   orderData.ready_delete_data(order_request,member_token_result[0])
                    response = {
                     "data": {
                         "number":  int(order_number),
@@ -51,7 +55,7 @@ def add_order():
                 else:
                     response = {
                             "error": True,
-                            "message": "訂單建立失敗"
+                            "message": tappay_result["msg"]
                     }
                     return jsonify(response),400
         else:

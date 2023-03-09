@@ -15,14 +15,43 @@
             <div class="navigation">
                 <button class="navigation_name">台北一日遊</button>
                 <div class="navigation_button">
-                    <button id="nav_record" class="navigation_button_record">歷史紀錄</button>
-                    <button id="nav_schedule" class="navigation_button_schedule">預定行程</button>
+                    <button  class="navigation_button_schedule">
+                        <div class="navigation_cart">
+                            <img class="navigation_cart_icon" src="/static/pic/cartIcon.svg">
+                            <span class="navigation_cart_number"></span>
+                        </div>
+                        <span id="nav_schedule" class="navigation_cart_word">預定行程</span>
+                    </button>
                     <button class="navigation_button_sign">登入/註冊</button>
-                    <button class="navigation_button_sign_out hide">登出系統</button>
+                    <button class="navigation_button_burger hide">
+                        <img class="navigation_button_burger_icon" src="/static/pic/burger.svg">
+                        <img class="navigation_button_burger_change_icon" src="/static/pic/burgerChange.svg">
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
+    <div class="navigation_button_burger_category hide">
+        <div class="burger_category_wrapper">
+            <button class="arrow_top">close</button>
+            
+            <button id="nav_member_information" class="navigation_button_member_information">
+                <img class="personIcon" src="/static/pic/personIcon.svg">
+                <img class="personIcon_change" src="/static/pic/personIconChange.svg">
+                <div>個人資料</div>
+            </button>
+            <button id="nav_record" class="navigation_button_record">
+                <img class="orderIcon" src="/static/pic/orderIcon.svg">
+                <img class="orderIcon_change" src="/static/pic/orderIconChange.svg">
+                <div>歷史紀錄</div>
+            </button>
+            <button class="navigation_button_sign_out hide">
+                <img class="signOutIcon"src="/static/pic/signoutIcon.svg">
+                <img class="signOutIcon_change" src="/static/pic/signoutIconChange.svg">
+                <div>登出系統</div>
+            </button>
+        </div>
+    </div>
     <div class="background hide"></div>
 
     <div class="member_container">
@@ -43,7 +72,16 @@
                     </div>
 
                     <div class="form_input">
-                        <input id="password" type="password" name="password" maxlength="15" placeholder="輸入密碼">
+                        <input id="password"
+                               class="login-form-eye-input"
+                               type="password"
+                               name="password"
+                               maxlength="15"
+                               placeholder="輸入密碼">
+                        <button id="login-form-eye">
+                            <img class="login-form-eye openEye hide" src="/static/pic/openEyeIcon.svg">
+                            <img class="login-form-eye closeEye" src="/static/pic/closeEyeIcon.svg">
+                        </button>
                     </div>
 
                     <button id="enter" type="button" >登入帳戶</button>
@@ -87,10 +125,15 @@
 
                     <div class="form_input">
                         <input id="newPassword"
+                        class="register-form-eye-input"
                         type="password"
                         name="password"
                         maxlength="15"
                         placeholder="輸入密碼">
+                        <button id="register-form-eye">
+                            <img class="register-form-eye openEye hide" src="/static/pic/openEyeIcon.svg">
+                            <img class="register-form-eye closeEye" src="/static/pic/closeEyeIcon.svg">
+                        </button>
                     </div>
 
                     <button id="build" type="button" >註冊新帳戶</button>

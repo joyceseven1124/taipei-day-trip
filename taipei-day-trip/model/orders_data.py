@@ -20,57 +20,50 @@ connection_pool = pooling.MySQLConnectionPool(pool_name = "order_pool",
 def save_order(data,member_id,order_number):
     try:
         connection_object = connection_pool.get_connection()
+        add_values = []
         for i in range(len(data["order"]['trip'])):
             cursor = connection_object.cursor()
             order_data = data["order"]['trip'][i][0]
-            add_sql = '''
-                        INSERT INTO order_table(
-                            order_number,
-                            booking_date,
-                            booking_time,
-                            booking_price,
-                            attraction_image,
-                            attraction_name,
-                            attraction_address,
-                            attraction_id,
-                            member_id,
-                            contact_name,
-                            contact_email,
-                            contact_phone)
-                        VALUE(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'''
-            
-            add_value = (int(order_number),
-                        order_data["date"],
-                        order_data["time"],
-                        order_data["price"],
-                        order_data["attraction"]["image"],
-                        order_data["attraction"]["name"],
-                        order_data["attraction"]["address"],
-                        order_data["attraction"]["id"],
-                        member_id,
-                        data["order"]["contact"]["name"],
-                        data["order"]["contact"]["email"],
-                        data["order"]["contact"]["phone"],
-                        )
-        
-            cursor.execute(add_sql,add_value)
-            connection_object.commit()
-            
 
+            value = (int(order_number),
+            order_data["date"],
+            order_data["time"],
+            order_data["price"],
+            order_data["attraction"]["image"],
+            order_data["attraction"]["name"],
+            order_data["attraction"]["address"],
+            order_data["attraction"]["id"],
+            member_id,
+            data["order"]["contact"]["name"],
+            data["order"]["contact"]["email"],
+            data["order"]["contact"]["phone"],
+            )
+
+            add_values.append(value)
+
+
+        add_sql = '''
+                    INSERT INTO order_table(
+                        order_number,
+                        booking_date,
+                        booking_time,
+                        booking_price,
+                        attraction_image,
+                        attraction_name,
+                        attraction_address,
+                        attraction_id,
+                        member_id,
+                        contact_name,
+                        contact_email,
+                        contact_phone)
+                    VALUE(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'''
+        cursor.executemany(add_sql,add_values)
+        connection_object.commit()
+            
         details = ""
         for i in range(len(data["order"]['trip'])):
             order_data = data["order"]['trip'][i][0]
             details = details+"/"+order_data["attraction"]["name"]
-
-        for i in range(len(data["order"]['trip'])):
-            order_data = data["order"]['trip'][i][0]
-            delete_booking_data = {
-                "attractionId": order_data["attraction"]["id"],
-                "date": order_data["date"],
-                "time": order_data["time"],
-                "price": order_data["price"]
-            }
-            bookingData.delete_booking(member_id,delete_booking_data)
 
         result = {
                 "prime": data["prime"],
@@ -105,24 +98,39 @@ def amend_order_state(order_number,tappay_result):
         cursor = connection_object.cursor()
         if tappay_result["status"] == 0:
             state = "已結帳"
+            amend_sql = '''
+                UPDATE order_table SET
+                    booking_state = %s,
+                    rec_trade_id = %s,
+                    msg = %s,
+                    transaction_time_millis = %s,
+                    order_status = %s
+                WHERE order_number= %s'''
+            
+            amend_value = ( state,
+                            tappay_result["rec_trade_id"],
+                            tappay_result["msg"],
+                            tappay_result["transaction_time_millis"],
+                            tappay_result["status"],
+                            int(order_number)
+                        )
         else:
             state = "未結帳"
-        amend_sql = '''
-                        UPDATE order_table SET
-                            booking_state = %s,
-                            rec_trade_id = %s,
-                            msg = %s,
-                            transaction_time_millis = %s,
-                            order_status = %s
-                        WHERE order_number= %s'''
+            amend_sql = '''
+                UPDATE order_table SET
+                    booking_state = %s,
+                    rec_trade_id = %s,
+                    msg = %s,
+                    order_status = %s
+                WHERE order_number= %s'''
             
-        amend_value = ( state,
-                        tappay_result["rec_trade_id"],
-                        tappay_result["msg"],
-                        tappay_result["transaction_time_millis"],
-                        tappay_result["status"],
-                        int(order_number)
-                    )
+            amend_value = ( state,
+                            tappay_result["rec_trade_id"],
+                            tappay_result["msg"],
+                            tappay_result["status"],
+                            int(order_number)
+                        )
+
     
         cursor.execute(amend_sql,amend_value)
         connection_object.commit()
@@ -145,7 +153,7 @@ def search_order(orderNumber,member_id):
         connection_object = connection_pool.get_connection()
         cursor = connection_object.cursor(buffered=True, dictionary=True)
         search_sql = '''
-                        SELECT 
+                        SELECT
                             order_number,
                             booking_date,
                             booking_time,
@@ -162,7 +170,8 @@ def search_order(orderNumber,member_id):
                             record_time
                         FROM order_table
                         WHERE  order_number= %s
-                        OR member_id = %s'''
+                        OR member_id = %s
+                        ORDER BY record_time DESC'''
 
         if  orderNumber != None:
             search_value = (orderNumber,orderNumber)
@@ -270,3 +279,15 @@ def search_order(orderNumber,member_id):
         return result
 
 
+def ready_delete_data(data,member_id):
+    delete_booking_all_data = []
+    for i in range(len(data["order"]['trip'])):
+        order_data = data["order"]['trip'][i][0]
+        delete_booking_data = {
+            "attractionId": order_data["attraction"]["id"],
+            "date": order_data["date"],
+            "time": order_data["time"],
+            "price": order_data["price"]
+        }
+        delete_booking_all_data.append(delete_booking_data)
+    bookingData.clean_cart(member_id,delete_booking_all_data)

@@ -98,3 +98,91 @@ def delete_account():
     res = make_response(jsonify(response))
     res.set_cookie("token_value", value="",expires=0)
     return res,200
+
+
+
+@member_api_blueprint.route("/api/member/information",methods=["POST"])
+def add_basic_information():
+    member_information = json.loads(request.data)
+    member_re_value = request.cookies.get('token_value')
+    #解讀token裏頭的東西
+    member_token_result = member.check_token(member_re_value)
+    if type(member_token_result) != list:
+        response ={
+                "error": True,
+                "message": "未登入系統，拒絕存取"
+                }
+        return jsonify(response),403
+    else:
+        #確認此人是否真的在資料庫中
+        member_check_result = member.check_member(member_token_result)
+        if member_check_result == "correct":
+            member_id = member_token_result[0]
+            member_name = member_token_result[1]
+            result = member.save_member_information(member_id,member_name,member_information)
+            if result == "ok":
+                response = {"ok": True}
+                return jsonify(response),200
+            else:
+                response ={
+                "error": True,
+                "message": "系統異常"
+                }
+                return jsonify(response),500
+        else:
+            response ={
+                "error": True,
+                "message": "未有存取權"
+                }
+            return jsonify(response),403
+
+
+@member_api_blueprint.route("/api/member/information/pic",methods=["POST"])
+def add_basic_information_pic():
+    member_image = request.files['file']
+    image = member_image.stream.read()
+    member_re_value = request.cookies.get('token_value')
+    member_token_result = member.check_token(member_re_value)
+
+    if(len(image) == 0):
+        return redirect("/member")
+    with open(f"static/pic/member/{member_token_result[0]}.png","wb") as file:
+        file.write(image)
+    member.save_member_img(member_token_result[0],f"static/pic/member/{member_token_result[0]}.png")
+    response = {"ok": True}
+    return jsonify(response),200
+
+
+@member_api_blueprint.route("/api/member/information",methods=["GET"])
+def search_basic_information():
+    member_re_value = request.cookies.get('token_value')
+    #解讀token裏頭的東西
+    member_token_result = member.check_token(member_re_value)
+    if type(member_token_result) != list:
+        response ={
+                "error": True,
+                "message": "未登入系統，拒絕存取"
+                }
+        return jsonify(response),403
+    else:
+        #確認此人是否真的在資料庫中
+        member_check_result = member.check_member(member_token_result)
+        if member_check_result == "correct":
+            result = member.search_member_page_information(member_token_result[0])
+            if type(result) == str:
+                response ={
+                "error": True,
+                "message": "系統有異常"
+                }
+                return jsonify(response),500
+            else:
+                response ={
+                "data":result
+                }
+                return jsonify(response),200
+        else:
+            response ={
+                "error": True,
+                "message": "未登入系統，拒絕存取"
+                }
+            return jsonify(response),403

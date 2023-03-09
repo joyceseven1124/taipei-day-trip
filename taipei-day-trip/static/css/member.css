@@ -1,0 +1,218 @@
+.member {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.member .member-wrapper {
+  width: 1170px;
+  display: flex;
+  justify-content: center;
+  border: 2px solid #489;
+  margin: 15px;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+.member .member-wrapper .member-content {
+  width: 600px;
+}
+.member .member-wrapper .member-content .member-picture {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.member .member-wrapper .member-content .member-picture .camera-icon {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  bottom: 0px;
+  left: 60%;
+}
+.member .member-wrapper .member-content .member-picture .file-uploader-input {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  bottom: 0px;
+  left: 60%;
+  opacity: 0;
+}
+.member .member-wrapper .member-content .member-picture .picture-place {
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
+  border: 1px solid rgb(220, 218, 218);
+}
+.member .member-wrapper .member-content .member-picture .picture-place img {
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.member .member-wrapper .member-content .member_word {
+  margin: 30px;
+  background-color: rgb(249, 249, 249);
+  border-radius: 10px;
+  padding: 30px 0px;
+  box-shadow: 10px 10px 1px 1px rgb(159, 173, 175);
+}
+.member .member-wrapper .member-content .member_word .member_item {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgb(188, 186, 186);
+}
+.member .member-wrapper .member-content .member_word .member_item .answer {
+  font-weight: 500;
+  margin-right: 30px;
+}
+.member .member-wrapper .member-content .member_word .member_item .edit-button {
+  background-color: inherit;
+  color: rgb(160, 161, 161);
+  font-size: 16px;
+}
+.member .member-wrapper .member-content .member_word .member_item .edit-button:hover {
+  color: #489;
+}
+.member .member-wrapper .member-content .member_word .member_item .edit_password_button {
+  background-color: inherit;
+}
+.member .member-wrapper .member-content .member_word .member_item .edit_password_button img {
+  width: 30px;
+  height: 30px;
+}
+.member .member-wrapper .member-content .member_word .member_item .edit_password_button .edit_password_change_icon {
+  display: none;
+}
+.member .member-wrapper .member-content .member_word .member_item .edit_password_button:hover .edit_password_icon {
+  display: none;
+}
+.member .member-wrapper .member-content .member_word .member_item .edit_password_button:hover .edit_password_change_icon {
+  display: inline-block;
+}
+.member .member-wrapper .member-content .member_word .edit-result-send-wrapper {
+  width: 400px;
+  display: flex;
+  justify-content: end;
+  margin: 0px auto;
+}
+.member .member-wrapper .member-content .member_word .edit-result-send-wrapper .edit-result-send {
+  width: 100px;
+  height: 50px;
+  color: white;
+  background-color: #489;
+  box-shadow: 1px 1px 5px 1px rgb(53, 52, 53);
+}
+.member .member-wrapper .member-content .member_word .edit-result-send-wrapper .edit-result-send:hover {
+  opacity: 80%;
+}
+.member .member-wrapper .member-content .edit-view-pop {
+  width: 600px;
+  height: auto;
+  border-radius: 10px;
+  background-color: white;
+  margin: 0px auto;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 50;
+}
+.member .member-wrapper .member-content .edit-view-pop .cancel-button {
+  margin-left: 80%;
+  margin-top: 20px;
+  width: 30px;
+  height: 30px;
+}
+.member .member-wrapper .member-content .edit-view-pop .cancel-button .cancel-button-img {
+  width: 30px;
+  height: 30px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.member .member-wrapper .member-content .edit-view-pop .edit-input-wrapper .edit-input {
+  margin-top: 40px;
+}
+.member .member-wrapper .member-content .edit-view-pop .edit-input-wrapper .edit-input .edit-data-input {
+  width: 350px;
+  height: 45px;
+  margin-left: 15px;
+  padding: 1px 10px;
+  box-sizing: border-box;
+}
+.member .member-wrapper .member-content .edit-view-pop .edit-input-wrapper .password {
+  position: relative;
+}
+.member .member-wrapper .member-content .edit-view-pop .edit-input-wrapper .password img {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 6px;
+  right: 86px;
+}
+.member .member-wrapper .member-content .edit-view-pop .edit-input-wrapper .password .openEye.hide {
+  display: none;
+}
+.member .member-wrapper .member-content .edit-view-pop .edit-input-wrapper .password .closeEye.hide {
+  display: none;
+}
+.member .member-wrapper .member-content .edit-view-pop .edit-input-wrapper .edit-input.hide {
+  display: none;
+}
+.member .member-wrapper .member-content .edit-view-pop .edit-input-wrapper .password.hide {
+  display: none;
+}
+.member .member-wrapper .member-content .edit-view-pop .edit-view-button {
+  background-color: #489;
+  color: white;
+  width: 100px;
+  height: 50px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.member .member-wrapper .member-content .edit-view-pop.hide {
+  display: none;
+}
+
+input[type=file]:hover {
+  font-size: 0;
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .member {
+    width: 100%;
+  }
+  .member .member-wrapper {
+    width: 100%;
+  }
+  .member .member-wrapper .member-content {
+    width: 600px;
+  }
+}
+@media (max-width: 600px) {
+  .member {
+    width: 100%;
+  }
+  .member .member-wrapper {
+    width: 100%;
+  }
+  .member .member-wrapper .member-content {
+    width: 100%;
+  }
+  .member .member-wrapper .member-content .member_word .member_item {
+    width: 100%;
+  }
+  .member .member-wrapper .member-content .member_word .edit-result-send-wrapper {
+    width: 100%;
+  }
+  .member .member-wrapper .member-content .member_word .edit-result-send-wrapper .edit-result-send {
+    margin: auto 10px;
+  }
+  .member .member-wrapper .member-content .edit-view-pop {
+    width: 100%;
+  }
+}/*# sourceMappingURL=member.css.map */

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}會員資料{% endblock %}
+{% block cssLink %}<link type="text/css" rel="stylesheet" href="./static/css/member.css">{% endblock %}
+
+{% block article %}
+    <article class="member">
+        <div class="member-wrapper">
+            <div class="member-content">
+                <div class="member-picture">
+                    <button class="camera-icon"><img  src="./static/pic/cameraIcon.svg"></button>
+                    <input class="file-uploader-input" type="file" id="file-uploader" accept="image/png"/>
+                    <div class="picture-place">
+                        <img id="preview-img" src="./static/pic/personIcon.svg">
+                    </div>
+                </div>
+                <div class="member_word">
+                    <div class="member_item">
+                        <span>名稱</span>
+                        <span>
+                            <span class="name-reply answer">無</span>
+                            <button class="edit-button change-name">編輯</button>
+                        </span>
+                    </div>
+                    <div class="member_item">
+                        <span>生日</span>
+                        <span>
+                            <span class="birthday-reply answer">無</span>
+                            <button class="edit-button change-birth">編輯</button>
+                        </span>
+                    </div>
+
+                    <div class="member_item">
+                        <span>性別</span>
+                        <span>
+                            <span class="gender-reply answer">無</span>
+                            <button class="edit-button change-gender">編輯</button>
+                        </span>
+                    </div>
+                    <div class="member_item">
+                        <span>更改密碼</span>
+                        <button class="edit_password_button">
+                            <img class="edit_password_icon" src="./static/pic/editArrowIcon.svg">
+                            <img class="edit_password_change_icon" src="./static/pic/editArrowChangeIcon.svg">
+                        </button>
+                    </div>
+                    <div class="edit-result-send-wrapper">
+                        <button class="edit-result-send">儲存</button>
+                    </div>
+                </div>
+
+                <div class="edit-view-pop hide">
+                    <button class="cancel-button">
+                        <img class="cancel-button-img" src="./static/pic/cancel_icon.png">
+                    </button>
+                    <div class="edit-input-wrapper">
+                        <h1>編輯中...</h1>
+                        <div id="common-input" class="edit-input">
+                            <span class="edit-data-item">名字:</span>
+                            <input class="edit-data-input" type="text">
+                        </div>
+                        <div id="first-password" class="edit-input password hide">
+                            <span id="first-password-item" class="edit-data-item">輸入新/舊密碼:</span>
+                            <input id="first-password-value"
+                                   class="edit-data-input edit-first-password-eye-input"
+                                   type="password"
+                                   maxlength="20">
+                            <button id="edit-first-password-eye">
+                                <img class="edit-first-password-eye closeEye" src="./static/pic/closeEyeIcon.svg">
+                                <img class="edit-first-password-eye openEye hide" src="./static/pic/openEyeIcon.svg">
+                            </button>
+                        </div>
+                        <div id="next-password" class="edit-input password hide">
+                            <span id="confirm-password-item" class="edit-data-item">確認新密碼:</span>
+                            <input id="confirm-password-value"
+                                   class="edit-data-input edit-confirm-password-eye-input"
+                                   type="password"
+                                   maxlength="20">
+                            <button id="edit-confirm-password-eye">
+                                <img class="edit-confirm-password-eye closeEye" src="./static/pic/closeEyeIcon.svg">
+                                <img class="edit-confirm-password-eye openEye hide" src="./static/pic/openEyeIcon.svg">
+                            </button>
+                        </div>
+                        <div class="edit-input message-input"></div>
+                    </div>
+                    <button class="edit-view-button">確認</button>
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+
+{% endblock %}
+
+{% block js %}
+<script src="./static/js/member.js"></script>
+{% endblock %}
