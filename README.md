@@ -24,12 +24,14 @@ Taipei-Day-Trip is an e-commerce website, that allows you to discover and find a
 
 ## Test Account
 
+|-|-|
 |-----|--------|
 |Account|111@gmail.com|
 |Password  |111      |
 
 ## Credit Card For Test
 
+|-|-|
 |-----|--------|
 |Card Number|424242442424242|
 |Valid Date|01 / 23|
