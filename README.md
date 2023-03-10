@@ -9,7 +9,6 @@ Taipei-Day-Trip is an e-commerce website, that allows you to discover and find a
   * [Skills Used](README.md#skills-used)
   * [Features](README.md#features) 
       - [Infinite Scroll](#infinite-scroll)
-      - [Keyword Search](#keyword-search)
       - [Image Slide Show](#image-slide-show)
       - [Keyword Search](#keyword-search)
       - [Third Party Payment System](#third-party-payment-system)
@@ -88,7 +87,7 @@ You can edit your user name, birth, gender, password, photo stickers.
 
 ### RWD
 
-![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/RWD.png)
+![image](https://github.com/joyceseven1124/taipei-day-trip/blob/develop/taipei-day-trip/taipei%20gif/rwd_gif.gif)
 
 ## Contact
  * Chia-Yi,Liu
