@@ -32,7 +32,7 @@ Taipei-Day-Trip is an e-commerce website, that allows you to discover and find a
 
 |-|-|
 |-----|--------|
-|Card Number|424242442424242|
+|Card Number|42424242424242|
 |Valid Date|01 / 23|
 |CVV | 123|
 
