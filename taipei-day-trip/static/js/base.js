@@ -1,9 +1,12 @@
 const nameRule =  /^[a-zA-Z\d\u4e00-\u9fa5]{1,}$/
 const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/
 const passwordRule = /^[a-zA-Z\d\u4e00-\u9fa5]{3,}$/
+const phoneNumberRule = /^09\d{8}$/
 
 //document.addEventListener('load', checkIsState())
 window.addEventListener('DOMContentLoaded',checkIsState)
+
+
 
 const home =  document.querySelector(".navigation_name")
 home.addEventListener("click",goHome)
@@ -11,8 +14,16 @@ home.addEventListener("click",goHome)
 const signIn = document.querySelector(".navigation_button_sign")
 signIn.addEventListener("click",signInView)
 
-const bookingIn = document.querySelector(".navigation_button_schedule")
+const bookingIn = document.querySelector(".navigation_cart_word")
 bookingIn.addEventListener("click",loginBookingStateCheck)
+
+const bookingNumber = document.querySelector(".navigation_cart_number")
+
+const recordButton = document.querySelector(".navigation_button_record")
+recordButton.addEventListener("click",orderRecordStateCheck)
+
+const memberButton = document.querySelector("#nav_member_information")
+memberButton.addEventListener("click",memberPageStateCheck)
 
 const signOut = document.querySelector(".navigation_button_sign_out")
 signOut.addEventListener("click",signOutState)
@@ -59,9 +70,20 @@ const password = document.querySelector("#password")
 password.addEventListener("keyup",checkRegular)
 password.addEventListener("change",regularResultPrint)
 
+const loginFormEye = document.querySelector("#login-form-eye")
+const registerFormEye = document.querySelector("#register-form-eye")
+loginFormEye.addEventListener("click",seePassword)
+registerFormEye.addEventListener("click",seePassword)
+
 const registerResultMessage = document.querySelector(".register_result")
 const loginResultMessage = document.querySelector(".logIn_result")
 const messagePopResult = document.querySelector(".form_message_print")
+
+const menuView = document.querySelector(".navigation_button_burger_category")
+const burgerButton = document.querySelector(".navigation_button_burger")
+burgerButton.addEventListener("click",openMenuView)
+const arrowTopButton = document.querySelector(".arrow_top")
+arrowTopButton.addEventListener("click", closeView)
 
 
 let memberState = false
@@ -81,6 +103,12 @@ function registerView(e){
     logIn.classList.add("hide")
 }
 
+function openMenuView(e){
+    menuView.classList.remove("hide")
+    alertBackground.classList.remove("hide")
+}
+
+
 function closeView(e){
     cleanBuildInput()
     alertBackground.classList.add("hide")
@@ -90,6 +118,26 @@ function closeView(e){
     logIn.classList.add("hide")
     register.classList.add("hide")
     messageCard.classList.add("hide")
+    menuView.classList.add("hide")
+}
+
+function seePassword(e){
+    let whereEye = e.target.classList[0]
+    const eyeIcon = document.getElementsByClassName(whereEye)
+    const eyeInput = document.querySelector("."+whereEye+"-input")
+    const eyeIconArr = Array.from(eyeIcon)
+    eyeIconArr.forEach( element => {
+        if(element.classList.contains("hide")){
+            element.classList.remove("hide")
+        }else{
+            element.classList.add("hide")
+        }
+    })
+    if(eyeInput.getAttribute('type') === "password"){
+        eyeInput.setAttribute('type','text')
+    }else{
+        eyeInput.setAttribute('type','password')
+    }
 }
 
 function resultMessagePrint(message,howIs,whereIs){
@@ -108,10 +156,11 @@ function resultMessagePrint(message,howIs,whereIs){
 
 
 function cleanBuildInput(){
-    registerResultMessage.textContent = " "
+    registerResultMessage.textContent = ""
     newName.value = ""
     newEmail.value = ""
     newPassword.value =""
+    password.value = ""
 }
 
 function goHome(){
@@ -218,18 +267,25 @@ async function checkIsState(){
         memberState = true
         userName = checkIsStateResult.data.name
         signIn.classList.add("hide")
-        signOut.classList.remove("hide")
+        burgerButton.classList.remove("hide")
+        countBookingNumber()
         if(whereIs.includes("booking")){
             const whoIs = document.querySelector("#username")
             whoIs.textContent = userName
         }
     }else if(whereIs.includes("booking") && memberState !== true){
         goHome()
+    }else if(whereIs.includes("thankyou") && memberState !== true){
+        goHome()
+    }else if(whereIs.includes("record") && memberState !== true){
+        goHome()
+    }else if(whereIs.includes("member") && memberState !== true){
+        goHome()
     }
 }
 
 function loginBookingStateCheck(e){
-    whereIs = window.location.href
+    //whereIs = window.location.href
     if(memberState){
         if(e.target.id == "nav_schedule" ){
             window.location.href = "/booking"
@@ -242,6 +298,21 @@ function loginBookingStateCheck(e){
     }
 }
 
+function orderRecordStateCheck(){
+    if(memberState){
+        window.location.href = "/recording"
+    }else{
+        signInView()
+    }
+}
+
+function memberPageStateCheck(){
+    if(memberState){
+        window.location.href = "/member"
+    }else{
+        signInView()
+    }
+}
 
 
 async function signOutState(){
@@ -250,12 +321,32 @@ async function signOutState(){
     })
     const signOutStateResult = await response.json()
     const whereIs = window.location.href
-    if(whereIs.includes("booking")){
+    window.location.reload()
+    /*if(whereIs.includes("booking")){
         window.location.reload()
         goHome()
     }else{
         window.location.reload()
+    }*/
+}
+
+async function countBookingNumber(){
+    const response = await fetch("/api/booking/number",{
+        method:"GET"
+    })
+    const responseResult = await response.json()
+    if(responseResult.data.error){
+        bookingNumber.textContent= ""
+    }else{
+        const num = responseResult.data[0]
+        bookingNumber.textContent= num
     }
+    /*if(whereIs.includes("booking")){
+        window.location.reload()
+        goHome()
+    }else{
+        window.location.reload()
+    }*/
 }
 
 

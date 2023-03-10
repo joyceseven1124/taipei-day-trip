@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}台北一日遊結單{% endblock %}
+{% block cssLink %}<link type="text/css" rel="stylesheet" href="./static/css/order.css">{% endblock %}
+
+{% block article %}
+    
+    <article class="order">
+        <div class="order-wrapper">
+            <div class="order-content">
+                <h1 class="thank-title">感謝訂購</h1>
+                <div>
+                    <span>親愛的顧客</span>
+                    <span id="order-from"></span>
+                </div>
+                <div>
+                    <span>訂購結果:</span>
+                    <span id="order-status"></span>
+                </div>
+                <div>
+                    <span>訂單編號:</span>
+                    <span id="order-number"></span>
+                </div>
+
+                <div>
+                    <span class="order-items-title">商品項目:</span>
+                    <span class="order-items"></span>
+                    <!--<div class="order-items next"></div> -->
+                </div>
+                <div class="go-home-button">
+                    <button id="go-home-button">回首頁</button>
+                </div>
+            </div>
+        </div>
+        
+    </article>
+    
+   
+    
+    
+{% endblock %}
+
+{% block js %}
+<script src="./static/js/order.js"></script>
+{% endblock %}

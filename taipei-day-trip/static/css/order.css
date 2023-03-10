@@ -1,0 +1,76 @@
+.order {
+  font-size: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background-image: url("/static/pic/thank.png");
+  background-color: #448899;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 80%;
+}
+.order .order-wrapper {
+  width: 1200px;
+  display: flex;
+  justify-content: center;
+}
+.order .order-wrapper .order-content {
+  box-sizing: border-box;
+  width: 500px;
+  background-color: beige;
+  box-shadow: 10px 10px 10px 2px #2e2e2e;
+  margin: 50px 0px;
+  padding: 30px 20px;
+  border-radius: 20px;
+  border: 1px solid black;
+  z-index: 10;
+}
+.order .order-wrapper .order-content .thank-title {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #fffafa;
+}
+.order .order-wrapper .order-content div {
+  margin-bottom: 10px;
+}
+.order .order-wrapper .order-content div #order-number, .order .order-wrapper .order-content div #order-status, .order .order-wrapper .order-content div .order-items, .order .order-wrapper .order-content div #order-from {
+  font-weight: 500;
+}
+.order .order-wrapper .order-content div .order-items.next {
+  margin-left: 90px;
+}
+.order .order-wrapper .order-content .go-home-button {
+  margin-top: 30px;
+  text-align: center;
+}
+.order .order-wrapper .order-content .go-home-button button {
+  background-color: #448899;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  color: white;
+}
+
+.footer {
+  margin-top: 0px;
+}
+
+@media (max-width: 1200px) {
+  .order {
+    width: 100%;
+  }
+  .order .order-wrapper {
+    width: 100%;
+  }
+}
+@media (max-width: 500px) {
+  .order {
+    width: 100%;
+  }
+  .order .order-wrapper {
+    width: 100%;
+  }
+  .order .order-wrapper .order-content {
+    width: 100%;
+  }
+}/*# sourceMappingURL=order.css.map */

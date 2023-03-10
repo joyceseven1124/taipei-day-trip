@@ -1,0 +1,229 @@
+.member{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .member-wrapper{
+        width: calc(1200px - 30px);
+        display: flex;
+        justify-content: center;
+        border: 2px solid #489;
+        margin: 15px;
+        padding: 30px 20px;
+        box-sizing: border-box;
+        .member-content{
+            width: 600px;
+            .member-picture{
+                position: relative;
+                display: flex;
+                justify-content: center;
+                .camera-icon{
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    bottom: 0px;
+                    left: 60%;
+                }
+                .file-uploader-input{
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    bottom: 0px;
+                    left: 60%;
+                    opacity: 0;
+                }
+                .picture-place{
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 75px;
+                    border: 1px solid rgb(220, 218, 218);
+                    img{
+                        width: 150px;
+                        height: 150px;
+                        border-radius: 75px;
+                        object-fit: cover;
+
+                    }
+                }
+            }
+            .member_word{
+                margin: 30px;
+                background-color: rgb(249, 249, 249);
+                border-radius: 10px;
+                padding: 30px 0px;
+                box-shadow: 10px 10px 1px 1px rgb(159, 173, 175);
+                .member_item{
+                    width: 400px;
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 30px auto;
+                    padding: 5px 10px;
+                    box-sizing: border-box;
+                    border-bottom: 1px solid rgb(188, 186, 186);
+                    .answer{
+                        font-weight: 500;
+                        margin-right: 30px;
+                    }
+                    .edit-button{
+                        background-color: inherit;
+                        color: rgb(160, 161, 161);
+                        font-size: 16px;
+                        &:hover{
+                            color: #489;
+                        }
+                    }
+                    .edit_password_button{
+                        background-color: inherit;
+                        img{
+                            width: 30px;
+                            height: 30px;
+                        }
+                        .edit_password_change_icon{
+                            display: none;
+                        }
+                        &:hover{
+                            .edit_password_icon{
+                                display: none;
+                            }
+                            .edit_password_change_icon{
+                                display: inline-block;
+                            }
+                        }
+                    }
+                }
+                .edit-result-send-wrapper{
+                    width: 400px;
+                    display: flex;
+                    justify-content: end;
+                    margin: 0px auto;
+                    .edit-result-send{
+                        width: 100px;
+                        height: 50px;
+                        color: white;
+                        background-color: #489;
+                        box-shadow: 1px 1px 5px 1px rgb(53, 52, 53);
+                        &:hover{
+                            opacity: 80%;
+                        }
+                    }
+                }
+            }
+            .edit-view-pop{
+                width: 600px;
+                height: auto;
+                border-radius: 10px;
+                background-color: white;
+                margin: 0px auto;
+                position: absolute;
+                top:40%;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                z-index: 50;
+                .cancel-button{
+                    margin-left: 80%;
+                    margin-top: 20px;
+                    width: 30px;
+                    height: 30px;
+                    .cancel-button-img{
+                        width: 30px;
+                        height: 30px;
+                        object-fit: cover;
+                    }
+                }
+                .edit-input-wrapper{
+                    .edit-input{
+                        margin-top: 40px;
+                        .edit-data-input{
+                            width:350px;
+                            height: 45px;
+                            margin-left: 15px;
+                            padding: 1px 10px;
+                            box-sizing: border-box;
+                        }
+                    }
+                    .password{
+                        position: relative;
+                        img{
+                            position: absolute;
+                            width: 30px;
+                            height: 30px;
+                            top:6px;
+                            right: 86px;
+                        }
+                        .openEye.hide{
+                            display: none;
+                        }
+                        .closeEye.hide{
+                            display: none;
+                        }
+                    }
+                    .edit-input.hide{
+                        display: none;
+                    }
+                    
+                    .password.hide{
+                        display: none;
+                    }
+                }
+                .edit-view-button{
+                    background-color: #489;
+                    color: white;
+                    width: 100px;
+                    height: 50px;
+                    margin-top: 40px;
+                    margin-bottom: 40px;
+                }
+            }
+            .edit-view-pop.hide{
+                display: none;  
+            }
+        }
+    }
+}
+
+input[type="file"] {
+    &:hover{
+        font-size: 0;
+        cursor: pointer;
+    }
+    
+}
+
+
+@media(max-width:1200px){
+    .member{
+        width: 100%;
+        .member-wrapper{
+            width: 100%;
+            .member-content{
+                width: 600px;
+            }
+        }
+    }
+}
+
+@media(max-width:600px){
+    .member{
+        width: 100%;
+        .member-wrapper{
+            width: 100%;
+            .member-content{
+                width: 100%;
+                .member_word{
+                    .member_item{
+                        width: 100%;
+                    }
+                    .edit-result-send-wrapper{
+                        width: 100%;
+                        .edit-result-send{
+                            margin: auto 10px;
+                        }
+                    }
+                }
+                .edit-view-pop{
+                    width: 100%;
+                }
+            }
+        }
+    }    
+}

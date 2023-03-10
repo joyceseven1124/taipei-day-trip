@@ -9,48 +9,65 @@ let img_number = 0
 getAttraction(idNumber)
 
 function getAttraction(id){
-        url="/api/attraction/"+id
-        fetch(url)
-        .then(function(response){
-            return response.json();})
-        .then(function(data){
-            const result = data.data[0]
-            img_number = result.images.length
-            const imgPlace = document.querySelector(".attraction_information_images_main")
-            const imgCircle = document.querySelector(".attraction_information_images_circle")
-            for(let i=0; i < result.images.length; i++){
-                const img = document.createElement("img")
-                img.setAttribute("class","image")
-                img.src = result.images[i]
-                imgPlace.appendChild(img)
+    url="/api/attraction/"+id
+    fetch(url)
+    .then(function(response){
+        return response.json();})
+    .then(function(data){
+        const result = data.data[0]
+        img_number = result.images.length
+        const imgPlace = document.querySelector(".attraction_information_images_main")
+        const imgCircle = document.querySelector(".attraction_information_images_circle")
+        imgPlace.style.opacity = "0"
+        imgCircle.style.opacity = "0"
+        let loadImgNumber = 0 
+        result.images.forEach(element => {
+            const img = new Image()
+            img.setAttribute("class","image")
+            img.src = element
+            imgPlace.appendChild(img)
 
-                const circle = document.createElement("span")
-                circle.setAttribute("class","circle")
-                circle.setAttribute("num",i)
-                if(i===0){
+            const circle = document.createElement("span")
+            circle.setAttribute("class","circle")
+            circle.setAttribute("num",loadImgNumber+1)
+           
+            imgCircle .appendChild(circle)
+            
+            let loadingStatus = document.querySelector('.loading_word')
+            img.onload = () => {
+                if(loadImgNumber===0){
                     circle.classList.add("checked")
                 }
-                imgCircle .appendChild(circle)
+                loadImgNumber++
+                if(loadImgNumber === img_number){
+                    imgPlace.style.opacity = "100%"
+                    imgCircle.style.opacity = "100%"
+                    document.getElementById('load-wrapper').style.display="none"
+                }else{
+                    loadingStatus.textContent = `載入中...${Math.round((loadImgNumber/img_number)*100)}%`
+                }
             }
-            const title = document.querySelector("title")
-            title.textContent = result.name
+        });
 
-            const attractionName = document.querySelector(".attraction_information_booking_name_title")
-            attractionName.textContent = result.name
+        const title = document.querySelector("title")
+        title.textContent = result.name
 
-            const attractionCategory = document.querySelector(".attraction_information_booking_name_category")
-            attractionCategory.textContent = result.category
+        const attractionName = document.querySelector(".attraction_information_booking_name_title")
+        attractionName.textContent = result.name
 
-            const attractionDescription = document.querySelector("#description")
-            attractionDescription.textContent = result.description
+        const attractionCategory = document.querySelector(".attraction_information_booking_name_category")
+        attractionCategory.textContent = result.category
 
-            const attractionAddress = document.querySelector("#address")
-            attractionAddress.textContent = result.address
+        const attractionDescription = document.querySelector("#description")
+        attractionDescription.textContent = result.description
 
-            const attractionTransport = document.querySelector("#transport")
-            attractionTransport.textContent = result.transport
+        const attractionAddress = document.querySelector("#address")
+        attractionAddress.textContent = result.address
 
-        })
+        const attractionTransport = document.querySelector("#transport")
+        attractionTransport.textContent = result.transport
+
+    })
 }
 
 let circleIndex=0;
@@ -103,6 +120,13 @@ const afternoonTime = document.querySelector("#afternoon_time")
 const booking_attractions = document.querySelector("#go_to_checkout_button")
 const cart_button = document.querySelector("#cart_button")
 
+const dateNow = new Date();
+const year = dateNow.getFullYear();
+const month = ('0'+ (dateNow.getMonth() + 1)).slice(-2);
+const day = ('0' + dateNow.getDate()).slice(-2);
+// var day = date.getDay();
+const dateTimeNow = year +'-'+ month +'-'+ day;
+date.setAttribute('min', dateTimeNow);
 
 
 async function saveBookingData(e){
@@ -132,7 +156,12 @@ async function saveBookingData(e){
             if(saveResult.ok && e.target.id == "go_to_checkout_button"){
                 window.location.href = "/booking"
             }else{
-                window.location.reload()
+                alertBackground.classList.remove("hide")
+                if(saveResult.ok){
+                    resultMessagePrint("加入成功","success","messageCard")
+                }else{
+                    resultMessagePrint("加入失敗","fail","messageCard")
+                }
             }
         }
     }

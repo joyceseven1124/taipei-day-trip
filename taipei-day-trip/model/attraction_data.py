@@ -21,23 +21,22 @@ def clean_data(myresult):
     imgs = []
     alldata = []
     for i in range(len(myresult)):
-
-        if i+1<len(myresult) and myresult[i][1] == myresult[i+1][1]:
-            img = myresult[i][9]
+        if i+1<len(myresult) and myresult[i]["name"] == myresult[i+1]["name"]:
+            img = myresult[i]["file"]
             imgs.append(img)
         else:
-            img = myresult[i][9]
+            img = myresult[i]["file"]
             imgs.append(img)
             data = {
-                "id" :  myresult[i][0] ,
-                "name" : myresult[i][1],
-                "category" : myresult[i][8],
-                "description" : myresult[i][2],
-                "address": myresult[i][3],
-                "transport" :  myresult[i][4],
-                "mrt" : myresult[i][5],
-                "lat": myresult[i][6],
-                "lng" : myresult[i][7],
+                "id" :  myresult[i]["attractions_id"] ,
+                "name" : myresult[i]["name"],
+                "category" : myresult[i]["catalog_name"],
+                "description" : myresult[i]["description"],
+                "address": myresult[i]["address"],
+                "transport" :  myresult[i]["direction"],
+                "mrt" : myresult[i]["MRT"],
+                "lat": myresult[i]["latitude"],
+                "lng" : myresult[i]["longitude"],
                 "images": imgs
                 }
             alldata.append(data)
@@ -48,7 +47,7 @@ def clean_data(myresult):
 def search_keyword(keyword,page):
     try:
         connection_object = connection_pool.get_connection()
-        cursor = connection_object.cursor()
+        cursor = connection_object.cursor(buffered=True, dictionary=True)
 
         count =12
         page = int(page)
@@ -97,6 +96,7 @@ def search_keyword(keyword,page):
                 keyword_search_value = (keyword,'%'+keyword+ '%',data_start,count)
             cursor.execute( keyword_search,keyword_search_value)
             myresult = cursor.fetchall()
+            
 
             #檢查是否有下一頁
             next_page_value = (keyword,'%'+keyword+ '%',next_page_star,1)
@@ -150,9 +150,7 @@ def search_keyword(keyword,page):
         else:
             next_page = None
         result = clean_data(myresult)
-        
         data_result = (next_page,result)
-
 
     except ValueError:
         data_result ="Please use a positive integer"
@@ -168,7 +166,7 @@ def search_keyword(keyword,page):
 def search_id(id):
     try:
         connection_object = connection_pool.get_connection()
-        cursor = connection_object.cursor()
+        cursor = connection_object.cursor(buffered=True, dictionary=True)
         id_search = '''
             SELECT
                 imags.attractions_id,
@@ -244,4 +242,3 @@ def search_categories():
         connection_object.close()
 
         return data_result
-

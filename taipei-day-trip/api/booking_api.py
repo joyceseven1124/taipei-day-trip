@@ -61,7 +61,7 @@ def search_booking_data():
     member_Id = member_token_result[0]
     searchResult = bookingData.search_booking(member_Id)
 
-    if searchResult != str:
+    if type(searchResult) != str:
         response = {
             "data": searchResult
             }
@@ -69,7 +69,7 @@ def search_booking_data():
         return jsonify(response),200
     else:
         response = {
-            "error": true,
+            "error": True,
             "message": searchResult
             }
         return jsonify(response),500
@@ -78,9 +78,7 @@ def search_booking_data():
 @booking_api_blueprint.route("/api/booking",methods=["DELETE"])
 def delete_booking_data():
     member_re_value = request.cookies.get('token_value')
-    print(member_re_value)
     booking_value = json.loads(request.data)
-    print(booking_value)
     member_token_result = memberData.check_token(member_re_value)
     if type(member_token_result) != list:
         response ={
@@ -95,6 +93,47 @@ def delete_booking_data():
             if result == "ok":
                 response ={
                 "ok": True
+                }
+                return jsonify(response),200
+
+            elif result == "伺服器內部錯誤":
+                response ={
+                    "error": True,
+                    "message": result
+                    }
+                return jsonify(response),500
+            else:
+                response ={
+                    "error": True,
+                    "message": result
+                    }
+                return jsonify(response),400
+        else:
+            response ={
+                    "error": True,
+                    "message": "未登入系統，拒絕存取"
+                    }
+            return jsonify(response),403
+
+
+
+@booking_api_blueprint.route("/api/booking/number",methods=["GET"])
+def count_booking_number():
+    member_re_value = request.cookies.get('token_value')
+    member_token_result = memberData.check_token(member_re_value)
+    if type(member_token_result) != list:
+        response ={
+                "error": True,
+                "message": "未登入系統，拒絕存取"
+                }
+        return jsonify(response),403
+    else:
+        member_check_result = memberData.check_member(member_token_result)
+        if member_check_result == "correct":
+            result = bookingData.count_booking_number(member_token_result[0])
+            if type(result) == tuple:
+                response ={
+                  "data":result
                 }
                 return jsonify(response),200
 
