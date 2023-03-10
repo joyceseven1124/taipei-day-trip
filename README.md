@@ -9,11 +9,13 @@ Taipei-Day-Trip is an e-commerce website, that allows you to discover and find a
   * [Skills Used](README.md#skills-used)
   * [Features](README.md#features) 
       - [Infinite Scroll](#infinite-scroll)
-      - [Keyword Search](#keyword_search)
-      - [Image slide show](#image-slide-show)
-      - [Third Party payment system](#third-party-payment-system)
-      - [Member page](#member-page)
-      - [RWD](#rwd)
+      - [Keyword Search](#keyword-search)
+      - [Image Slide Show](#image-slide-show)
+      - [Keyword Search](#keyword-search)
+      - [Third Party Payment System](#third-party-payment-system)
+      - [Member Page](#member-page)
+      - [Historical Record](#historical-record)
+      - [RWD](#rwd)    
 
   * [contact](README.md#contact)
   
@@ -22,14 +24,12 @@ Taipei-Day-Trip is an e-commerce website, that allows you to discover and find a
 
 ## Test Account
 
-|- |-|
 |-----|--------|
 |Account|111@gmail.com|
 |Password  |111      |
 
 ## Credit Card For Test
 
-|- |-|
 |-----|--------|
 |Card Number|424242442424242|
 |Valid Date|01 / 23|
@@ -37,7 +37,7 @@ Taipei-Day-Trip is an e-commerce website, that allows you to discover and find a
 
 ## Skills Used
 
-| - | - |
+| Technology | Description |
 | ------- | ------- |
 | JavaScript | Pure JavaScript |
 | CSS | Layouts and RWD |
@@ -55,30 +55,38 @@ Taipei-Day-Trip is an e-commerce website, that allows you to discover and find a
 
 Using Infinite Scroll to create a seamless browsing experience, increased engagement, and reduced server and page load times.
 
-![image]()
+![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/Infinite%20Scroll.gif)
 
-### Image slide show
+### Image Slide Show
 
 create a image slide show without any plug-ins.
 
-![image]()
+![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/Image%20Carousel.gif)
 
-### Third Party payment system
+### Keyword Search
+
+![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/Keyword%20Search.gif)
+
+### Third Party Payment System
 
 You can purchase those trips with a third party payment system - TapPay.
 
-![image]()
+![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/Shopping%20Cart%20System.gif)
 
-### Little fun feature after purchasing
 
-![image]()
+### Member Page
 
-### Member page
+You can edit your user name, birth, gender, password, photo stickers.
 
-You can edit your user name, avator, password, or check your last ordered item in this page
+![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/Member%20Center.jpg)
 
-![image]()
+### Historical Record
 
+![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/historical%20record.gif)
+
+### RWD
+
+![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/RWD.png)
 
 ## Contact
  * Chia-Yi,Liu
