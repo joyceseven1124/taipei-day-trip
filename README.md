@@ -17,7 +17,7 @@ Website: http://13.113.56.130:3000/
       - [Member Page](#member-page)
       - [Historical Record](#historical-record)
       - [RWD](#rwd)    
-  * [Design Doc](README.md#design_doc)
+  * [Design Doc](README.md#design-doc)
   * [contact](README.md#contact)
   
   
