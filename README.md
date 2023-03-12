@@ -74,6 +74,8 @@ create a image slide show without any plug-ins.
 
 ### Keyword Search
 
+You can input keywords of attraction names or select category names from the menu below.
+
 ![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/Keyword%20Search.gif)
 
 ### Third Party Payment System
@@ -85,11 +87,13 @@ You can purchase those trips with a third party payment system - TapPay.
 
 ### Member Page
 
-You can edit your user name, birth, gender, password, photo stickers.
+You can edit your username, birthdate, gender, password, and photo sticker, but remember to click the save button.
 
 ![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/Member%20Center.jpg)
 
 ### Historical Record
+
+You can check all transaction records, both successful and failed transactions, in your order history.
 
 ![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/historical%20record.gif)
 
