@@ -1,6 +1,8 @@
 # Taipei Day Trip
 Taipei-Day-Trip is an e-commerce website, that allows you to discover and find attractions to make one-day tour reservations.
 
+Website: http://13.113.56.130:3000/
+
 ![image](https://github.com/joyceseven1124/taipei-day-trip/blob/main/taipei-day-trip/taipei%20gif/rwd-3.jpg)
 
 ## Catalog
