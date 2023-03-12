@@ -17,7 +17,7 @@ Website: http://13.113.56.130:3000/
       - [Member Page](#member-page)
       - [Historical Record](#historical-record)
       - [RWD](#rwd)    
-
+  * [Design Doc](README.md#design_doc)
   * [contact](README.md#contact)
   
   
@@ -100,6 +100,11 @@ You can check all transaction records, both successful and failed transactions, 
 ### RWD
 
 ![image](https://github.com/joyceseven1124/taipei-day-trip/blob/develop/taipei-day-trip/taipei%20gif/rwd_gif.gif)
+
+## Design Doc
+[Figma](https://www.figma.com/file/MZkYBH31H5gyLoZoZq116j)
+</br>
+[API Doc](https://app.swaggerhub.com/apis-docs/padax/taipei-day-trip/1.1.0)
 
 ## Contact
  * Chia-Yi,Liu
