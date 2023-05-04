@@ -55,7 +55,7 @@ Website: http://13.113.56.130:3000/
 | RESTful API | A web-based architectural style for designing scalable and flexible software systems.|
 | Blueprints | Managing Python files |
 | AWS | AWS EC2 for deployment |
-| Regex | Protect this website being attacked by XXS|
+| Regex | Protect this website being attacked by XSS|
 | MVC | Model, View, and Controller.|
 
 ##Features
